@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://higuchiki.github.io/spotify-for-creators-api/</loc>
+         <lastmod>2026-05-26</lastmod>
+    </url>
+    <url>
+         <loc>https://higuchiki.github.io/spotify-for-creators-api/auth/</loc>
+         <lastmod>2026-05-26</lastmod>
+    </url>
+    <url>
+         <loc>https://higuchiki.github.io/spotify-for-creators-api/changelog/</loc>
+         <lastmod>2026-05-26</lastmod>
+    </url>
+    <url>
+         <loc>https://higuchiki.github.io/spotify-for-creators-api/graphql/</loc>
+         <lastmod>2026-05-26</lastmod>
+    </url>
+    <url>
+         <loc>https://higuchiki.github.io/spotify-for-creators-api/recipes/</loc>
+         <lastmod>2026-05-26</lastmod>
+    </url>
+    <url>
+         <loc>https://higuchiki.github.io/spotify-for-creators-api/rest-api/</loc>
+         <lastmod>2026-05-26</lastmod>
+    </url>
+</urlset>

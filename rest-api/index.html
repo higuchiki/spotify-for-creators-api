@@ -1,0 +1,3233 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Unofficial, reverse-engineered API reference for Spotify for Creators (formerly Anchor.fm)">
+      
+      
+      
+        <link rel="canonical" href="https://higuchiki.github.io/spotify-for-creators-api/rest-api/">
+      
+      
+        <link rel="prev" href="../auth/">
+      
+      
+        <link rel="next" href="../graphql/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>REST API - Spotify for Creators API</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rest-api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Spotify for Creators API" class="md-header__button md-logo" aria-label="Spotify for Creators API" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Spotify for Creators API
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              REST API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/higuchiki/spotify-for-creators-api" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spotify-for-creators-api
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../auth/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Authentication
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  REST API
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../graphql/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  GraphQL API
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../recipes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Recipes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../changelog/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Spotify for Creators API" class="md-nav__button md-logo" aria-label="Spotify for Creators API" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Spotify for Creators API
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/higuchiki/spotify-for-creators-api" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spotify-for-creators-api
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#common-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Headers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-query-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Query Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#id-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ID System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-a-spotify-episode-id-anchor-numeric-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-A. Spotify Episode ID → Anchor Numeric ID
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-A. Spotify Episode ID → Anchor Numeric ID">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-b-get-episode-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-B. Get Episode Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-B. Get Episode Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#response-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#episode-state-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Episode state matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-c-update-episode-title-description-publish-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-C. Update Episode (Title / Description / Publish Date)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-C. Update Episode (Title / Description / Publish Date)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-d-get-region" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-D. Get Region
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-e-get-sponsored-content-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-E. Get Sponsored Content Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-f-get-cover-art-colors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-F. Get Cover Art Colors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-F. Get Cover Art Colors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-g-get-episode-form-data-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-G. Get Episode Form Data (Batch)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-h-get-show-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-H. Get Show Metadata
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-H. Get Show Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#response-fields_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-i-get-partner-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-I. Get Partner IDs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-j-get-user-verification-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-J. Get User Verification Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-k-onboarding-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-K. Onboarding Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-l-spotify-show-id-anchor-numeric-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-L. Spotify Show ID → Anchor Numeric IDs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-L. Spotify Show ID → Anchor Numeric IDs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#response_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-m-update-episode-list-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-M. Update Episode List Index
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-n-get-show-form-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-N. Get Show Form Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-o-get-distribution-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-O. Get Distribution Settings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-O. Get Distribution Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#response-fields_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-p-get-user-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-P. Get User Settings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-P. Get User Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-q-update-sponsored-content-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Q. Update Sponsored Content Status
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-Q. Update Sponsored Content Status">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-r-sync-monetisation-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-R. Sync Monetisation Lifecycle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-R. Sync Monetisation Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-response-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key response fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-s-create-a-new-episode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-S. Create a New Episode
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-S. Create a New Episode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-t-update-show-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-T. Update Show Metadata
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-T. Update Show Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-u-update-vanity-slug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-U. Update Vanity Slug
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-U. Update Vanity Slug">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-v-image-upload-flow-cover-art-episode-thumbnail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V. Image Upload Flow (Cover Art / Episode Thumbnail)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-V. Image Upload Flow (Cover Art / Episode Thumbnail)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-v-1-get-a-signed-upload-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-1. Get a Signed Upload URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-2-put-the-image-to-google-cloud-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-2. PUT the Image to Google Cloud Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-3-notify-upload-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-3. Notify Upload Completion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-4-poll-for-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-4. Poll for Completion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-w-monetisation-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-W. Monetisation Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-x-show-settings-page-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-X. Show Settings Page Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-y-distribution-page-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Y. Distribution Page Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-quirks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Quirks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Known Quirks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description-field-server-side-transformations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        description field — server-side transformations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishon-must-be-an-iso-8601-string-not-a-unix-timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        publishOn must be an ISO 8601 string — not a Unix timestamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#media-upload-flow-audio-video" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Media Upload Flow (Audio / Video)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Media Upload Flow (Audio / Video)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported formats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-size-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File size limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-a-get-a-signed-upload-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-A. Get a Signed Upload URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-b-put-the-file-to-google-cloud-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-B. PUT the File to Google Cloud Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-c-notify-upload-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-C. Notify Upload Completion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-d-poll-for-media-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-D. Poll for Media Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../graphql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GraphQL API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recipes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#common-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Headers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-query-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Query Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#id-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ID System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-a-spotify-episode-id-anchor-numeric-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-A. Spotify Episode ID → Anchor Numeric ID
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-A. Spotify Episode ID → Anchor Numeric ID">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-b-get-episode-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-B. Get Episode Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-B. Get Episode Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#response-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#episode-state-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Episode state matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-c-update-episode-title-description-publish-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-C. Update Episode (Title / Description / Publish Date)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-C. Update Episode (Title / Description / Publish Date)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-d-get-region" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-D. Get Region
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-e-get-sponsored-content-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-E. Get Sponsored Content Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-f-get-cover-art-colors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-F. Get Cover Art Colors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-F. Get Cover Art Colors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-g-get-episode-form-data-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-G. Get Episode Form Data (Batch)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-h-get-show-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-H. Get Show Metadata
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-H. Get Show Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#response-fields_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-i-get-partner-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-I. Get Partner IDs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-j-get-user-verification-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-J. Get User Verification Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-k-onboarding-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-K. Onboarding Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-l-spotify-show-id-anchor-numeric-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-L. Spotify Show ID → Anchor Numeric IDs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-L. Spotify Show ID → Anchor Numeric IDs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#response_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-m-update-episode-list-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-M. Update Episode List Index
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-n-get-show-form-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-N. Get Show Form Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-o-get-distribution-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-O. Get Distribution Settings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-O. Get Distribution Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#response-fields_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-p-get-user-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-P. Get User Settings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-P. Get User Settings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-q-update-sponsored-content-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Q. Update Sponsored Content Status
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-Q. Update Sponsored Content Status">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-r-sync-monetisation-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-R. Sync Monetisation Lifecycle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-R. Sync Monetisation Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-response-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key response fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-s-create-a-new-episode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-S. Create a New Episode
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-S. Create a New Episode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-t-update-show-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-T. Update Show Metadata
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-T. Update Show Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-u-update-vanity-slug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-U. Update Vanity Slug
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-U. Update Vanity Slug">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-v-image-upload-flow-cover-art-episode-thumbnail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V. Image Upload Flow (Cover Art / Episode Thumbnail)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-V. Image Upload Flow (Cover Art / Episode Thumbnail)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-v-1-get-a-signed-upload-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-1. Get a Signed Upload URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-2-put-the-image-to-google-cloud-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-2. PUT the Image to Google Cloud Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-3-notify-upload-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-3. Notify Upload Completion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-4-poll-for-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-4. Poll for Completion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-w-monetisation-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-W. Monetisation Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-x-show-settings-page-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-X. Show Settings Page Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-y-distribution-page-endpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Y. Distribution Page Endpoints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#known-quirks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Quirks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Known Quirks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description-field-server-side-transformations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        description field — server-side transformations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishon-must-be-an-iso-8601-string-not-a-unix-timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        publishOn must be an ISO 8601 string — not a Unix timestamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#media-upload-flow-audio-video" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Media Upload Flow (Audio / Video)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Media Upload Flow (Audio / Video)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#supported-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported formats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-size-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File size limits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-a-get-a-signed-upload-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-A. Get a Signed Upload URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-b-put-the-file-to-google-cloud-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-B. PUT the File to Google Cloud Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-c-notify-upload-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-C. Notify Upload Completion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-d-poll-for-media-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-D. Poll for Media Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="rest-api-reference">REST API Reference<a class="headerlink" href="#rest-api-reference" title="Permanent link">&para;</a></h1>
+<p><strong>Base URL:</strong> <code>https://api-v5.anchor.fm</code></p>
+<p>The anchor.fm internal REST API handles episode creation, metadata
+read/write, show settings, and media upload. It predates and coexists with
+the GraphQL API — Anchor's acquisition by Spotify left this backend intact.</p>
+<hr />
+<h2 id="common-headers">Common Headers<a class="headerlink" href="#common-headers" title="Permanent link">&para;</a></h2>
+<p>All requests require:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Authorization: Bearer {bearer_token}
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Accept: application/json
+</span></code></pre></div>
+<p>POST / PUT requests additionally require:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Content-Type: application/json
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Origin: https://creators.spotify.com
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Referer: https://creators.spotify.com/
+</span></code></pre></div>
+<h2 id="common-query-parameters">Common Query Parameters<a class="headerlink" href="#common-query-parameters" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isMumsCompatible=true</code></td>
+<td>Required on every endpoint. Never omit.</td>
+</tr>
+<tr>
+<td><code>returnWebIds=true</code></td>
+<td>Recommended on <code>/overview</code>. Omitting it may drop some fields.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="id-system">ID System<a class="headerlink" href="#id-system" title="Permanent link">&para;</a></h2>
+<p>The anchor.fm API uses <strong>anchor numeric IDs</strong> (integers), not the Spotify
+string IDs visible in the S4C UI. You need to convert between them before
+calling most endpoints.</p>
+<table>
+<thead>
+<tr>
+<th>ID type</th>
+<th>Example</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spotify Episode ID</td>
+<td><code>"1xouj0WrH2klavXKzDWZbq"</code></td>
+<td>S4C UI, GraphQL</td>
+</tr>
+<tr>
+<td>Anchor Episode ID</td>
+<td><code>123456789</code></td>
+<td>anchor.fm REST endpoints</td>
+</tr>
+<tr>
+<td>Spotify Show ID</td>
+<td><code>"033mWbN806GYwFrVjdQtol"</code></td>
+<td>S4C UI, GraphQL</td>
+</tr>
+<tr>
+<td>Station ID (numeric)</td>
+<td><code>46036667</code></td>
+<td>anchor.fm REST endpoints</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-a-spotify-episode-id-anchor-numeric-id">1-A. Spotify Episode ID → Anchor Numeric ID<a class="headerlink" href="#1-a-spotify-episode-id-anchor-numeric-id" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>GET /v3/episodes/spotify:episode:{SPOTIFY_EP_ID}/episodeId?isMumsCompatible=true
+</span></code></pre></div>
+<p>Translates a Spotify Episode ID into the numeric ID required by all other
+episode endpoints.</p>
+<h3 id="response">Response<a class="headerlink" href="#response" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">123456789</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Python</label><label for="__tabbed_1_2">cURL</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/spotify:episode:</span><span class="si">{</span><span class="n">spotify_ep_id</span><span class="si">}</span><span class="s2">/episodeId&quot;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="s2">&quot;?isMumsCompatible=true&quot;</span><span class="p">,</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">headers</span><span class="o">=</span><span class="n">headers_get</span><span class="p">,</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">anchor_id</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;episodeId&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$BEARER</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/spotify:episode:</span><span class="si">${</span><span class="nv">SPOTIFY_EP_ID</span><span class="si">}</span><span class="s2">/episodeId?isMumsCompatible=true&quot;</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<hr />
+<h2 id="1-b-get-episode-overview">1-B. Get Episode Overview<a class="headerlink" href="#1-b-get-episode-overview" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>GET /v3/episodes/{ANCHOR_ID}/overview?isMumsCompatible=true&amp;returnWebIds=true
+</span></code></pre></div>
+<p>Returns the current metadata for an episode.</p>
+<h3 id="response-fields">Response fields<a class="headerlink" href="#response-fields" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td>string</td>
+<td>Episode title</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>string</td>
+<td>Description HTML</td>
+</tr>
+<tr>
+<td><code>isPublished</code></td>
+<td>boolean</td>
+<td>Whether the episode is published</td>
+</tr>
+<tr>
+<td><code>publishOn</code></td>
+<td>string | null</td>
+<td>Scheduled publish time (UTC ISO 8601). Present only for scheduled episodes</td>
+</tr>
+<tr>
+<td><code>userId</code></td>
+<td>integer</td>
+<td>Account user ID — required for update calls</td>
+</tr>
+<tr>
+<td><code>podcastEpisodeType</code></td>
+<td>string</td>
+<td><code>"full"</code> / <code>"trailer"</code> / <code>"bonus"</code></td>
+</tr>
+<tr>
+<td><code>podcastEpisodeIsExplicit</code></td>
+<td>boolean</td>
+<td>Explicit content flag</td>
+</tr>
+</tbody>
+</table>
+<h3 id="episode-state-matrix">Episode state matrix<a class="headerlink" href="#episode-state-matrix" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th><code>isPublished</code></th>
+<th><code>publishOn</code></th>
+<th>State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>false</code></td>
+<td>present</td>
+<td>Scheduled</td>
+</tr>
+<tr>
+<td><code>true</code></td>
+<td>—</td>
+<td>Published</td>
+</tr>
+<tr>
+<td><code>false</code></td>
+<td>absent</td>
+<td>Draft</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Draft episodes return 403</p>
+<p>Calling this endpoint on a draft episode (<code>isPublished: false</code>, no
+<code>publishOn</code>) returns <strong>HTTP 403 Forbidden</strong> — even in a live browser
+session. The S4C UI fetches draft data via GraphQL instead. If you need
+to update a draft episode's metadata, keep the original values in memory
+before calling the update endpoint.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Python</label><label for="__tabbed_2_2">cURL</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">{</span><span class="n">anchor_id</span><span class="si">}</span><span class="s2">/overview&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    <span class="s2">&quot;?isMumsCompatible=true&amp;returnWebIds=true&quot;</span><span class="p">,</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="n">headers</span><span class="o">=</span><span class="n">headers_get</span><span class="p">,</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">overview</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$BEARER</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">${</span><span class="nv">ANCHOR_ID</span><span class="si">}</span><span class="s2">/overview?isMumsCompatible=true&amp;returnWebIds=true&quot;</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<hr />
+<h2 id="1-c-update-episode-title-description-publish-date">1-C. Update Episode (Title / Description / Publish Date)<a class="headerlink" href="#1-c-update-episode-title-description-publish-date" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>POST /v3/episodes/{ANCHOR_ID}/update?isMumsCompatible=true
+</span></code></pre></div>
+<p>Updates episode metadata. You can change the title, description, episode
+type, explicit flag, and scheduled publish time in a single call.</p>
+<h3 id="request-body">Request body<a class="headerlink" href="#request-body" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">43612824</span><span class="p">,</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Episode title&quot;</span><span class="p">,</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;Episode description HTML&lt;/p&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nt">&quot;episodeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;full&quot;</span><span class="p">,</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="nt">&quot;isPublished&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-31T21:00:00.000Z&quot;</span><span class="p">,</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">  </span><span class="nt">&quot;wizardDraftedToPublishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-31T21:00:00.000Z&quot;</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userId</code></td>
+<td>integer</td>
+<td>Yes</td>
+<td>Copy directly from the <code>/overview</code> response</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>Omitting it risks the server setting a blank title</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>HTML format</td>
+</tr>
+<tr>
+<td><code>episodeType</code></td>
+<td>string</td>
+<td>Yes</td>
+<td><code>"full"</code> / <code>"trailer"</code> / <code>"bonus"</code></td>
+</tr>
+<tr>
+<td><code>isPublished</code></td>
+<td>boolean</td>
+<td>Yes</td>
+<td>Pass the current value from <code>/overview</code> to preserve state</td>
+</tr>
+<tr>
+<td><code>podcastEpisodeIsExplicit</code></td>
+<td>boolean</td>
+<td>Yes</td>
+<td>Same as above</td>
+</tr>
+<tr>
+<td><code>publishOn</code></td>
+<td>string</td>
+<td>No</td>
+<td>UTC ISO 8601. Required when scheduling</td>
+</tr>
+<tr>
+<td><code>wizardDraftedToPublishOn</code></td>
+<td>string</td>
+<td>No</td>
+<td>Set to the same value as <code>publishOn</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="response_1">Response<a class="headerlink" href="#response_1" title="Permanent link">&para;</a></h3>
+<p>HTTP 200 on success:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;Episode description HTML&lt;/p&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Episode title&quot;</span><span class="p">,</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="nt">&quot;didChangePublishState&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span><span class="nt">&quot;shareUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://creators.spotify.com/pod/show/...&quot;</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Scheduling behaviour</p>
+<p>Sending <code>isPublished: false</code> together with a <code>publishOn</code> value causes
+the server to automatically treat it as <code>isPublished: true</code> (scheduled
+for future publication). This is the correct way to schedule an episode.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Published episodes lock publishOn</p>
+<p>Once an episode is published (<code>isPublished: true</code>), you cannot change
+<code>publishOn</code> via this endpoint. Use the S4C UI or Playwright to modify
+the publish date of a live episode.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><code>publishOn</code> timezone</p>
+<p>Always specify <code>publishOn</code> in <strong>UTC</strong>. To publish at 06:00 JST, use the
+previous day at 21:00 UTC.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">JST</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">publish_jst</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">JST</span><span class="p">)</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">publish_utc</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">)</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1"># → &quot;2026-05-31T21:00:00.000Z&quot;</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Python</label><label for="__tabbed_3_2">cURL</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="s2">&quot;userId&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="p">[</span><span class="s2">&quot;userId&quot;</span><span class="p">],</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;New episode title&quot;</span><span class="p">,</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;p&gt;New description&lt;/p&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="s2">&quot;episodeType&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;podcastEpisodeType&quot;</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">),</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="s2">&quot;isPublished&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;isPublished&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    <span class="s2">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    <span class="s2">&quot;publishOn&quot;</span><span class="p">:</span> <span class="s2">&quot;2026-06-01T21:00:00.000Z&quot;</span><span class="p">,</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>    <span class="s2">&quot;wizardDraftedToPublishOn&quot;</span><span class="p">:</span> <span class="s2">&quot;2026-06-01T21:00:00.000Z&quot;</span><span class="p">,</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="p">}</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">{</span><span class="n">anchor_id</span><span class="si">}</span><span class="s2">/update?isMumsCompatible=true&quot;</span><span class="p">,</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>    <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>    <span class="n">headers</span><span class="o">=</span><span class="n">headers_post</span><span class="p">,</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$BEARER</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Origin: https://creators.spotify.com&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Referer: https://creators.spotify.com/&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;userId&quot;:43612824,&quot;title&quot;:&quot;New title&quot;,&quot;description&quot;:&quot;&lt;p&gt;Desc&lt;/p&gt;&quot;,&quot;episodeType&quot;:&quot;full&quot;,&quot;isPublished&quot;:false,&quot;podcastEpisodeIsExplicit&quot;:false,&quot;publishOn&quot;:&quot;2026-06-01T21:00:00.000Z&quot;,&quot;wizardDraftedToPublishOn&quot;:&quot;2026-06-01T21:00:00.000Z&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">${</span><span class="nv">ANCHOR_ID</span><span class="si">}</span><span class="s2">/update?isMumsCompatible=true&quot;</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<hr />
+<h2 id="1-d-get-region">1-D. Get Region<a class="headerlink" href="#1-d-get-region" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>GET /v3/region?isMumsCompatible=true
+</span></code></pre></div>
+<p>Returns the user account's region. Called automatically when loading the
+episode detail page.</p>
+<p><strong>Example response:</strong> <code>{ "region": "JP" }</code></p>
+<hr />
+<h2 id="1-e-get-sponsored-content-status">1-E. Get Sponsored Content Status<a class="headerlink" href="#1-e-get-sponsored-content-status" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>GET /v3/episodes/{ANCHOR_ID}/sponsoredContentStatus?isMumsCompatible=true
+</span></code></pre></div>
+<p>Returns whether the episode contains sponsored content.</p>
+<p><strong>Response:</strong> <code>{ "containsSponsoredContent": false }</code></p>
+<hr />
+<h2 id="1-f-get-cover-art-colors">1-F. Get Cover Art Colors<a class="headerlink" href="#1-f-get-cover-art-colors" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>POST /MultiGetColor?isMumsCompatible=true
+</span></code></pre></div>
+<p>Returns the color palette extracted from an image URL. Called when
+rendering cover art in the UI.</p>
+<h3 id="request-body_1">Request body<a class="headerlink" href="#request-body_1" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">{</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="nt">&quot;color_queries&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://anchor-generated-image-bank.s3.amazonaws.com/...jpg&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="1-g-get-episode-form-data-batch">1-G. Get Episode Form Data (Batch)<a class="headerlink" href="#1-g-get-episode-form-data-batch" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>GET /v3/episodes/pcdFormData?episodeUri[]=spotify:episode:{SPOTIFY_EP_ID}&amp;isMumsCompatible=true
+</span></code></pre></div>
+<p>You can supply multiple <code>episodeUri[]</code> parameters to batch-fetch form data.
+Called when the episode list page loads.</p>
+<hr />
+<h2 id="1-h-get-show-metadata">1-H. Get Show Metadata<a class="headerlink" href="#1-h-get-show-metadata" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>GET /v3/stations/{STATION_ID}/metadata?isMumsCompatible=true
+</span></code></pre></div>
+<p>Returns show-level information: title, description, categories, cover art,
+and distribution flags. Called when the show settings page loads.</p>
+<p>The <code>STATION_ID</code> is the anchor numeric station ID (distinct from the user
+ID). You can obtain it via the ID conversion endpoint (1-L).</p>
+<h3 id="response-fields_1">Response fields<a class="headerlink" href="#response-fields_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rssFeedUrl</code></td>
+<td>string</td>
+<td>RSS feed URL</td>
+</tr>
+<tr>
+<td><code>podcastName</code></td>
+<td>string</td>
+<td>Show title</td>
+</tr>
+<tr>
+<td><code>podcastDescription</code></td>
+<td>string</td>
+<td>Show description</td>
+</tr>
+<tr>
+<td><code>podcastAuthorName</code></td>
+<td>string</td>
+<td>Author name</td>
+</tr>
+<tr>
+<td><code>podcastAuthorEmail</code></td>
+<td>string</td>
+<td>Author email</td>
+</tr>
+<tr>
+<td><code>podcastImage</code></td>
+<td>string</td>
+<td>Cover art URL (original size)</td>
+</tr>
+<tr>
+<td><code>podcastImage400</code></td>
+<td>string</td>
+<td>Cover art URL (400 px)</td>
+</tr>
+<tr>
+<td><code>podcastCategory</code></td>
+<td>string</td>
+<td>Category in <code>"Arts\|Design"</code> format</td>
+</tr>
+<tr>
+<td><code>podcastLanguage</code></td>
+<td>string</td>
+<td>Language code (e.g. <code>"ja"</code>)</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>string</td>
+<td>Same as <code>podcastLanguage</code></td>
+</tr>
+<tr>
+<td><code>isDistributedOnSpotify</code></td>
+<td>boolean</td>
+<td>Whether the show is on Spotify</td>
+</tr>
+<tr>
+<td><code>isRssFeedDisabled</code></td>
+<td>boolean</td>
+<td>Whether the RSS feed is disabled</td>
+</tr>
+<tr>
+<td><code>hasPublishedEpisode</code></td>
+<td>boolean</td>
+<td>Whether at least one episode is published</td>
+</tr>
+<tr>
+<td><code>distributionEligibilityForPaywalls</code></td>
+<td>string</td>
+<td>Paywall eligibility (<code>"eligible"</code> etc.)</td>
+</tr>
+<tr>
+<td><code>isStationOver30DaysOld</code></td>
+<td>boolean</td>
+<td>Whether the show is older than 30 days</td>
+</tr>
+<tr>
+<td><code>isStationMarkedAsSpam</code></td>
+<td>boolean</td>
+<td>Whether the show is flagged as spam</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-i-get-partner-ids">1-I. Get Partner IDs<a class="headerlink" href="#1-i-get-partner-ids" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>POST /v3/{USER_ID}/partnerIds?isMumsCompatible=true
+</span></code></pre></div>
+<p>Returns partner IDs related to monetisation (ads, Fan Support, etc.).
+Called when the show settings page loads.</p>
+<hr />
+<h2 id="1-j-get-user-verification-status">1-J. Get User Verification Status<a class="headerlink" href="#1-j-get-user-verification-status" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>GET /v3/users/verification?isMumsCompatible=true
+</span></code></pre></div>
+<p>Returns the account's identity verification state.</p>
+<hr />
+<h2 id="1-k-onboarding-status">1-K. Onboarding Status<a class="headerlink" href="#1-k-onboarding-status" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>GET /v3/onboarding/redirectStatus/{USER_ID}/?isMumsCompatible=true
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>GET /v3/onboarding/steps/{USER_ID}/?userId={USER_ID}&amp;isMumsCompatible=true
+</span></code></pre></div>
+<p>Returns onboarding progress for new users. Has no practical effect on
+established accounts.</p>
+<hr />
+<h2 id="1-l-spotify-show-id-anchor-numeric-ids">1-L. Spotify Show ID → Anchor Numeric IDs<a class="headerlink" href="#1-l-spotify-show-id-anchor-numeric-ids" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>GET /v3/shows/{SPOTIFY_SHOW_ID}/legacyIds?isMumsCompatible=true
+</span></code></pre></div>
+<p>Converts a Spotify Show ID into the anchor.fm internal numeric IDs needed
+by most other endpoints.</p>
+<h3 id="response_2">Response<a class="headerlink" href="#response_2" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">{</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">45990797</span><span class="p">,</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">46036667</span><span class="p">,</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">  </span><span class="nt">&quot;webStationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;112fef78c&quot;</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stationId</code></td>
+<td>The numeric ID used in episode list, metadata, and other endpoints</td>
+</tr>
+<tr>
+<td><code>userId</code></td>
+<td>The numeric user account ID</td>
+</tr>
+<tr>
+<td><code>webStationId</code></td>
+<td>The URL slug (vanity ID)</td>
+</tr>
+</tbody>
+</table>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Python</label><label for="__tabbed_4_2">cURL</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-python highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/shows/</span><span class="si">{</span><span class="n">spotify_show_id</span><span class="si">}</span><span class="s2">/legacyIds?isMumsCompatible=true&quot;</span><span class="p">,</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>    <span class="n">headers</span><span class="o">=</span><span class="n">headers_get</span><span class="p">,</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="p">)</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="n">ids</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="n">station_id</span> <span class="o">=</span> <span class="n">ids</span><span class="p">[</span><span class="s2">&quot;stationId&quot;</span><span class="p">]</span>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="n">user_id</span>    <span class="o">=</span> <span class="n">ids</span><span class="p">[</span><span class="s2">&quot;userId&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$BEARER</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/shows/</span><span class="si">${</span><span class="nv">SPOTIFY_SHOW_ID</span><span class="si">}</span><span class="s2">/legacyIds?isMumsCompatible=true&quot;</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<hr />
+<h2 id="1-m-update-episode-list-index">1-M. Update Episode List Index<a class="headerlink" href="#1-m-update-episode-list-index" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>POST /v3/stations/{STATION_ID}/episode-list-index?isMumsCompatible=true
+</span></code></pre></div>
+<p>Synchronises the episode list index. Called automatically by the browser
+when the episode list page loads.</p>
+<p><strong>Response:</strong> <code>{ "success": true }</code></p>
+<hr />
+<h2 id="1-n-get-show-form-data">1-N. Get Show Form Data<a class="headerlink" href="#1-n-get-show-form-data" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>GET /v3/stations/{STATION_ID}/pcdForm?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>Response:</strong> <code>{ "formUrl": "" }</code></p>
+<hr />
+<h2 id="1-o-get-distribution-settings">1-O. Get Distribution Settings<a class="headerlink" href="#1-o-get-distribution-settings" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>GET /v3/stations/{STATION_ID}/distribution?isMumsCompatible=true
+</span></code></pre></div>
+<p>Returns the show's distribution and RSS status. Called when the episode
+list page loads.</p>
+<h3 id="response-fields_2">Response fields<a class="headerlink" href="#response-fields_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>canEnableRss</code></td>
+<td>boolean</td>
+<td>Whether RSS distribution can be enabled</td>
+</tr>
+<tr>
+<td><code>externalUrls</code></td>
+<td>object</td>
+<td>E.g. <code>{"spotify": "https://open.spotify.com/show/..."}</code></td>
+</tr>
+<tr>
+<td><code>spotifyDistributionStatus</code></td>
+<td>string</td>
+<td>Spotify distribution status</td>
+</tr>
+<tr>
+<td><code>spotifyShowUri</code></td>
+<td>string</td>
+<td>Spotify Show URI</td>
+</tr>
+<tr>
+<td><code>platforms</code></td>
+<td>array</td>
+<td>List of active distribution platforms</td>
+</tr>
+<tr>
+<td><code>vanitySlug</code></td>
+<td>string</td>
+<td>URL slug</td>
+</tr>
+<tr>
+<td><code>isEnterprisePodcast</code></td>
+<td>boolean</td>
+<td>Enterprise plan flag</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-p-get-user-settings">1-P. Get User Settings<a class="headerlink" href="#1-p-get-user-settings" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>GET /v3/users/{USER_ID}/settings/termsAndContactability?isMumsCompatible=true
+</span></code></pre></div>
+<h3 id="example-response">Example response<a class="headerlink" href="#example-response" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="nt">&quot;termsOfServiceVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">  </span><span class="nt">&quot;agreedToMinimumRequiredTermsOfService&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="w">  </span><span class="nt">&quot;contactabilityStatus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;optedOut&quot;</span><span class="p">,</span>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="w">  </span><span class="nt">&quot;countryRule&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;needsResponseOptInSelected&quot;</span>
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="1-q-update-sponsored-content-status">1-Q. Update Sponsored Content Status<a class="headerlink" href="#1-q-update-sponsored-content-status" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>PUT /v3/episodes/{ANCHOR_ID}/sponsoredContentStatus?isMumsCompatible=true
+</span></code></pre></div>
+<p>Sets whether the episode contains sponsored content. Called automatically
+when saving an episode.</p>
+<h3 id="request-body_2">Request body<a class="headerlink" href="#request-body_2" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="p">{</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">  </span><span class="nt">&quot;containsSponsoredContent&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1748732022</span>
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>containsSponsoredContent</code></td>
+<td>boolean</td>
+<td>Yes</td>
+<td>Whether the episode includes sponsored content</td>
+</tr>
+<tr>
+<td><code>publishOn</code></td>
+<td>integer</td>
+<td>Yes</td>
+<td>Publish time as a <strong>Unix timestamp in seconds</strong> (not ISO 8601)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>publishOn</code> here is a <strong>Unix timestamp (integer seconds)</strong>, not an ISO 8601
+string. Passing an ISO 8601 string will silently corrupt the value.</p>
+</div>
+<hr />
+<h2 id="1-r-sync-monetisation-lifecycle">1-R. Sync Monetisation Lifecycle<a class="headerlink" href="#1-r-sync-monetisation-lifecycle" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>POST /v5/monetization-lifecycle/{STATION_ID}/sync-and-fetch?isMumsCompatible=true
+</span></code></pre></div>
+<p>Synchronises and fetches the monetisation state (e.g. Spotify Partner
+Program). Called when the episode list page loads.</p>
+<h3 id="key-response-fields">Key response fields<a class="headerlink" href="#key-response-fields" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>products.SPOTIFY_PARTNER_PROGRAM.lifecycleState</code></td>
+<td>Partner program state</td>
+</tr>
+<tr>
+<td><code>products.SPOTIFY_PARTNER_PROGRAM.pendingRequirements</code></td>
+<td>Outstanding requirements</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-s-create-a-new-episode">1-S. Create a New Episode<a class="headerlink" href="#1-s-create-a-new-episode" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>POST /v3/stations/{STATION_ID}/episodes?isMumsCompatible=true
+</span></code></pre></div>
+<p>Creates an empty episode record. This is the first step in the episode
+wizard — it allocates the episode ID before audio or metadata are set.</p>
+<h3 id="request-body_3">Request body<a class="headerlink" href="#request-body_3" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;hourOffset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-9</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hourOffset</code></td>
+<td>integer</td>
+<td>User timezone offset (JST = <code>-9</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="response_3">Response<a class="headerlink" href="#response_3" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="p">{</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120529038</span><span class="p">,</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">46036667</span>
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Three-step episode creation</p>
+<ol>
+<li><code>POST /v3/stations/{STATION_ID}/episodes</code> — allocate the episode record (this endpoint)</li>
+<li>Upload audio/video via the media upload flow (6-A through 6-D)</li>
+<li><code>POST /v3/episodes/{ANCHOR_ID}/update</code> (1-C) — set title, description, and publish settings</li>
+</ol>
+</div>
+<hr />
+<h2 id="1-t-update-show-metadata">1-T. Update Show Metadata<a class="headerlink" href="#1-t-update-show-metadata" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>POST /v3/stations/{STATION_ID}/metadata?isMumsCompatible=true
+</span></code></pre></div>
+<p>Updates show-level metadata: title, description, author, category, language,
+and explicit flag. Called when the podcast settings page is saved.</p>
+<h3 id="request-body_4">Request body<a class="headerlink" href="#request-body_4" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="p">{</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="w">  </span><span class="nt">&quot;podcastName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Your Podcast Title&quot;</span><span class="p">,</span>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="w">  </span><span class="nt">&quot;podcastDescription&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Show description&quot;</span><span class="p">,</span>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="w">  </span><span class="nt">&quot;podcastAuthorName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Author Name&quot;</span><span class="p">,</span>
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a><span class="w">  </span><span class="nt">&quot;podcastCategory&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Arts|Design&quot;</span><span class="p">,</span>
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a><span class="w">  </span><span class="nt">&quot;podcastLanguage&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ja&quot;</span><span class="p">,</span>
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+</span><span id="__span-40-8"><a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>podcastName</code></td>
+<td>string</td>
+<td>Yes</td>
+<td>Show title (max 100 characters)</td>
+</tr>
+<tr>
+<td><code>podcastDescription</code></td>
+<td>string</td>
+<td>No</td>
+<td>Show description (max 600 characters)</td>
+</tr>
+<tr>
+<td><code>podcastAuthorName</code></td>
+<td>string</td>
+<td>No</td>
+<td>Author name (max 80 characters)</td>
+</tr>
+<tr>
+<td><code>podcastCategory</code></td>
+<td>string</td>
+<td>No</td>
+<td>Category in <code>"Arts\|Design"</code> format; fetch valid values from <code>/v3/settings/podcast-category/options</code></td>
+</tr>
+<tr>
+<td><code>podcastLanguage</code></td>
+<td>string</td>
+<td>No</td>
+<td>Language code (e.g. <code>"ja"</code>)</td>
+</tr>
+<tr>
+<td><code>podcastEpisodeIsExplicit</code></td>
+<td>boolean</td>
+<td>No</td>
+<td>Explicit content flag</td>
+</tr>
+</tbody>
+</table>
+<p><strong>HTTP 200</strong> returns the updated metadata object.</p>
+<hr />
+<h2 id="1-u-update-vanity-slug">1-U. Update Vanity Slug<a class="headerlink" href="#1-u-update-vanity-slug" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>POST /v3/settings?isMumsCompatible=true
+</span></code></pre></div>
+<p>Updates the show's custom URL slug.</p>
+<h3 id="request-body_5">Request body<a class="headerlink" href="#request-body_5" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;webStationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your-vanity-slug&quot;</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>webStationId</code> must be globally unique. Using an already-taken slug may
+return <strong>409 Conflict</strong>.</p>
+</div>
+<hr />
+<h2 id="1-v-image-upload-flow-cover-art-episode-thumbnail">1-V. Image Upload Flow (Cover Art / Episode Thumbnail)<a class="headerlink" href="#1-v-image-upload-flow-cover-art-episode-thumbnail" title="Permanent link">&para;</a></h2>
+<p>Cover art and episode thumbnails share the same upload pipeline but use
+different endpoints. The pipeline is <strong>separate</strong> from the media upload
+pipeline (6-A through 6-D).</p>
+<h3 id="1-v-1-get-a-signed-upload-url">1-V-1. Get a Signed Upload URL<a class="headerlink" href="#1-v-1-get-a-signed-upload-url" title="Permanent link">&para;</a></h3>
+<p><strong>Show cover art:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>GET /v3/stations/{STATION_ID}/images/upload/signed_url?isMumsCompatible=true
+</span></code></pre></div></p>
+<p><strong>Episode thumbnail:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>GET /v3/episodes/{ANCHOR_ID}/images/upload/signed_url?isMumsCompatible=true
+</span></code></pre></div></p>
+<p><strong>Response:</strong>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="p">{</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor-image-storage-production/{UUID}/{FILENAME}?X-Goog-Algorithm=...&quot;</span><span class="p">,</span>
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a46e21a4-1d2d-1686-1355-905e191a3bef&quot;</span>
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<h3 id="1-v-2-put-the-image-to-google-cloud-storage">1-V-2. PUT the Image to Google Cloud Storage<a class="headerlink" href="#1-v-2-put-the-image-to-google-cloud-storage" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>PUT {signed_url}
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>Content-Type: image/png   # or image/jpeg
+</span></code></pre></div>
+<p>No auth headers needed — the signature is embedded in the URL.</p>
+<h3 id="1-v-3-notify-upload-completion">1-V-3. Notify Upload Completion<a class="headerlink" href="#1-v-3-notify-upload-completion" title="Permanent link">&para;</a></h3>
+<p><strong>Show cover art:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>POST /v3/stations/{STATION_ID}/images/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+</span></code></pre></div>
+Body: <code>{}</code> or empty.</p>
+<p><strong>Episode thumbnail:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>POST /v3/episodes/{ANCHOR_ID}/images/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+</span></code></pre></div></p>
+<p>Body:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="p">{</span>
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120520683</span><span class="p">,</span>
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode_image&quot;</span>
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<h3 id="1-v-4-poll-for-completion">1-V-4. Poll for Completion<a class="headerlink" href="#1-v-4-poll-for-completion" title="Permanent link">&para;</a></h3>
+<p><strong>Show cover art:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>GET /v3/stations/{STATION_ID}/images/upload/{UPLOAD_ID}/?isMumsCompatible=true
+</span></code></pre></div></p>
+<p><strong>Episode thumbnail:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>GET /v3/episodes/{ANCHOR_ID}/images/upload/{UPLOAD_ID}/?isMumsCompatible=true
+</span></code></pre></div></p>
+<p>Poll until <code>status</code> equals <code>"completed"</code> (typically a few seconds).</p>
+<hr />
+<h2 id="1-w-monetisation-endpoints">1-W. Monetisation Endpoints<a class="headerlink" href="#1-w-monetisation-endpoints" title="Permanent link">&para;</a></h2>
+<p>Called from the monetisation page (<code>/pod/show/{SHOW_ID}/monetize/...</code>):</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>GET /v4/paywalls/{STATION_ID}/lifecycle-state?isMumsCompatible=true
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>GET /v6/wallet/{STATION_ID}/availability?isMumsCompatible=true
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>GET /v6/wallet/{STATION_ID}/?isMumsCompatible=true
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a>GET /v3/paywalls/{STATION_ID}/?isMumsCompatible=true
+</span></code></pre></div>
+<p>These endpoints return paywall and wallet state. Used together with 1-R.</p>
+<hr />
+<h2 id="1-x-show-settings-page-endpoints">1-X. Show Settings Page Endpoints<a class="headerlink" href="#1-x-show-settings-page-endpoints" title="Permanent link">&para;</a></h2>
+<p>Called from the podcast settings page (<code>/pod/show/{SHOW_ID}/podcast/edit</code>):</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>GET /v3/stations/{STATION_ID}/episodePage?isMumsCompatible=true
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>GET /v3/station/{STATION_ID}/episodes/featured?isMumsCompatible=true
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a>GET /v3/stations/{STATION_ID}/hostRecommendations?isMumsCompatible=true
+</span></code></pre></div>
+<p>These return "Start Here" featured episode and host recommendation settings.</p>
+<hr />
+<h2 id="1-y-distribution-page-endpoints">1-Y. Distribution Page Endpoints<a class="headerlink" href="#1-y-distribution-page-endpoints" title="Permanent link">&para;</a></h2>
+<p>Called from the distribution page (<code>/pod/show/{SHOW_ID}/podcast/distribution</code>):</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>GET /v3/onboarding/redirectStatus/{STATION_ID}/?isMumsCompatible=true
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>GET /v3/onboarding/steps/{STATION_ID}/?userId={USER_ID}&amp;isMumsCompatible=true
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>GET /v3/stations/status?isMumsCompatible=true
+</span></code></pre></div>
+<p><code>/v3/stations/status</code> returns a list of all shows associated with the
+currently authenticated user.</p>
+<hr />
+<h2 id="known-quirks">Known Quirks<a class="headerlink" href="#known-quirks" title="Permanent link">&para;</a></h2>
+<h3 id="description-field-server-side-transformations">description field — server-side transformations<a class="headerlink" href="#description-field-server-side-transformations" title="Permanent link">&para;</a></h3>
+<p>When the server stores the <code>description</code> field, it automatically applies
+these transformations:</p>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Stored as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;br&gt;</code></td>
+<td><code>&lt;br /&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;a href="..."&gt;</code></td>
+<td><code>&lt;a href="..." rel="ugc noopener noreferrer" target="_blank"&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>If you compare the raw value from <code>/overview</code> against the value you
+originally posted, they will not match exactly. Normalise both sides before
+comparing.</p>
+<h3 id="publishon-must-be-an-iso-8601-string-not-a-unix-timestamp">publishOn must be an ISO 8601 string — not a Unix timestamp<a class="headerlink" href="#publishon-must-be-an-iso-8601-string-not-a-unix-timestamp" title="Permanent link">&para;</a></h3>
+<p>Passing an integer (e.g. the year <code>2026</code>) as <code>publishOn</code> in the update body
+will produce a timestamp like <code>"1970-01-01T00:33:46.000Z"</code>. Always use a
+full ISO 8601 string such as <code>"2026-06-01T21:00:00.000Z"</code>.</p>
+<hr />
+<h2 id="media-upload-flow-audio-video">Media Upload Flow (Audio / Video)<a class="headerlink" href="#media-upload-flow-audio-video" title="Permanent link">&para;</a></h2>
+<p>See <a href="../recipes/#media-upload">Recipes — Media upload</a> for the full
+end-to-end Python example using endpoints <strong>6-A through 6-D</strong>.</p>
+<h3 id="supported-formats">Supported formats<a class="headerlink" href="#supported-formats" title="Permanent link">&para;</a></h3>
+<p><code>mp3</code>, <code>m4a</code>, <code>aifc</code>, <code>aiff</code>, <code>ogg</code>, <code>wav</code>, <code>flac</code>, <code>mp4</code>, <code>mov</code></p>
+<h3 id="file-size-limits">File size limits<a class="headerlink" href="#file-size-limits" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Video</td>
+<td>4 GB</td>
+</tr>
+<tr>
+<td>Audio</td>
+<td>500 MB</td>
+</tr>
+</tbody>
+</table>
+<h3 id="6-a-get-a-signed-upload-url">6-A. Get a Signed Upload URL<a class="headerlink" href="#6-a-get-a-signed-upload-url" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&amp;type={MIME_TYPE}&amp;isMumsCompatible=true
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filename</code></td>
+<td><code>episode.mp4</code></td>
+<td>File name to upload</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>video/mp4</code></td>
+<td>MIME type</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response:</strong>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="p">{</span>
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor_exclusive_media_upload_production/...&quot;</span><span class="p">,</span>
+</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a><span class="w">  </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<h3 id="6-b-put-the-file-to-google-cloud-storage">6-B. PUT the File to Google Cloud Storage<a class="headerlink" href="#6-b-put-the-file-to-google-cloud-storage" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>PUT {signed_url}
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>Content-Type: {MIME_TYPE}
+</span></code></pre></div>
+<p>Save the <code>ETag</code> response header — you need it in the next step.</p>
+<h3 id="6-c-notify-upload-completion">6-C. Notify Upload Completion<a class="headerlink" href="#6-c-notify-upload-completion" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>Request body (video):</strong>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="p">{</span>
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">45990797</span><span class="p">,</span>
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;video&quot;</span><span class="p">,</span>
+</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
+</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp4&quot;</span><span class="p">,</span>
+</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-59-7"><a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-59-8"><a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d49fffd0ed1c6a291577ac47d26b997&quot;</span><span class="w"> </span><span class="p">}],</span>
+</span><span id="__span-59-9"><a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-59-10"><a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
+</span><span id="__span-59-11"><a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">46036667</span>
+</span><span id="__span-59-12"><a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uploadType</code></td>
+<td>string</td>
+<td><code>"video"</code> for video files; <code>"default"</code> for audio files (<strong>not</strong> <code>"audio"</code>)</td>
+</tr>
+<tr>
+<td><code>isExtractedFromVideo</code></td>
+<td>boolean</td>
+<td><code>true</code> for mp4/mov; <code>false</code> for audio-only</td>
+</tr>
+<tr>
+<td><code>parts</code></td>
+<td>array</td>
+<td>List of ETags from the GCS PUT response</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For audio files, use <code>uploadType: "default"</code>, <strong>not</strong> <code>"audio"</code>. This
+was confirmed against a live session in May 2026.</p>
+</div>
+<h3 id="6-d-poll-for-media-validation">6-D. Poll for Media Validation<a class="headerlink" href="#6-d-poll-for-media-validation" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&amp;isMumsCompatible=true
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Response field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td><code>"processing"</code> / <code>"completed"</code> / <code>"failed"</code></td>
+</tr>
+<tr>
+<td><code>mediaType</code></td>
+<td><code>"video"</code> / <code>"audio"</code></td>
+</tr>
+<tr>
+<td><code>durationInMilliseconds</code></td>
+<td>Duration in ms</td>
+</tr>
+<tr>
+<td><code>validationStatus</code></td>
+<td>Validation result</td>
+</tr>
+</tbody>
+</table>
+<p>Poll until <code>status</code> is <code>"completed"</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/higuchiki/spotify-for-creators-api" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
