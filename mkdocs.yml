@@ -56,6 +56,7 @@ plugins:
             Authentication: 認証
             REST API: REST API リファレンス
             GraphQL API: GraphQL API
+            Browser Automation: ブラウザ自動化
             Recipes: レシピ・実装例
             Changelog: 更新履歴
 
@@ -86,6 +87,7 @@ nav:
   - Authentication: auth.md
   - REST API: rest-api.md
   - GraphQL API: graphql.md
+  - Browser Automation: browser-automation.md
   - Recipes: recipes.md
   - Changelog: changelog.md
 
