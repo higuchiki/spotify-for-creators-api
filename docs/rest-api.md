@@ -44,8 +44,8 @@ calling most endpoints.
 |---------|---------|---------|
 | Spotify Episode ID | `"1xouj0WrH2klavXKzDWZbq"` | S4C UI, GraphQL |
 | Anchor Episode ID | `123456789` | anchor.fm REST endpoints |
-| Spotify Show ID | `"033mWbN806GYwFrVjdQtol"` | S4C UI, GraphQL |
-| Station ID (numeric) | `46036667` | anchor.fm REST endpoints |
+| Spotify Show ID | `"YOUR_SHOW_ID"` | S4C UI, GraphQL |
+| Station ID (numeric) | `YOUR_STATION_ID` | anchor.fm REST endpoints |
 
 ---
 
@@ -150,7 +150,7 @@ type, explicit flag, and scheduled publish time in a single call.
 
 ```json
 {
-  "userId": 43612824,
+  "userId": YOUR_USER_ID,
   "title": "Episode title",
   "description": "<p>Episode description HTML</p>",
   "episodeType": "full",
@@ -233,7 +233,7 @@ HTTP 200 on success:
       -H "Content-Type: application/json" \
       -H "Origin: https://creators.spotify.com" \
       -H "Referer: https://creators.spotify.com/" \
-      -d '{"userId":43612824,"title":"New title","description":"<p>Desc</p>","episodeType":"full","isPublished":false,"podcastEpisodeIsExplicit":false,"publishOn":"2026-06-01T21:00:00.000Z","wizardDraftedToPublishOn":"2026-06-01T21:00:00.000Z"}' \
+      -d '{"userId":YOUR_USER_ID,"title":"New title","description":"<p>Desc</p>","episodeType":"full","isPublished":false,"podcastEpisodeIsExplicit":false,"publishOn":"2026-06-01T21:00:00.000Z","wizardDraftedToPublishOn":"2026-06-01T21:00:00.000Z"}' \
       "https://api-v5.anchor.fm/v3/episodes/${ANCHOR_ID}/update?isMumsCompatible=true"
     ```
 
@@ -377,8 +377,8 @@ by most other endpoints.
 
 ```json
 {
-  "userId": 45990797,
-  "stationId": 46036667,
+  "userId": YOUR_STATION_ID,
+  "stationId": YOUR_STATION_ID,
   "webStationId": "112fef78c"
 }
 ```
@@ -545,7 +545,7 @@ wizard — it allocates the episode ID before audio or metadata are set.
 ```json
 {
   "episodeId": 120529038,
-  "stationId": 46036667
+  "stationId": YOUR_STATION_ID
 }
 ```
 
@@ -805,7 +805,7 @@ POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
 **Request body (video):**
 ```json
 {
-  "userId": 45990797,
+  "userId": YOUR_STATION_ID,
   "uploadType": "video",
   "origin": "episode-media:upload",
   "caption": "episode.mp4",
@@ -814,7 +814,7 @@ POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
   "parts": [{ "partNumber": 1, "etag": "4d49fffd0ed1c6a291577ac47d26b997" }],
   "uploadId": "9e1fdfce-4485-6bde-e582-3b7c84978d55",
   "episodeId": 120525547,
-  "stationId": 46036667
+  "stationId": YOUR_STATION_ID
 }
 ```
 

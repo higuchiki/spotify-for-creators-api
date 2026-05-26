@@ -147,7 +147,7 @@ mutation updateIsCommentsEnabledForShowByShowUri {
 ```json
 {
   "isEnabled": true,
-  "showUri": "spotify:show:033mWbN806GYwFrVjdQtol"
+  "showUri": "spotify:show:YOUR_SHOW_ID"
 }
 ```
 

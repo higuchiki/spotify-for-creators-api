@@ -91,7 +91,7 @@ isPublished: false  かつ  publishOn なし   →  draft（下書き）
   "description": "<p>ep.61 〇〇という話</p>",
   "isPublished": false,
   "publishOn": "2026-05-31T21:00:00.000Z",
-  "userId": 43612824,
+  "userId": YOUR_USER_ID,
   "podcastEpisodeType": "full",
   "podcastEpisodeIsExplicit": false
 }
@@ -109,7 +109,7 @@ POST /v3/episodes/{ANCHOR_ID}/update?isMumsCompatible=true
 
 ```json
 {
-  "userId": 43612824,
+  "userId": YOUR_USER_ID,
   "title": "エピソードタイトル",
   "description": "<p>概要欄の HTML</p>",
   "episodeType": "full",
@@ -279,8 +279,8 @@ Spotify Show ID から anchor.fm 内部の numeric ID を一括変換して返�
 
 ```json
 {
-  "userId": 45990797,
-  "stationId": 46036667,
+  "userId": YOUR_STATION_ID,
+  "stationId": YOUR_STATION_ID,
   "webStationId": "112fef78c"
 }
 ```
@@ -410,7 +410,7 @@ POST /v3/stations/{STATION_ID}/episodes?isMumsCompatible=true
 ```json
 {
   "episodeId": 120529038,
-  "stationId": 46036667
+  "stationId": YOUR_STATION_ID
 }
 ```
 
@@ -620,7 +620,7 @@ POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
 
 ```json
 {
-  "userId": 45990797,
+  "userId": YOUR_STATION_ID,
   "uploadType": "video",
   "origin": "episode-media:upload",
   "caption": "episode.mp4",
@@ -631,7 +631,7 @@ POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
   ],
   "uploadId": "9e1fdfce-4485-6bde-e582-3b7c84978d55",
   "episodeId": 120525547,
-  "stationId": 46036667
+  "stationId": YOUR_STATION_ID
 }
 ```
 

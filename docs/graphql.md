@@ -114,7 +114,7 @@ Called from the episode detail and analytics pages.
 **`getEpisodesForShow` variables example:**
 ```json
 {
-  "showUri": "spotify:show:033mWbN806GYwFrVjdQtol",
+  "showUri": "spotify:show:YOUR_SHOW_ID",
   "pageSize": 15,
   "pageToken": ""
 }
@@ -259,7 +259,7 @@ mutation updateIsCommentsEnabledForShowByShowUri {
 ```json
 {
   "isEnabled": true,
-  "showUri": "spotify:show:033mWbN806GYwFrVjdQtol"
+  "showUri": "spotify:show:YOUR_SHOW_ID"
 }
 ```
 
@@ -409,7 +409,7 @@ mutation blockUserForShow {
 ```json
 {
   "username": "21yafw4q377x3jpbbcohdh4py",
-  "showUri": "spotify:show:033mWbN806GYwFrVjdQtol"
+  "showUri": "spotify:show:YOUR_SHOW_ID"
 }
 ```
 

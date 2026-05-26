@@ -18,7 +18,7 @@ interceptors and console log capture.
 
 ### 2026-05-26 — Extended API coverage
 
-Additional pages explored on a test show (STATION_ID: 46036667) using a
+Additional pages explored on a test show (STATION_ID: YOUR_STATION_ID) using a
 dedicated test account:
 
 **New REST endpoints discovered:**
