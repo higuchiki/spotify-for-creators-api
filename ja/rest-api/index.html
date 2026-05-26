@@ -1,0 +1,2512 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Unofficial, reverse-engineered API reference for Spotify for Creators (formerly Anchor.fm)">
+      
+      
+      
+        <link rel="canonical" href="https://higuchiki.github.io/spotify-for-creators-api/ja/rest-api/">
+      
+      
+        <link rel="prev" href="../auth/">
+      
+      
+        <link rel="next" href="../graphql/">
+      
+      
+        
+          <link rel="alternate" href="../../rest-api/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="ja">
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>REST API リファレンス - Spotify for Creators API</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rest-api" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../" title="Spotify for Creators API" class="md-header__button md-logo" aria-label="Spotify for Creators API" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Spotify for Creators API
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              REST API リファレンス
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="言語切り替え">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../rest-api/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/higuchiki/spotify-for-creators-api" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spotify-for-creators-api
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="タブ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ホーム
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../auth/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  認証
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  REST API リファレンス
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../graphql/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  GraphQL API
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../recipes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  レシピ・実装例
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../changelog/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  更新履歴
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="Spotify for Creators API" class="md-nav__button md-logo" aria-label="Spotify for Creators API" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Spotify for Creators API
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/higuchiki/spotify-for-creators-api" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    spotify-for-creators-api
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    認証
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API リファレンス
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REST API リファレンス
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        共通ヘッダー
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        共通クエリパラメータ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-a-idspotify-episode-id-anchor-numeric-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-A. ID変換：Spotify Episode ID → Anchor Numeric ID
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-B. エピソード詳細取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-C. エピソード更新（タイトル・概要欄・公開日時）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-D. リージョン取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-e" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-E. スポンサードコンテンツ状態取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-f" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-F. カバーアート配色取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-g" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-G. エピソードフォームデータ取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-h" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-H. ショーメタデータ取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-i-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-I. パートナーID取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-j" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-J. ユーザー認証状態確認
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-K. オンボーディング状態確認
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-l-idspotify-show-id-anchor-numeric-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-L. ショーID変換（Spotify Show ID → Anchor numeric IDs）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-M. エピソード一覧インデックス更新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-N. ショー形式データ取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-o" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-O. 配信設定取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-P. ユーザー設定取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Q. スポンサードコンテンツ状態更新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-R. マネタイズライフサイクル同期
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-S. エピソード新規作成
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-T. ショーメタデータ更新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-u-vanity-slug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-U. vanity slug 更新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V. 画像アップロードフロー
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-V. 画像アップロードフロー">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-v-1-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-1. 署名付きURL取得
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-2-google-cloud-storage-put" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-2. Google Cloud Storage への直接 PUT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-3-process_upload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-3. アップロード完了通知（process_upload）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-4. アップロード状態ポーリング
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-w" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-W. 収益化関連エンドポイント
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-X. 番組設定ページ固有エンドポイント
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-y" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Y. 配信ページ固有エンドポイント
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-a-6-e" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声/動画アップロード（6-A 〜 6-E）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="音声/動画アップロード（6-A 〜 6-E）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6-a-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-A. アップロード署名付きURL取得
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-b-google-cloud-storage-put" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-B. Google Cloud Storage への直接 PUT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-c-process_upload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-C. アップロード完了通知（process_upload）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-D. メディア検証確認
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        既知の注意事項
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="既知の注意事項">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        description フィールドのサーバー側自動変換
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#draft-overview-403" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        draft エピソードの overview は 403
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        publishOn のタイムゾーン
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishon-ispublished-false-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        publishOn を isPublished: false → true に一発設定する挙動
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishon_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        publishOn は公開済みエピソードでは変更不可
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../graphql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GraphQL API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    レシピ・実装例
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    更新履歴
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        共通ヘッダー
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        共通クエリパラメータ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-a-idspotify-episode-id-anchor-numeric-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-A. ID変換：Spotify Episode ID → Anchor Numeric ID
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-B. エピソード詳細取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-C. エピソード更新（タイトル・概要欄・公開日時）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-D. リージョン取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-e" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-E. スポンサードコンテンツ状態取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-f" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-F. カバーアート配色取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-g" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-G. エピソードフォームデータ取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-h" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-H. ショーメタデータ取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-i-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-I. パートナーID取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-j" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-J. ユーザー認証状態確認
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-K. オンボーディング状態確認
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-l-idspotify-show-id-anchor-numeric-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-L. ショーID変換（Spotify Show ID → Anchor numeric IDs）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-M. エピソード一覧インデックス更新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-N. ショー形式データ取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-o" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-O. 配信設定取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-P. ユーザー設定取得
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-q" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Q. スポンサードコンテンツ状態更新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-R. マネタイズライフサイクル同期
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-s" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-S. エピソード新規作成
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-T. ショーメタデータ更新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-u-vanity-slug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-U. vanity slug 更新
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V. 画像アップロードフロー
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-V. 画像アップロードフロー">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-v-1-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-1. 署名付きURL取得
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-2-google-cloud-storage-put" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-2. Google Cloud Storage への直接 PUT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-3-process_upload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-3. アップロード完了通知（process_upload）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-v-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-V-4. アップロード状態ポーリング
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-w" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-W. 収益化関連エンドポイント
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-X. 番組設定ページ固有エンドポイント
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-y" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Y. 配信ページ固有エンドポイント
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-a-6-e" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声/動画アップロード（6-A 〜 6-E）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="音声/動画アップロード（6-A 〜 6-E）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6-a-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-A. アップロード署名付きURL取得
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-b-google-cloud-storage-put" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-B. Google Cloud Storage への直接 PUT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-c-process_upload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-C. アップロード完了通知（process_upload）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6-D. メディア検証確認
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        既知の注意事項
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="既知の注意事項">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        description フィールドのサーバー側自動変換
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#draft-overview-403" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        draft エピソードの overview は 403
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        publishOn のタイムゾーン
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishon-ispublished-false-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        publishOn を isPublished: false → true に一発設定する挙動
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publishon_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        publishOn は公開済みエピソードでは変更不可
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="rest-api">REST API リファレンス<a class="headerlink" href="#rest-api" title="Permanent link">&para;</a></h1>
+<p><strong>ベースURL</strong>: <code>https://api-v5.anchor.fm</code></p>
+<p>認証の詳細は <a href="../auth/">認証</a> ページを参照。</p>
+<hr />
+<h2 id="_1">共通ヘッダー<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Authorization: Bearer {bearer_token}
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Accept: application/json
+</span></code></pre></div>
+<p>POST 時はさらに追加：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Content-Type: application/json
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Origin: https://creators.spotify.com
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Referer: https://creators.spotify.com/
+</span></code></pre></div>
+<p><code>Origin</code> と <code>Referer</code> がないと POST が拒否される場合がある。</p>
+<h2 id="_2">共通クエリパラメータ<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>パラメータ</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isMumsCompatible=true</code></td>
+<td>全エンドポイントで必須。省略しないこと</td>
+</tr>
+<tr>
+<td><code>returnWebIds=true</code></td>
+<td><code>/overview</code> で推奨。省略すると一部フィールドが欠ける</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-a-idspotify-episode-id-anchor-numeric-id">1-A. ID変換：Spotify Episode ID → Anchor Numeric ID<a class="headerlink" href="#1-a-idspotify-episode-id-anchor-numeric-id" title="Permanent link">&para;</a></h2>
+<p>anchor.fm API のエンドポイントはすべて <strong>anchor numeric ID</strong>（整数）を使う。
+S4C 上で見える Spotify Episode ID（文字列）からの変換が必要。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>GET /v3/episodes/spotify:episode:{SPOTIFY_EP_ID}/episodeId?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>レスポンス</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">123456789</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/spotify:episode:</span><span class="si">{</span><span class="n">spotify_ep_id</span><span class="si">}</span><span class="s2">/episodeId?isMumsCompatible=true&quot;</span><span class="p">,</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">bearer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">},</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">anchor_id</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;episodeId&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+<hr />
+<h2 id="1-b">1-B. エピソード詳細取得<a class="headerlink" href="#1-b" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>GET /v3/episodes/{ANCHOR_ID}/overview?isMumsCompatible=true&amp;returnWebIds=true
+</span></code></pre></div>
+<p><strong>レスポンスフィールド（主要）</strong></p>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>title</code></td>
+<td>string</td>
+<td>タイトル</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>string</td>
+<td>概要欄（<strong>HTML形式</strong>）</td>
+</tr>
+<tr>
+<td><code>isPublished</code></td>
+<td>boolean</td>
+<td>公開済みかどうか</td>
+</tr>
+<tr>
+<td><code>publishOn</code></td>
+<td>string | null</td>
+<td>公開日時（UTC ISO8601）。scheduled の場合のみ存在</td>
+</tr>
+<tr>
+<td><code>userId</code></td>
+<td>integer</td>
+<td>アカウントのユーザーID</td>
+</tr>
+<tr>
+<td><code>podcastEpisodeType</code></td>
+<td>string</td>
+<td><code>"full"</code> / <code>"trailer"</code> / <code>"bonus"</code></td>
+</tr>
+<tr>
+<td><code>podcastEpisodeIsExplicit</code></td>
+<td>boolean</td>
+<td>露骨なコンテンツフラグ</td>
+</tr>
+</tbody>
+</table>
+<p><strong>エピソード状態の判定</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>isPublished: false  かつ  publishOn が存在  →  scheduled（予約済み）
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>isPublished: true                          →  published（公開済み）
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>isPublished: false  かつ  publishOn なし   →  draft（下書き）
+</span></code></pre></div>
+<p><strong>レスポンス例</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ep.61 〇〇という話&quot;</span><span class="p">,</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;ep.61 〇〇という話&lt;/p&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">&quot;isPublished&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-31T21:00:00.000Z&quot;</span><span class="p">,</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">43612824</span><span class="p">,</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;full&quot;</span><span class="p">,</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="1-c">1-C. エピソード更新（タイトル・概要欄・公開日時）<a class="headerlink" href="#1-c" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>POST /v3/episodes/{ANCHOR_ID}/update?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>リクエストボディ</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">43612824</span><span class="p">,</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;エピソードタイトル&quot;</span><span class="p">,</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;概要欄の HTML&lt;/p&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">&quot;episodeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;full&quot;</span><span class="p">,</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">&quot;isPublished&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-31T21:00:00.000Z&quot;</span><span class="p">,</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span><span class="nt">&quot;wizardDraftedToPublishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-31T21:00:00.000Z&quot;</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>必須</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userId</code></td>
+<td>✅</td>
+<td><code>/overview</code> から取得した値をそのまま使う</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>✅</td>
+<td>省略するとサーバー側で空になる恐れがある</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>✅</td>
+<td>HTML 形式</td>
+</tr>
+<tr>
+<td><code>episodeType</code></td>
+<td>✅</td>
+<td><code>"full"</code> / <code>"trailer"</code> / <code>"bonus"</code></td>
+</tr>
+<tr>
+<td><code>isPublished</code></td>
+<td>✅</td>
+<td>現状を維持する場合は <code>/overview</code> の値をそのまま渡す</td>
+</tr>
+<tr>
+<td><code>podcastEpisodeIsExplicit</code></td>
+<td>✅</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>publishOn</code></td>
+<td>—</td>
+<td>UTC ISO8601。scheduled の場合は必須</td>
+</tr>
+<tr>
+<td><code>wizardDraftedToPublishOn</code></td>
+<td>—</td>
+<td><code>publishOn</code> と同じ値を入れる</td>
+</tr>
+</tbody>
+</table>
+<p><strong>レスポンス</strong>: 成功時 HTTP 200</p>
+<p><strong>レスポンスボディ（主要フィールド）</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;概要欄 HTML&lt;/p&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;タイトル&quot;</span><span class="p">,</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">&quot;didChangePublishState&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nt">&quot;isAnchorCreate&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="nt">&quot;shareUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://creators.spotify.com/pod/show/...&quot;</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>didChangePublishState: true</code> は <code>isPublished</code> が変わったことを示す。</p>
+<hr />
+<h2 id="1-d">1-D. リージョン取得<a class="headerlink" href="#1-d" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>GET /v3/region?isMumsCompatible=true
+</span></code></pre></div>
+<p>ユーザーアカウントのリージョン情報を返す。</p>
+<p><strong>レスポンス（推定）</strong>: <code>{ "region": "JP" }</code></p>
+<hr />
+<h2 id="1-e">1-E. スポンサードコンテンツ状態取得<a class="headerlink" href="#1-e" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>GET /v3/episodes/{ANCHOR_ID}/sponsoredContentStatus?isMumsCompatible=true
+</span></code></pre></div>
+<p>エピソードのスポンサー（広告）設定状態を返す。</p>
+<hr />
+<h2 id="1-f">1-F. カバーアート配色取得<a class="headerlink" href="#1-f" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>POST /MultiGetColor?isMumsCompatible=true
+</span></code></pre></div>
+<p>画像 URL からカラーパレットを返す。</p>
+<p><strong>リクエストボディ</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">{</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">&quot;color_queries&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://anchor-generated-image-bank.s3.amazonaws.com/...jpg&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="1-g">1-G. エピソードフォームデータ取得<a class="headerlink" href="#1-g" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>GET /v3/episodes/pcdFormData?episodeUri[]=spotify:episode:{SPOTIFY_EP_ID}&amp;isMumsCompatible=true
+</span></code></pre></div>
+<p><code>episodeUri[]</code> を複数指定して一括取得可能。</p>
+<hr />
+<h2 id="1-h">1-H. ショーメタデータ取得<a class="headerlink" href="#1-h" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>GET /v3/stations/{STATION_ID}/metadata?isMumsCompatible=true
+</span></code></pre></div>
+<p><code>STATION_ID</code> は <code>1-L</code> の <code>legacyIds</code> エンドポイントで取得できる。</p>
+<p><strong>レスポンスフィールド（全フィールド、2026-05-26 実測）</strong></p>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rssFeedUrl</code></td>
+<td>string</td>
+<td>RSS フィード URL</td>
+</tr>
+<tr>
+<td><code>podcastName</code></td>
+<td>string</td>
+<td>番組タイトル</td>
+</tr>
+<tr>
+<td><code>podcastDescription</code></td>
+<td>string</td>
+<td>番組説明</td>
+</tr>
+<tr>
+<td><code>podcastAuthorName</code></td>
+<td>string</td>
+<td>著者名</td>
+</tr>
+<tr>
+<td><code>podcastAuthorEmail</code></td>
+<td>string</td>
+<td>著者メールアドレス</td>
+</tr>
+<tr>
+<td><code>podcastImage</code></td>
+<td>string</td>
+<td>カバーアート URL（オリジナルサイズ）</td>
+</tr>
+<tr>
+<td><code>podcastImage400</code></td>
+<td>string</td>
+<td>カバーアート URL（400px）</td>
+</tr>
+<tr>
+<td><code>podcastCategory</code></td>
+<td>string</td>
+<td>カテゴリ（<code>"Arts\|Design"</code> 形式）</td>
+</tr>
+<tr>
+<td><code>podcastLanguage</code></td>
+<td>string</td>
+<td>言語コード（例: <code>"ja"</code>）</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>string</td>
+<td>言語コード（<code>podcastLanguage</code> と同値）</td>
+</tr>
+<tr>
+<td><code>isDistributedOnSpotify</code></td>
+<td>boolean</td>
+<td>Spotify 配信中か</td>
+</tr>
+<tr>
+<td><code>isRssFeedDisabled</code></td>
+<td>boolean</td>
+<td>RSS フィードが無効か</td>
+</tr>
+<tr>
+<td><code>hasPublishedEpisode</code></td>
+<td>boolean</td>
+<td>公開済みエピソードがあるか</td>
+</tr>
+<tr>
+<td><code>isExternalSyndicationSetup</code></td>
+<td>boolean</td>
+<td>外部シンジケーション設定済みか</td>
+</tr>
+<tr>
+<td><code>isSaiAndDaiFullyActivated</code></td>
+<td>boolean</td>
+<td>SAI/DAI が有効か</td>
+</tr>
+<tr>
+<td><code>isAdCategoryExclusionsEnabled</code></td>
+<td>boolean</td>
+<td>広告カテゴリ除外が有効か</td>
+</tr>
+<tr>
+<td><code>distributionEligibilityForPaywalls</code></td>
+<td>string</td>
+<td>ペイウォール配信資格（<code>"eligible"</code> 等）</td>
+</tr>
+<tr>
+<td><code>hasAnchorBrandingRemoved</code></td>
+<td>boolean</td>
+<td>Anchor ブランディング除去済みか</td>
+</tr>
+<tr>
+<td><code>isStationOver30DaysOld</code></td>
+<td>boolean</td>
+<td>30 日以上経過したショーか</td>
+</tr>
+<tr>
+<td><code>isStationMarkedAsSpam</code></td>
+<td>boolean</td>
+<td>スパム判定されているか</td>
+</tr>
+<tr>
+<td><code>isPublicCallinShownInRSS</code></td>
+<td>boolean</td>
+<td>コールイン機能が RSS に含まれるか</td>
+</tr>
+<tr>
+<td><code>isPublicCallinHiddenFromWeb</code></td>
+<td>boolean</td>
+<td>コールイン機能が Web 非表示か</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-i-id">1-I. パートナーID取得<a class="headerlink" href="#1-i-id" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>POST /v3/{USER_ID}/partnerIds?isMumsCompatible=true
+</span></code></pre></div>
+<p>収益化（広告・Fan Support 等）に関連するパートナー ID を取得。</p>
+<hr />
+<h2 id="1-j">1-J. ユーザー認証状態確認<a class="headerlink" href="#1-j" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>GET /v3/users/verification?isMumsCompatible=true
+</span></code></pre></div>
+<hr />
+<h2 id="1-k">1-K. オンボーディング状態確認<a class="headerlink" href="#1-k" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>GET /v3/onboarding/redirectStatus/{USER_ID}/?isMumsCompatible=true
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>GET /v3/onboarding/steps/{USER_ID}/?userId={USER_ID}&amp;isMumsCompatible=true
+</span></code></pre></div>
+<p>新規ユーザーのオンボーディング進捗確認。既存ユーザーには通常影響しない。</p>
+<hr />
+<h2 id="1-l-idspotify-show-id-anchor-numeric-ids">1-L. ショーID変換（Spotify Show ID → Anchor numeric IDs）<a class="headerlink" href="#1-l-idspotify-show-id-anchor-numeric-ids" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>GET /v3/shows/{SPOTIFY_SHOW_ID}/legacyIds?isMumsCompatible=true
+</span></code></pre></div>
+<p>Spotify Show ID から anchor.fm 内部の numeric ID を一括変換して返す。</p>
+<p><strong>レスポンス例</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">{</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">45990797</span><span class="p">,</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">46036667</span><span class="p">,</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">  </span><span class="nt">&quot;webStationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;112fef78c&quot;</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>stationId</code> がエピソード一覧・メタデータ等の他エンドポイントで使う numeric ID。</p>
+<hr />
+<h2 id="1-m">1-M. エピソード一覧インデックス更新<a class="headerlink" href="#1-m" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>POST /v3/stations/{STATION_ID}/episode-list-index?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>レスポンス</strong>: <code>{ "success": true }</code></p>
+<hr />
+<h2 id="1-n">1-N. ショー形式データ取得<a class="headerlink" href="#1-n" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>GET /v3/stations/{STATION_ID}/pcdForm?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>レスポンス</strong>: <code>{ "formUrl": "" }</code></p>
+<hr />
+<h2 id="1-o">1-O. 配信設定取得<a class="headerlink" href="#1-o" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>GET /v3/stations/{STATION_ID}/distribution?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>レスポンスフィールド（主要）</strong></p>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>canEnableRss</code></td>
+<td>boolean</td>
+<td>RSS 配信可否</td>
+</tr>
+<tr>
+<td><code>externalUrls</code></td>
+<td>object</td>
+<td><code>{"spotify": "https://open.spotify.com/show/..."}</code></td>
+</tr>
+<tr>
+<td><code>spotifyDistributionStatus</code></td>
+<td>string</td>
+<td>Spotify 配信状態</td>
+</tr>
+<tr>
+<td><code>spotifyShowUri</code></td>
+<td>string</td>
+<td>Spotify Show URI</td>
+</tr>
+<tr>
+<td><code>platforms</code></td>
+<td>array</td>
+<td>配信プラットフォーム一覧</td>
+</tr>
+<tr>
+<td><code>vanitySlug</code></td>
+<td>string</td>
+<td>URL スラッグ</td>
+</tr>
+<tr>
+<td><code>isEnterprisePodcast</code></td>
+<td>boolean</td>
+<td>エンタープライズ契約か</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-p">1-P. ユーザー設定取得<a class="headerlink" href="#1-p" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>GET /v3/users/{USER_ID}/settings/termsAndContactability?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>レスポンス例</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="p">{</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="nt">&quot;termsOfServiceVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">  </span><span class="nt">&quot;agreedToMinimumRequiredTermsOfService&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">  </span><span class="nt">&quot;contactabilityStatus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;optedOut&quot;</span><span class="p">,</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">  </span><span class="nt">&quot;countryRule&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;needsResponseOptInSelected&quot;</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="1-q">1-Q. スポンサードコンテンツ状態更新<a class="headerlink" href="#1-q" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>PUT /v3/episodes/{ANCHOR_ID}/sponsoredContentStatus?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>リクエストボディ</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="p">{</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span><span class="nt">&quot;containsSponsoredContent&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1748732022</span>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>containsSponsoredContent</code></td>
+<td>boolean</td>
+<td>スポンサードコンテンツを含むか</td>
+</tr>
+<tr>
+<td><code>publishOn</code></td>
+<td>number | null</td>
+<td>公開日時の <strong>Unix タイムスタンプ（秒）</strong>。null は不可</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>⚠️ <code>publishOn</code> は ISO8601 文字列ではなく <strong>Unix タイムスタンプ（整数秒）</strong> で指定する。</p>
+</blockquote>
+<hr />
+<h2 id="1-r">1-R. マネタイズライフサイクル同期<a class="headerlink" href="#1-r" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>POST /v5/monetization-lifecycle/{STATION_ID}/sync-and-fetch?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>レスポンスフィールド（主要）</strong></p>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>products.SPOTIFY_PARTNER_PROGRAM.lifecycleState</code></td>
+<td>string</td>
+<td>パートナープログラムの状態</td>
+</tr>
+<tr>
+<td><code>products.SPOTIFY_PARTNER_PROGRAM.pendingRequirements</code></td>
+<td>array</td>
+<td>完了待ちの要件リスト</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-s">1-S. エピソード新規作成<a class="headerlink" href="#1-s" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>POST /v3/stations/{STATION_ID}/episodes?isMumsCompatible=true
+</span></code></pre></div>
+<p>エピソードの <strong>器（空レコード）</strong> を作るだけ。タイトル・音声・説明は後続の <code>1-C</code>（update）で設定する。</p>
+<p><strong>リクエストボディ</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;hourOffset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-9</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hourOffset</code></td>
+<td>integer</td>
+<td>ユーザーのタイムゾーンオフセット（JST = -9）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>レスポンス例</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120529038</span><span class="p">,</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">46036667</span>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<blockquote>
+<p>エピソード作成の完全フローは <strong>3ステップ</strong>：
+1. <code>POST /v3/stations/{STATION_ID}/episodes</code>（空レコード作成 = 本エンドポイント）
+2. アップロードフロー（<code>6-A</code>〜<code>6-D</code>）で音声/動画をアップロード
+3. <code>POST /v3/episodes/{ANCHOR_ID}/update</code>（<code>1-C</code>）でタイトル・説明・公開設定</p>
+</blockquote>
+<hr />
+<h2 id="1-t">1-T. ショーメタデータ更新<a class="headerlink" href="#1-t" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>POST /v3/stations/{STATION_ID}/metadata?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>リクエストボディ（主要フィールド）</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="p">{</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">  </span><span class="nt">&quot;podcastName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;番組タイトル&quot;</span><span class="p">,</span>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="w">  </span><span class="nt">&quot;podcastDescription&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;番組説明&quot;</span><span class="p">,</span>
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="w">  </span><span class="nt">&quot;podcastAuthorName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;著者名&quot;</span><span class="p">,</span>
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="w">  </span><span class="nt">&quot;podcastCategory&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Arts|Design&quot;</span><span class="p">,</span>
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="w">  </span><span class="nt">&quot;podcastLanguage&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ja&quot;</span><span class="p">,</span>
+</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+</span><span id="__span-34-8"><a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>型</th>
+<th>必須</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>podcastName</code></td>
+<td>string</td>
+<td>✅</td>
+<td>番組タイトル（最大100文字）</td>
+</tr>
+<tr>
+<td><code>podcastDescription</code></td>
+<td>string</td>
+<td>—</td>
+<td>番組説明（最大600文字）</td>
+</tr>
+<tr>
+<td><code>podcastAuthorName</code></td>
+<td>string</td>
+<td>—</td>
+<td>著者名（最大80文字）</td>
+</tr>
+<tr>
+<td><code>podcastCategory</code></td>
+<td>string</td>
+<td>—</td>
+<td>カテゴリ（<code>"Arts|Design"</code> 形式）</td>
+</tr>
+<tr>
+<td><code>podcastLanguage</code></td>
+<td>string</td>
+<td>—</td>
+<td>言語コード（例: <code>"ja"</code>）</td>
+</tr>
+<tr>
+<td><code>podcastEpisodeIsExplicit</code></td>
+<td>boolean</td>
+<td>—</td>
+<td>露骨コンテンツフラグ</td>
+</tr>
+</tbody>
+</table>
+<p><strong>カテゴリオプション一覧取得</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>GET /v3/settings/podcast-category/options?isMumsCompatible=true
+</span></code></pre></div>
+<hr />
+<h2 id="1-u-vanity-slug">1-U. vanity slug 更新<a class="headerlink" href="#1-u-vanity-slug" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>POST /v3/settings?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>リクエストボディ</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="p">{</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="w">  </span><span class="nt">&quot;webStationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your-vanity-slug&quot;</span>
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<blockquote>
+<p>⚠️ <code>webStationId</code> はグローバルでユニークである必要がある。すでに使用されているスラッグを指定すると 409 Conflict が返る可能性がある。</p>
+</blockquote>
+<hr />
+<h2 id="1-v">1-V. 画像アップロードフロー<a class="headerlink" href="#1-v" title="Permanent link">&para;</a></h2>
+<p>S4C の画像アップロードは音声/動画とは<strong>別の専用パイプライン</strong>を使う。ショーカバーアート・エピソードサムネイルで共通フロー。</p>
+<h3 id="1-v-1-url">1-V-1. 署名付きURL取得<a class="headerlink" href="#1-v-1-url" title="Permanent link">&para;</a></h3>
+<p><strong>ショーカバーアート</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>GET /v3/stations/{STATION_ID}/images/upload/signed_url?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>エピソードサムネイル</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>GET /v3/episodes/{ANCHOR_ID}/images/upload/signed_url?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>レスポンス例</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="p">{</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor-image-storage-production/{UUID}/{FILENAME}?X-Goog-Algorithm=...&quot;</span><span class="p">,</span>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a46e21a4-1d2d-1686-1355-905e191a3bef&quot;</span>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="1-v-2-google-cloud-storage-put">1-V-2. Google Cloud Storage への直接 PUT<a class="headerlink" href="#1-v-2-google-cloud-storage-put" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>PUT {signed_url}
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>Content-Type: image/png  # または image/jpeg
+</span></code></pre></div>
+<p>署名付きURL に対して画像ファイルを直接 PUT する。認証ヘッダー不要（署名パラメータに埋め込み済み）。</p>
+<h3 id="1-v-3-process_upload">1-V-3. アップロード完了通知（process_upload）<a class="headerlink" href="#1-v-3-process_upload" title="Permanent link">&para;</a></h3>
+<p><strong>ショーカバーアート</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>POST /v3/stations/{STATION_ID}/images/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>エピソードサムネイル</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>POST /v3/episodes/{ANCHOR_ID}/images/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>リクエストボディ（エピソードサムネイル）</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="p">{</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120520683</span><span class="p">,</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode_image&quot;</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="1-v-4">1-V-4. アップロード状態ポーリング<a class="headerlink" href="#1-v-4" title="Permanent link">&para;</a></h3>
+<p><code>status</code> が <code>"completed"</code> になるまでポーリング（通常数秒）。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>GET /v3/stations/{STATION_ID}/images/upload/{UPLOAD_ID}/?isMumsCompatible=true
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>GET /v3/episodes/{ANCHOR_ID}/images/upload/{UPLOAD_ID}/?isMumsCompatible=true
+</span></code></pre></div>
+<hr />
+<h2 id="1-w">1-W. 収益化関連エンドポイント<a class="headerlink" href="#1-w" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>GET /v4/paywalls/{STATION_ID}/lifecycle-state?isMumsCompatible=true
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>GET /v6/wallet/{STATION_ID}/availability?isMumsCompatible=true
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>GET /v6/wallet/{STATION_ID}/?isMumsCompatible=true
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>GET /v3/paywalls/{STATION_ID}/?isMumsCompatible=true
+</span></code></pre></div>
+<hr />
+<h2 id="1-x">1-X. 番組設定ページ固有エンドポイント<a class="headerlink" href="#1-x" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>GET /v3/stations/{STATION_ID}/episodePage?isMumsCompatible=true
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>GET /v3/station/{STATION_ID}/episodes/featured?isMumsCompatible=true
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>GET /v3/stations/{STATION_ID}/hostRecommendations?isMumsCompatible=true
+</span></code></pre></div>
+<hr />
+<h2 id="1-y">1-Y. 配信ページ固有エンドポイント<a class="headerlink" href="#1-y" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>GET /v3/onboarding/redirectStatus/{STATION_ID}/?isMumsCompatible=true
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>GET /v3/onboarding/steps/{STATION_ID}/?userId={USER_ID}&amp;isMumsCompatible=true
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>GET /v3/stations/status?isMumsCompatible=true
+</span></code></pre></div>
+<hr />
+<h2 id="6-a-6-e">音声/動画アップロード（6-A 〜 6-E）<a class="headerlink" href="#6-a-6-e" title="Permanent link">&para;</a></h2>
+<p><strong>対応フォーマット</strong>：mp3, m4a, aifc, aiff, ogg, wav, flac, mp4, mov</p>
+<h3 id="6-a-url">6-A. アップロード署名付きURL取得<a class="headerlink" href="#6-a-url" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&amp;type={MIME_TYPE}&amp;isMumsCompatible=true
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>パラメータ</th>
+<th>例</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filename</code></td>
+<td><code>episode.mp4</code></td>
+<td>アップロードするファイル名</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>video/mp4</code></td>
+<td>MIMEタイプ（音声なら <code>audio/mp3</code> 等）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>レスポンス例</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="p">{</span>
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor_exclusive_media_upload_production/...&quot;</span><span class="p">,</span>
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="w">  </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="6-b-google-cloud-storage-put">6-B. Google Cloud Storage への直接 PUT<a class="headerlink" href="#6-b-google-cloud-storage-put" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>PUT {signed_url}
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>Content-Type: {MIME_TYPE}
+</span></code></pre></div>
+<p>レスポンスヘッダーの <code>ETag</code> を記録する（<code>process_upload</code> で使う）。</p>
+<h3 id="6-c-process_upload">6-C. アップロード完了通知（process_upload）<a class="headerlink" href="#6-c-process_upload" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>リクエストボディ（ビデオの場合）</strong></p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="p">{</span>
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">45990797</span><span class="p">,</span>
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;video&quot;</span><span class="p">,</span>
+</span><span id="__span-53-4"><a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
+</span><span id="__span-53-5"><a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp4&quot;</span><span class="p">,</span>
+</span><span id="__span-53-6"><a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-53-7"><a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-53-8"><a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-53-9"><a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d49fffd0ed1c6a291577ac47d26b997&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-53-10"><a id="__codelineno-53-10" name="__codelineno-53-10" href="#__codelineno-53-10"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-53-11"><a id="__codelineno-53-11" name="__codelineno-53-11" href="#__codelineno-53-11"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-53-12"><a id="__codelineno-53-12" name="__codelineno-53-12" href="#__codelineno-53-12"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
+</span><span id="__span-53-13"><a id="__codelineno-53-13" name="__codelineno-53-13" href="#__codelineno-53-13"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">46036667</span>
+</span><span id="__span-53-14"><a id="__codelineno-53-14" name="__codelineno-53-14" href="#__codelineno-53-14"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">uploadType の注意</p>
+<p>音声ファイルは <code>uploadType: "default"</code> を使う。<code>"audio"</code> は誤り（2026-05-26 実測確認）。</p>
+</div>
+<h3 id="6-d">6-D. メディア検証確認<a class="headerlink" href="#6-d" title="Permanent link">&para;</a></h3>
+<p><code>status</code> が <code>"completed"</code> になるまでポーリングする。</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&amp;isMumsCompatible=true
+</span></code></pre></div>
+<p><strong>レスポンスフィールド（主要）</strong></p>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td>string</td>
+<td><code>"processing"</code> / <code>"completed"</code> / <code>"failed"</code></td>
+</tr>
+<tr>
+<td><code>mediaType</code></td>
+<td>string</td>
+<td><code>"video"</code> / <code>"audio"</code></td>
+</tr>
+<tr>
+<td><code>durationInMilliseconds</code></td>
+<td>integer</td>
+<td>動画/音声の長さ（ms）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">既知の注意事項<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="description">description フィールドのサーバー側自動変換<a class="headerlink" href="#description" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>変換前</th>
+<th>変換後</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;br&gt;</code></td>
+<td><code>&lt;br /&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;a href="..."&gt;</code></td>
+<td><code>&lt;a href="..." rel="ugc noopener noreferrer" target="_blank"&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="draft-overview-403">draft エピソードの overview は 403<a class="headerlink" href="#draft-overview-403" title="Permanent link">&para;</a></h3>
+<p><code>isPublished: false</code>（draft 状態）のエピソードに対して <code>GET /v3/episodes/{ANCHOR_ID}/overview</code> を呼ぶと <strong>HTTP 403 Forbidden</strong> が返る。</p>
+<h3 id="publishon">publishOn のタイムゾーン<a class="headerlink" href="#publishon" title="Permanent link">&para;</a></h3>
+<p><code>publishOn</code> は <strong>UTC</strong> で指定する。JST 06:00 に公開したい場合は前日 21:00 UTC。</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>
+</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a><span class="n">JST</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))</span>
+</span><span id="__span-55-4"><a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="n">publish_jst</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">JST</span><span class="p">)</span>
+</span><span id="__span-55-5"><a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a><span class="n">publish_utc_str</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">)</span>
+</span><span id="__span-55-6"><a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a><span class="c1"># → &quot;2026-05-31T21:00:00.000Z&quot;</span>
+</span></code></pre></div>
+<h3 id="publishon-ispublished-false-true">publishOn を isPublished: false → true に一発設定する挙動<a class="headerlink" href="#publishon-ispublished-false-true" title="Permanent link">&para;</a></h3>
+<p><code>isPublished: false</code> + <code>publishOn: "..."</code> で update を呼ぶと、サーバー側が <strong>自動的に <code>isPublished: true</code></strong> に変換する（予約公開として即公開状態になる）。</p>
+<h3 id="publishon_1">publishOn は公開済みエピソードでは変更不可<a class="headerlink" href="#publishon_1" title="Permanent link">&para;</a></h3>
+<p><code>isPublished: true</code> のエピソードに対してこの API で <code>publishOn</code> を変更しても、サーバー側でロックされており変更されない。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/higuchiki/spotify-for-creators-api" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
