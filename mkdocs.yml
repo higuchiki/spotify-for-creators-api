@@ -92,6 +92,9 @@ nav:
   - Changelog: changelog.md
 
 extra:
+  analytics:
+    provider: google
+    property: G-ZKXMJ6G91Y
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/higuchiki/spotify-for-creators-api
