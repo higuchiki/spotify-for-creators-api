@@ -37,7 +37,27 @@ theme:
     repo: fontawesome/brands/github
 
 plugins:
-  - search
+  - search:
+      lang:
+        - en
+        - ja
+  - i18n:
+      docs_structure: suffix
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: ja
+          name: 日本語
+          build: true
+          nav_translations:
+            Overview: ホーム
+            Authentication: 認証
+            REST API: REST API リファレンス
+            GraphQL API: GraphQL API
+            Recipes: レシピ・実装例
+            Changelog: 更新履歴
 
 markdown_extensions:
   - admonition
