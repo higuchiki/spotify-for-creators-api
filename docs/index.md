@@ -3,8 +3,7 @@
 !!! danger "Unofficial API — Use at your own risk"
     This documentation covers **unofficial, reverse-engineered** internal APIs
     used by Spotify for Creators (formerly Anchor.fm). These APIs are
-    undocumented and may change or break without notice. Use of these APIs
-    may violate Spotify's Terms of Service. The authors are not affiliated
+    undocumented and may change or break without notice. The authors are not affiliated
     with Spotify.
 
 This site documents the internal HTTP and GraphQL APIs powering

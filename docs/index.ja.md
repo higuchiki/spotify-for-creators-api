@@ -4,7 +4,6 @@
     このドキュメントは、Spotify for Creators（旧 Anchor.fm）が内部で使用している
     **非公式・リバースエンジニアリングによって解析した** APIを対象としています。
     これらの API は非公開であり、予告なく仕様変更・廃止される可能性があります。
-    また、利用が Spotify の利用規約に違反する可能性があります。
     本サイトの著者は Spotify とは無関係です。
 
 このサイトでは、[Spotify for Creators](https://creators.spotify.com)（旧 Anchor.fm）の
