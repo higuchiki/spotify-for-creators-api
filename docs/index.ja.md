@@ -97,3 +97,9 @@ print(r.json())
   実操作を行い、mutation のペイロードを確認
 
 調査期間：**2026年5月25日〜26日**
+
+---
+
+## お問い合わせ
+
+誤りやAPI仕様の変更を発見した場合は、X（Twitter）までご連絡ください：[@HiguchiKi](https://x.com/HiguchiKi)

@@ -98,3 +98,9 @@ All endpoints were discovered by:
 - Performing real operations (episode create, update, comment approve/delete/reply, pin, block) on a test show to capture mutation payloads
 
 Research dates: **2026-05-25 to 2026-05-26**
+
+---
+
+## Contact
+
+Found an error or noticed an API change? Feel free to reach out on X (Twitter): [@HiguchiKi](https://x.com/HiguchiKi)
