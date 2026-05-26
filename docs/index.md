@@ -1,4 +1,4 @@
-# Spotify for Creators — Unofficial API Reference
+# Spotify for Creators API (Unofficial)
 
 !!! danger "Unofficial API — Use at your own risk"
     This documentation covers **unofficial, reverse-engineered** internal APIs

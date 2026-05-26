@@ -1,4 +1,4 @@
-# Spotify for Creators — 非公式 API リファレンス
+# Spotify for Creators API（非公式）
 
 !!! danger "非公式API — 自己責任でご利用ください"
     このドキュメントは、Spotify for Creators（旧 Anchor.fm）が内部で使用している
