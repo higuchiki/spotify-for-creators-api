@@ -2237,12 +2237,12 @@ calling most endpoints.</p>
 </tr>
 <tr>
 <td>Spotify Show ID</td>
-<td><code>"033mWbN806GYwFrVjdQtol"</code></td>
+<td><code>"YOUR_SHOW_ID"</code></td>
 <td>S4C UI, GraphQL</td>
 </tr>
 <tr>
 <td>Station ID (numeric)</td>
-<td><code>46036667</code></td>
+<td><code>YOUR_STATION_ID</code></td>
 <td>anchor.fm REST endpoints</td>
 </tr>
 </tbody>
@@ -2389,7 +2389,7 @@ before calling the update endpoint.</p>
 type, explicit flag, and scheduled publish time in a single call.</p>
 <h3 id="request-body">Request body<a class="headerlink" href="#request-body" title="Permanent link">&para;</a></h3>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">43612824</span><span class="p">,</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_USER_ID</span><span class="p">,</span>
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Episode title&quot;</span><span class="p">,</span>
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;Episode description HTML&lt;/p&gt;&quot;</span><span class="p">,</span>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nt">&quot;episodeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;full&quot;</span><span class="p">,</span>
@@ -2517,7 +2517,7 @@ previous day at 21:00 UTC.</p>
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Origin: https://creators.spotify.com&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Referer: https://creators.spotify.com/&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;userId&quot;:43612824,&quot;title&quot;:&quot;New title&quot;,&quot;description&quot;:&quot;&lt;p&gt;Desc&lt;/p&gt;&quot;,&quot;episodeType&quot;:&quot;full&quot;,&quot;isPublished&quot;:false,&quot;podcastEpisodeIsExplicit&quot;:false,&quot;publishOn&quot;:&quot;2026-06-01T21:00:00.000Z&quot;,&quot;wizardDraftedToPublishOn&quot;:&quot;2026-06-01T21:00:00.000Z&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;userId&quot;:YOUR_USER_ID,&quot;title&quot;:&quot;New title&quot;,&quot;description&quot;:&quot;&lt;p&gt;Desc&lt;/p&gt;&quot;,&quot;episodeType&quot;:&quot;full&quot;,&quot;isPublished&quot;:false,&quot;podcastEpisodeIsExplicit&quot;:false,&quot;publishOn&quot;:&quot;2026-06-01T21:00:00.000Z&quot;,&quot;wizardDraftedToPublishOn&quot;:&quot;2026-06-01T21:00:00.000Z&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">${</span><span class="nv">ANCHOR_ID</span><span class="si">}</span><span class="s2">/update?isMumsCompatible=true&quot;</span>
 </span></code></pre></div>
 </div>
@@ -2681,8 +2681,8 @@ established accounts.</p>
 by most other endpoints.</p>
 <h3 id="response_2">Response<a class="headerlink" href="#response_2" title="Permanent link">&para;</a></h3>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">{</span>
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">45990797</span><span class="p">,</span>
-</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">46036667</span><span class="p">,</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
 </span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">  </span><span class="nt">&quot;webStationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;112fef78c&quot;</span>
 </span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="p">}</span>
 </span></code></pre></div>
@@ -2899,7 +2899,7 @@ wizard — it allocates the episode ID before audio or metadata are set.</p>
 <h3 id="response_3">Response<a class="headerlink" href="#response_3" title="Permanent link">&para;</a></h3>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="p">{</span>
 </span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120529038</span><span class="p">,</span>
-</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">46036667</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
 </span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition note">
@@ -3155,7 +3155,7 @@ end-to-end Python example using endpoints <strong>6-A through 6-D</strong>.</p>
 </span></code></pre></div>
 <p><strong>Request body (video):</strong>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="p">{</span>
-</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">45990797</span><span class="p">,</span>
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
 </span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;video&quot;</span><span class="p">,</span>
 </span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
 </span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp4&quot;</span><span class="p">,</span>
@@ -3164,7 +3164,7 @@ end-to-end Python example using endpoints <strong>6-A through 6-D</strong>.</p>
 </span><span id="__span-59-8"><a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d49fffd0ed1c6a291577ac47d26b997&quot;</span><span class="w"> </span><span class="p">}],</span>
 </span><span id="__span-59-9"><a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
 </span><span id="__span-59-10"><a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
-</span><span id="__span-59-11"><a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">46036667</span>
+</span><span id="__span-59-11"><a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
 </span><span id="__span-59-12"><a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <table>
