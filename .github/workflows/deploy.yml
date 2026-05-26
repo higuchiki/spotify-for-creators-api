@@ -23,7 +23,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install MkDocs Material
-        run: pip install mkdocs-material babel
+        run: pip install "mkdocs-material==9.7.6" mkdocs-static-i18n babel
 
       - name: Deploy to GitHub Pages
         run: mkdocs gh-deploy --force
