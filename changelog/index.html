@@ -666,6 +666,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-11-analytics-queries-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-11 — Analytics Queries Verified
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-05-25-to-2026-05-26-initial-research" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -750,6 +761,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-11-analytics-queries-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-11 — Analytics Queries Verified
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-05-25-to-2026-05-26-initial-research" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -817,6 +839,30 @@
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h2 id="2026-06-11-analytics-queries-verified">2026-06-11 — Analytics Queries Verified<a class="headerlink" href="#2026-06-11-analytics-queries-verified" title="Permanent link">&para;</a></h2>
+<p><strong>Research method:</strong> schema introspection + live GraphQL queries against a
+production show.</p>
+<ul>
+<li><strong>Confirmed <code>/v2/graph-pq</code> accepts full GraphQL query strings</strong> — Persisted
+  Queries are not required, and schema introspection is enabled</li>
+<li>Discovered the real access path for analytics data: browser-captured
+  operation names (<code>getShowAudienceAllPlatformsStats</code> etc.) are <strong>not</strong>
+  top-level Query fields; data is accessed via
+  <code>showByShowUri → Show.analytics(getShowAnalyticsRequest)</code> and
+  <code>episodeByUri → Episode.analytics(getEpisodePlayCountRequest)</code></li>
+<li>Documented <code>ShowAnalyticsMetricType</code> / <code>EpisodeAnalyticsMetricType</code> /
+  <code>AggregationType</code> / <code>AnalyticsWindow</code> enums with verified semantics</li>
+<li><strong>Key finding — metric names are misleading:</strong> <code>SHOW_PLAYS</code> is
+  Spotify-only; the all-platforms figures (matching the dashboard
+  "All platforms" view) are the <code>*_AND_DOWNLOADS</code> metrics</li>
+<li>Verified <code>SHOW_STREAMS_AND_DOWNLOADS</code> equals the sum of per-episode
+  <code>EPISODE_STREAMS_AND_DOWNLOADS</code> (within &lt;0.01%) — one call replaces a
+  per-episode loop</li>
+<li>Documented daily/weekly/monthly time series and window options, the
+  <code>ShowUri</code> / <code>EpisodeUri</code> scalars, and the no-argument
+  <code>analyticsStarts { startsCount }</code> field (Spotify-only starts)</li>
+</ul>
+<p>See <a href="../graphql/#analytics-queries-verified">GraphQL API → Analytics Queries</a>.</p>
 <h2 id="2026-05-25-to-2026-05-26-initial-research">2026-05-25 to 2026-05-26 — Initial Research<a class="headerlink" href="#2026-05-25-to-2026-05-26-initial-research" title="Permanent link">&para;</a></h2>
 <p><strong>Research method:</strong> Claude in Chrome MCP with JavaScript fetch/XHR
 interceptors and console log capture.</p>

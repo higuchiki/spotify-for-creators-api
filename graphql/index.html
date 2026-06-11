@@ -703,6 +703,112 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#analytics-queries-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analytics Queries (Verified)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analytics Queries (Verified)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture-analytics-are-nested-fields-not-top-level-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture: analytics are nested fields, not top-level operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show-level-analytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Show-Level Analytics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Show-Level Analytics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#showanalyticsmetrictype-selected-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ShowAnalyticsMetricType (selected values)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aggregationtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AggregationType
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analyticswindow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AnalyticsWindow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#episode-level-analytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Episode-Level Analytics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Episode-Level Analytics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#episodeanalyticsmetrictype-selected-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EpisodeAnalyticsMetricType (selected values)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#comment-queries" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1200,6 +1306,112 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#analytics-queries-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analytics Queries (Verified)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analytics Queries (Verified)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#architecture-analytics-are-nested-fields-not-top-level-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture: analytics are nested fields, not top-level operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show-level-analytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Show-Level Analytics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Show-Level Analytics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#showanalyticsmetrictype-selected-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ShowAnalyticsMetricType (selected values)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aggregationtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AggregationType
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analyticswindow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AnalyticsWindow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#episode-level-analytics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Episode-Level Analytics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Episode-Level Analytics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#episodeanalyticsmetrictype-selected-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EpisodeAnalyticsMetricType (selected values)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#comment-queries" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1502,8 +1714,9 @@ path is the indicator. In browser traffic, the <code>query</code> field is an em
 string because the server looks up the query body by <code>operationName</code>
 from a server-side registry.</p>
 <p>When calling from Python, include the full GraphQL query string in the
-<code>query</code> field. Whether the server accepts this as a fallback is not
-confirmed for all operations.</p>
+<code>query</code> field. <strong>Confirmed (2026-06-11):</strong> the server accepts full query
+strings, and schema introspection is enabled — see
+<a href="#analytics-queries-verified">Analytics Queries</a> below.</p>
 </div>
 <hr />
 <h2 id="common-headers">Common Headers<a class="headerlink" href="#common-headers" title="Permanent link">&para;</a></h2>
@@ -1829,18 +2042,274 @@ confirmed for all operations.</p>
 </tbody>
 </table>
 <hr />
+<h2 id="analytics-queries-verified">Analytics Queries (Verified)<a class="headerlink" href="#analytics-queries-verified" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>Verified 2026-06-11 by schema introspection and live queries against a
+production show.</p>
+</blockquote>
+<h3 id="architecture-analytics-are-nested-fields-not-top-level-operations">Architecture: analytics are nested fields, not top-level operations<a class="headerlink" href="#architecture-analytics-are-nested-fields-not-top-level-operations" title="Permanent link">&para;</a></h3>
+<p>The operation names captured from browser traffic (e.g.
+<code>getShowAudienceAllPlatformsStats</code>) are <strong>not top-level Query fields</strong> on
+<code>/v2/graph-pq</code> — sending them as ad-hoc queries returns a <code>ValidationError</code>.
+Analytics data is accessed through a nested structure instead:</p>
+<ul>
+<li>Show level: <code>showByShowUri</code> → <code>Show.analytics(getShowAnalyticsRequest: …)</code></li>
+<li>Episode level: <code>episodeByUri</code> → <code>Episode.analytics(getEpisodePlayCountRequest: …)</code></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Introspection is enabled — Persisted Queries are not required</p>
+<p><code>/v2/graph-pq</code> accepts full GraphQL query strings, and standard schema
+introspection works. You can discover the complete schema (including all
+metric enums below) with a normal introspection query.</p>
+</div>
+<h3 id="show-level-analytics">Show-Level Analytics<a class="headerlink" href="#show-level-analytics" title="Permanent link">&para;</a></h3>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">query</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="n">showByShowUri</span><span class="p">(</span><span class="n">getShowByShowUriRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">showUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spotify:show:YOUR_SHOW_ID&quot;</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">analytics</span><span class="p">(</span><span class="n">getShowAnalyticsRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">      </span><span class="n">showAnalyticsMetricType</span><span class="p">:</span><span class="w"> </span><span class="no">SHOW_STREAMS_AND_DOWNLOADS</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="n">aggregationType</span><span class="p">:</span><span class="w"> </span><span class="no">AGGREGATION_TYPE_TOTAL</span><span class="p">,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="n">window</span><span class="p">:</span><span class="w"> </span><span class="no">WINDOW_ALL_TIME</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="n">type</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">      </span><span class="n">startDate</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">      </span><span class="n">endDate</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">      </span><span class="n">followerCount</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">      </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">        </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">          </span><span class="n">__typename</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">          </span><span class="p">...</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nc">SingleValueLong</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">          </span><span class="p">...</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nc">AudienceValue</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">totalAudienceSize</span><span class="w"> </span><span class="n">foregroundAudienceSize</span><span class="w"> </span><span class="n">foregroundAudiencePercent</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">          </span><span class="p">...</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nc">TimeSeriesValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">            </span><span class="n">points</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">              </span><span class="n">date</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">              </span><span class="n">value</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">                </span><span class="p">...</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nc">CountValueLong</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">                </span><span class="p">...</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nc">RatioValueFloat</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">              </span><span class="p">}</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">          </span><span class="p">}</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>showUri</code> is a <code>ShowUri</code> scalar — pass the string <code>"spotify:show:YOUR_SHOW_ID"</code>.</p>
+<h4 id="showanalyticsmetrictype-selected-values"><code>ShowAnalyticsMetricType</code> (selected values)<a class="headerlink" href="#showanalyticsmetrictype-selected-values" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Enum value</th>
+<th>What it actually measures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SHOW_PLAYS</code></td>
+<td><strong>Spotify-only</strong> plays (matches the Spotify-only starts total from the podcasters API)</td>
+</tr>
+<tr>
+<td><code>SHOW_STREAMS</code></td>
+<td><strong>Spotify-only</strong> streams (60s+ plays)</td>
+</tr>
+<tr>
+<td><code>SHOW_STREAMS_AND_DOWNLOADS</code></td>
+<td><strong>All platforms</strong> streams + downloads — matches the dashboard "All platforms" figure</td>
+</tr>
+<tr>
+<td><code>SHOW_PLAYS_AND_DOWNLOADS</code></td>
+<td>All platforms plays + downloads (larger than streams + downloads)</td>
+</tr>
+<tr>
+<td><code>SHOW_ALL_PLATFORMS_LISTENERS</code></td>
+<td>All-platforms unique listeners</td>
+</tr>
+<tr>
+<td><code>SHOW_DOWNLOAD_LISTENERS</code></td>
+<td>Download listeners</td>
+</tr>
+<tr>
+<td><code>SHOW_OFF_PLATFORM_DOWNLOADS</code></td>
+<td>Off-platform downloads (RSS apps etc.)</td>
+</tr>
+<tr>
+<td><code>SHOW_LISTENERS</code></td>
+<td>Unique listeners (Spotify-scoped)</td>
+</tr>
+<tr>
+<td><code>SHOW_FOLLOWERS</code></td>
+<td>Follower count</td>
+</tr>
+<tr>
+<td><code>AUDIENCE_SIZE</code></td>
+<td>Audience size (returns <code>AudienceValue</code>)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Metric names are misleading</p>
+<p>Despite the generic name, <code>SHOW_PLAYS</code> matched the <strong>Spotify-only</strong>
+starts total from the podcasters API in our tests — it is <em>not</em> an
+all-platforms number. The true all-platforms figures are the
+<code>*_AND_DOWNLOADS</code> metrics. For our test show, the all-platforms total
+(<code>SHOW_STREAMS_AND_DOWNLOADS</code>) was roughly <strong>1.6×</strong> the Spotify-only
+total.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">One call replaces a per-episode loop</p>
+<p>The sum of <code>EPISODE_STREAMS_AND_DOWNLOADS</code> across all episodes equals
+<code>SHOW_STREAMS_AND_DOWNLOADS</code> (matched within &lt;0.01% in our tests). If
+you need the show-level all-platforms total, one show-level call is
+enough — no need to loop over episodes.</p>
+</div>
+<h4 id="aggregationtype"><code>AggregationType</code><a class="headerlink" href="#aggregationtype" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AGGREGATION_TYPE_TOTAL</code></td>
+<td>Total over the window</td>
+</tr>
+<tr>
+<td><code>AGGREGATION_TYPE_DAILY</code></td>
+<td>Daily time series</td>
+</tr>
+<tr>
+<td><code>AGGREGATION_TYPE_WEEKLY</code></td>
+<td>Weekly time series</td>
+</tr>
+<tr>
+<td><code>AGGREGATION_TYPE_MONTHLY</code></td>
+<td>Monthly time series</td>
+</tr>
+</tbody>
+</table>
+<h4 id="analyticswindow"><code>AnalyticsWindow</code><a class="headerlink" href="#analyticswindow" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>WINDOW_ALL_TIME</code></td>
+<td>All time</td>
+</tr>
+<tr>
+<td><code>WINDOW_LAST_SEVEN_DAYS</code></td>
+<td>Last 7 days</td>
+</tr>
+<tr>
+<td><code>WINDOW_LAST_THIRTY_DAYS</code></td>
+<td>Last 30 days</td>
+</tr>
+<tr>
+<td><code>WINDOW_LAST_NINETY_DAYS</code></td>
+<td>Last 90 days</td>
+</tr>
+<tr>
+<td><code>WINDOW_YEAR_TO_DATE</code></td>
+<td>Year to date</td>
+</tr>
+<tr>
+<td><code>WINDOW_CUSTOM</code></td>
+<td>Custom range (pass <code>customDateRange: { startDate, endDate }</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="episode-level-analytics">Episode-Level Analytics<a class="headerlink" href="#episode-level-analytics" title="Permanent link">&para;</a></h3>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">query</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="n">episodeByUri</span><span class="p">(</span><span class="n">getEpisodeRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">episodeUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spotify:episode:YOUR_EPISODE_ID&quot;</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">title</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">analytics</span><span class="p">(</span><span class="n">getEpisodePlayCountRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="n">episodeAnalyticsMetricType</span><span class="p">:</span><span class="w"> </span><span class="no">EPISODE_STREAMS_AND_DOWNLOADS</span><span class="p">,</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">      </span><span class="n">aggregationType</span><span class="p">:</span><span class="w"> </span><span class="no">AGGREGATION_TYPE_TOTAL</span><span class="p">,</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">      </span><span class="n">window</span><span class="p">:</span><span class="w"> </span><span class="no">WINDOW_ALL_TIME</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">      </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">        </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">          </span><span class="n">__typename</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">          </span><span class="p">...</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nc">SingleValueLong</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="n">analyticsStarts</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">      </span><span class="n">startsCount</span><span class="w">  </span><span class="c"># Spotify-only starts (no arguments)</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>episodeUri</code> is an <code>EpisodeUri</code> scalar — pass <code>"spotify:episode:YOUR_EPISODE_ID"</code>.</p>
+<h4 id="episodeanalyticsmetrictype-selected-values"><code>EpisodeAnalyticsMetricType</code> (selected values)<a class="headerlink" href="#episodeanalyticsmetrictype-selected-values" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Enum value</th>
+<th>What it actually measures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EPISODE_PLAYS</code></td>
+<td>Plays (Spotify-scoped in our tests)</td>
+</tr>
+<tr>
+<td><code>EPISODE_STREAMS</code></td>
+<td>Streams, 60s+ (Spotify-only)</td>
+</tr>
+<tr>
+<td><code>EPISODE_LISTENERS</code></td>
+<td>Unique listeners</td>
+</tr>
+<tr>
+<td><code>EPISODE_ALL_PLATFORMS_LISTENERS</code></td>
+<td>All-platforms unique listeners</td>
+</tr>
+<tr>
+<td><code>EPISODE_STREAMS_AND_DOWNLOADS</code></td>
+<td><strong>All platforms</strong> streams + downloads</td>
+</tr>
+<tr>
+<td><code>EPISODE_PLAYS_AND_DOWNLOADS</code></td>
+<td>All platforms plays + downloads</td>
+</tr>
+<tr>
+<td><code>EPISODE_OFF_PLATFORM_DOWNLOADS</code></td>
+<td>Off-platform downloads</td>
+</tr>
+<tr>
+<td><code>EPISODE_DOWNLOAD_LISTENERS</code></td>
+<td>Download listeners</td>
+</tr>
+<tr>
+<td><code>EPISODE_PERFORMANCE</code></td>
+<td>Audience retention</td>
+</tr>
+</tbody>
+</table>
+<p>For a recent episode of our test show, <code>EPISODE_STREAMS_AND_DOWNLOADS</code> was
+roughly <strong>2.5×</strong> the Spotify-only starts — RSS-distributed platforms (Apple
+Podcasts etc.) can account for the majority of early plays.</p>
+<hr />
 <h2 id="comment-queries">Comment Queries<a class="headerlink" href="#comment-queries" title="Permanent link">&para;</a></h2>
 <h3 id="get-comments-for-an-episode">Get Comments for an Episode<a class="headerlink" href="#get-comments-for-an-episode" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">query</span><span class="w"> </span><span class="nf">getCommentsForEpisode</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="n">getCommentsForEpisode</span><span class="p">(</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">episodeUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="n">primaryFilters</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="no">commentTypesFilters</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="no">secondaryFilters</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="no">repliesFilter</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="no">pageSize</span><span class="err">:</span><span class="w"> </span><span class="no">Int</span><span class="err">!</span>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="err">)</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="err">}</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">query</span><span class="w"> </span><span class="nf">getCommentsForEpisode</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="n">getCommentsForEpisode</span><span class="p">(</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">episodeUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">primaryFilters</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="no">commentTypesFilters</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="no">secondaryFilters</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="no">repliesFilter</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="no">pageSize</span><span class="err">:</span><span class="w"> </span><span class="no">Int</span><span class="err">!</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span><span class="err">)</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="err">}</span>
 </span></code></pre></div>
 <p><strong><code>primaryFilters</code> values:</strong></p>
 <table>
@@ -1881,88 +2350,88 @@ confirmed for all operations.</p>
 </tbody>
 </table>
 <p><strong>Variables example (fetch all comments):</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;episodeUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:episode:1xouj0WrH2klavXKzDWZbq&quot;</span><span class="p">,</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;primaryFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_PUBLISHED&quot;</span><span class="p">,</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW&quot;</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="p">],</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="nt">&quot;commentTypesFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_TYPE_FILTER_ROOT&quot;</span><span class="p">,</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_TYPE_FILTER_REPLY&quot;</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">  </span><span class="p">],</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">  </span><span class="nt">&quot;secondaryFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">  </span><span class="nt">&quot;repliesFilter&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_PUBLISHED&quot;</span><span class="p">,</span>
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW&quot;</span>
-</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">  </span><span class="p">],</span>
-</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">  </span><span class="nt">&quot;pageSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span>
-</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="p">}</span>
-</span></code></pre></div></p>
-<h3 id="get-comment-replies">Get Comment Replies<a class="headerlink" href="#get-comment-replies" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">query</span><span class="w"> </span><span class="nf">GetCommentReplies</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="n">GetCommentReplies</span><span class="p">(</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">episodeUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">primaryFilters</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="no">parentCommentUri</span><span class="err">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="no">pageSize</span><span class="err">:</span><span class="w"> </span><span class="no">Int</span><span class="err">!</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="err">)</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="err">}</span>
-</span></code></pre></div>
-<p><strong>Variables example:</strong>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;episodeUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:episode:1xouj0WrH2klavXKzDWZbq&quot;</span><span class="p">,</span>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;primaryFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW&quot;</span><span class="p">,</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_PUBLISHED&quot;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_PUBLISHED&quot;</span><span class="p">,</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW&quot;</span>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="p">],</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">&quot;parentCommentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ&quot;</span><span class="p">,</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">&quot;pageSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">}</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">&quot;commentTypesFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_TYPE_FILTER_ROOT&quot;</span><span class="p">,</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_TYPE_FILTER_REPLY&quot;</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span><span class="nt">&quot;secondaryFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">  </span><span class="nt">&quot;repliesFilter&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_PUBLISHED&quot;</span><span class="p">,</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW&quot;</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">  </span><span class="nt">&quot;pageSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="p">}</span>
 </span></code></pre></div></p>
-<h3 id="get-pinned-comment">Get Pinned Comment<a class="headerlink" href="#get-pinned-comment" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">query</span><span class="w"> </span><span class="nf">getPinnedCommentForEpisode</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="n">getPinnedCommentForEpisode</span><span class="p">(</span>
+<h3 id="get-comment-replies">Get Comment Replies<a class="headerlink" href="#get-comment-replies" title="Permanent link">&para;</a></h3>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">query</span><span class="w"> </span><span class="nf">GetCommentReplies</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="n">GetCommentReplies</span><span class="p">(</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="n">episodeUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="n">primaryFilters</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="no">commentTypesFilters</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="no">parentCommentUri</span><span class="err">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="no">pageSize</span><span class="err">:</span><span class="w"> </span><span class="no">Int</span><span class="err">!</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="no">pageToken</span><span class="err">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="err">)</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="err">}</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="err">)</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="err">}</span>
 </span></code></pre></div>
 <p><strong>Variables example:</strong>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;episodeUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:episode:0QeJ1berqX4UL20FYKGsZT&quot;</span><span class="p">,</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">&quot;primaryFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_PUBLISHED&quot;</span><span class="p">],</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">&quot;commentTypesFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;LIST_COMMENT_TYPE_FILTER_ROOT&quot;</span><span class="p">],</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="nt">&quot;pageSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="nt">&quot;pageToken&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">}</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;episodeUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:episode:1xouj0WrH2klavXKzDWZbq&quot;</span><span class="p">,</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">&quot;primaryFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW&quot;</span><span class="p">,</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_PUBLISHED&quot;</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="nt">&quot;parentCommentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ&quot;</span><span class="p">,</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span><span class="nt">&quot;pageSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<h3 id="get-pinned-comment">Get Pinned Comment<a class="headerlink" href="#get-pinned-comment" title="Permanent link">&para;</a></h3>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">query</span><span class="w"> </span><span class="nf">getPinnedCommentForEpisode</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="n">getPinnedCommentForEpisode</span><span class="p">(</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="n">episodeUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="n">primaryFilters</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="no">commentTypesFilters</span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="no">pageSize</span><span class="err">:</span><span class="w"> </span><span class="no">Int</span><span class="err">!</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="no">pageToken</span><span class="err">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="err">)</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="err">}</span>
+</span></code></pre></div>
+<p><strong>Variables example:</strong>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;episodeUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:episode:0QeJ1berqX4UL20FYKGsZT&quot;</span><span class="p">,</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;primaryFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_PUBLISHED&quot;</span><span class="p">],</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="nt">&quot;commentTypesFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;LIST_COMMENT_TYPE_FILTER_ROOT&quot;</span><span class="p">],</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nt">&quot;pageSize&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="nt">&quot;pageToken&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <hr />
 <h2 id="comment-settings-mutations">Comment Settings Mutations<a class="headerlink" href="#comment-settings-mutations" title="Permanent link">&para;</a></h2>
 <h3 id="enable-disable-comments">Enable / Disable Comments<a class="headerlink" href="#enable-disable-comments" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">updateIsCommentsEnabledForShowByShowUri</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="n">updateIsCommentsEnabledForShowByShowUri</span><span class="p">(</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="n">isEnabled</span><span class="p">:</span><span class="w"> </span><span class="no">Boolean</span><span class="err">!</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="n">showUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="p">)</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">}</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">updateIsCommentsEnabledForShowByShowUri</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="n">updateIsCommentsEnabledForShowByShowUri</span><span class="p">(</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">isEnabled</span><span class="p">:</span><span class="w"> </span><span class="no">Boolean</span><span class="err">!</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="n">showUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span><span class="p">)</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nt">&quot;isEnabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="nt">&quot;showUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:show:YOUR_SHOW_ID&quot;</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">&quot;isEnabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nt">&quot;showUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:show:YOUR_SHOW_ID&quot;</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="set-moderation-policy">Set Moderation Policy<a class="headerlink" href="#set-moderation-policy" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">updateModerationPolicy</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="n">updateModerationPolicy</span><span class="p">(</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">showUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="n">moderationSignal</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="n">moderationPolicy</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="p">)</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="p">}</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">updateModerationPolicy</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="n">updateModerationPolicy</span><span class="p">(</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="n">showUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="n">moderationSignal</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="n">moderationPolicy</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">  </span><span class="p">)</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="p">}</span>
 </span></code></pre></div>
 <table>
 <thead>
@@ -2010,11 +2479,11 @@ confirmed for all operations.</p>
 <p>All comment management mutations were confirmed from live browser traffic
 captured on <strong>2026-05-26</strong> using a test show.</p>
 <h3 id="approve-a-comment">Approve a Comment<a class="headerlink" href="#approve-a-comment" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">publishCommentByCommentUri</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="n">publishCommentByCommentUri</span><span class="p">(</span><span class="n">commentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">}</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">publishCommentByCommentUri</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="n">publishCommentByCommentUri</span><span class="p">(</span><span class="n">commentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;commentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ&quot;</span><span class="w"> </span><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;commentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ&quot;</span><span class="w"> </span><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2022,9 +2491,9 @@ captured on <strong>2026-05-26</strong> using a test show.</p>
 (two requests are sent in sequence).</p>
 </div>
 <h3 id="delete-a-comment">Delete a Comment<a class="headerlink" href="#delete-a-comment" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">deleteCommentByCommentUri</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="n">deleteCommentByCommentUri</span><span class="p">(</span><span class="n">commentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">,</span><span class="w"> </span><span class="n">filter</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="p">}</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">deleteCommentByCommentUri</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="n">deleteCommentByCommentUri</span><span class="p">(</span><span class="n">commentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">,</span><span class="w"> </span><span class="n">filter</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><strong><code>filter</code> values:</strong></p>
 <table>
@@ -2045,23 +2514,23 @@ captured on <strong>2026-05-26</strong> using a test show.</p>
 </tr>
 </tbody>
 </table>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">&quot;commentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ&quot;</span><span class="p">,</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DELETE_COMMENT_FILTER_PUBLISHED&quot;</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="p">{</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nt">&quot;commentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ&quot;</span><span class="p">,</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span><span class="nt">&quot;filter&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;DELETE_COMMENT_FILTER_PUBLISHED&quot;</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="reply-to-a-comment-as-creator">Reply to a Comment (as Creator)<a class="headerlink" href="#reply-to-a-comment-as-creator" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">createCommentReplyByCommentUri</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="n">createCommentReplyByCommentUri</span><span class="p">(</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="n">parentCommentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">    </span><span class="n">replyStr</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span><span class="p">)</span>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="p">}</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">createCommentReplyByCommentUri</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="n">createCommentReplyByCommentUri</span><span class="p">(</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="n">parentCommentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span><span class="n">replyStr</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span><span class="p">)</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="p">{</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nt">&quot;parentCommentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ&quot;</span><span class="p">,</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span><span class="nt">&quot;replyStr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Thank you for listening!&quot;</span>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">{</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">&quot;parentCommentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ&quot;</span><span class="p">,</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span><span class="nt">&quot;replyStr&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Thank you for listening!&quot;</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2070,20 +2539,20 @@ parameter). After a reply, <code>GetCommentReplies</code> fires automatically to
 refresh the thread.</p>
 </div>
 <h3 id="mark-a-comment-as-read">Mark a Comment as Read<a class="headerlink" href="#mark-a-comment-as-read" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">markCommentAsRead</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="n">markCommentAsRead</span><span class="p">(</span><span class="n">commentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="p">}</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">markCommentAsRead</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="n">markCommentAsRead</span><span class="p">(</span><span class="n">commentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;commentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ&quot;</span><span class="w"> </span><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;commentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ&quot;</span><span class="w"> </span><span class="p">}</span>
 </span></code></pre></div>
 <p>Fires automatically alongside approve, reply, and delete operations.
 You can also call it independently.</p>
 <h3 id="pin-a-comment">Pin a Comment<a class="headerlink" href="#pin-a-comment" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">pinComment</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="n">pinComment</span><span class="p">(</span><span class="n">commentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="p">}</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">pinComment</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span><span class="n">pinComment</span><span class="p">(</span><span class="n">commentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;commentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:0tHI8bJTfued8QR8E2Rv6B&quot;</span><span class="w"> </span><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;commentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:0tHI8bJTfued8QR8E2Rv6B&quot;</span><span class="w"> </span><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2094,21 +2563,21 @@ You can also call it independently.</p>
 </ul>
 </div>
 <h3 id="unpin-a-comment">Unpin a Comment<a class="headerlink" href="#unpin-a-comment" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">unPinComment</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span><span class="n">unPinComment</span><span class="p">(</span><span class="n">commentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="p">}</span>
-</span></code></pre></div>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;commentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:0tHI8bJTfued8QR8E2Rv6B&quot;</span><span class="w"> </span><span class="p">}</span>
-</span></code></pre></div>
-<h3 id="block-a-user">Block a User<a class="headerlink" href="#block-a-user" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">blockUserForShow</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span><span class="n">blockUserForShow</span><span class="p">(</span><span class="n">username</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">,</span><span class="w"> </span><span class="n">showUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">unPinComment</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span><span class="n">unPinComment</span><span class="p">(</span><span class="n">commentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
 </span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">{</span>
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;21yafw4q377x3jpbbcohdh4py&quot;</span><span class="p">,</span>
-</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span><span class="nt">&quot;showUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:show:YOUR_SHOW_ID&quot;</span>
-</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;commentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:0tHI8bJTfued8QR8E2Rv6B&quot;</span><span class="w"> </span><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="block-a-user">Block a User<a class="headerlink" href="#block-a-user" title="Permanent link">&para;</a></h3>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">blockUserForShow</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="n">blockUserForShow</span><span class="p">(</span><span class="n">username</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">,</span><span class="w"> </span><span class="n">showUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="p">{</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;21yafw4q377x3jpbbcohdh4py&quot;</span><span class="p">,</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span><span class="nt">&quot;showUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:show:YOUR_SHOW_ID&quot;</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2123,27 +2592,27 @@ You can also call it independently.</p>
 </ul>
 </div>
 <h3 id="update-thread-creator-last-seen">Update Thread Creator Last Seen<a class="headerlink" href="#update-thread-creator-last-seen" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">updateThreadCreatorLastSeen</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="n">updateThreadCreatorLastSeen</span><span class="p">(</span>
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">    </span><span class="n">parentCommentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">    </span><span class="n">primaryFilters</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
-</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">  </span><span class="err">)</span>
-</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="err">}</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">updateThreadCreatorLastSeen</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span><span class="n">updateThreadCreatorLastSeen</span><span class="p">(</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span><span class="n">parentCommentUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">    </span><span class="n">primaryFilters</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="no">String</span><span class="err">!]!</span>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="w">  </span><span class="err">)</span>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="err">}</span>
 </span></code></pre></div>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="p">{</span>
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span><span class="nt">&quot;parentCommentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:0tHI8bJTfued8QR8E2Rv6B&quot;</span><span class="p">,</span>
-</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span><span class="nt">&quot;primaryFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW&quot;</span><span class="p">,</span>
-</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_PUBLISHED&quot;</span>
-</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">  </span><span class="p">]</span>
-</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="p">{</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span><span class="nt">&quot;parentCommentUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:comment:0tHI8bJTfued8QR8E2Rv6B&quot;</span><span class="p">,</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">  </span><span class="nt">&quot;primaryFilters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW&quot;</span><span class="p">,</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">    </span><span class="s2">&quot;LIST_COMMENT_PRIMARY_FILTER_PUBLISHED&quot;</span>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Fires automatically when a creator opens a reply thread. Records the
 timestamp of the creator's last view to manage unread badges.</p>
 <hr />
 <h2 id="comment-uri-format">Comment URI Format<a class="headerlink" href="#comment-uri-format" title="Permanent link">&para;</a></h2>
 <p>All comment operations identify comments by their URI:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>spotify:comment:{COMMENT_ID}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>spotify:comment:{COMMENT_ID}
 </span></code></pre></div>
 <p>Example: <code>spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ</code></p>
 <p>You can retrieve comment IDs from the <code>getCommentsForEpisode</code> query response.</p>
@@ -2223,16 +2692,16 @@ timestamp of the creator's last view to manage unread badges.</p>
 <hr />
 <h2 id="poll-mutations">Poll Mutations<a class="headerlink" href="#poll-mutations" title="Permanent link">&para;</a></h2>
 <h3 id="create-or-update-a-poll-upsert">Create or Update a Poll (Upsert)<a class="headerlink" href="#create-or-update-a-poll-upsert" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">createPollForEpisode</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span><span class="n">createPollForEpisode</span><span class="p">(</span>
-</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">    </span><span class="n">episodeUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">    </span><span class="n">question</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">    </span><span class="n">options</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="no">PollOption</span><span class="err">!]!</span>
-</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">    </span><span class="no">type</span><span class="err">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
-</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="w">    </span><span class="no">openingDate</span><span class="err">:</span><span class="w"> </span><span class="no">Int</span><span class="err">!</span>
-</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="w">    </span><span class="no">closingDate</span><span class="err">:</span><span class="w"> </span><span class="no">Int</span><span class="err">!</span>
-</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="w">  </span><span class="err">)</span>
-</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="err">}</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">createPollForEpisode</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="n">createPollForEpisode</span><span class="p">(</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">    </span><span class="n">episodeUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="w">    </span><span class="n">question</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="w">    </span><span class="n">options</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="no">PollOption</span><span class="err">!]!</span>
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="w">    </span><span class="no">type</span><span class="err">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span>
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="w">    </span><span class="no">openingDate</span><span class="err">:</span><span class="w"> </span><span class="no">Int</span><span class="err">!</span>
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="w">    </span><span class="no">closingDate</span><span class="err">:</span><span class="w"> </span><span class="no">Int</span><span class="err">!</span>
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="w">  </span><span class="err">)</span>
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="err">}</span>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2240,17 +2709,17 @@ timestamp of the creator's last view to manage unread badges.</p>
 There is no separate <code>updatePollForEpisode</code> mutation.</p>
 </div>
 <p><strong>Variables example:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="p">{</span>
-</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">  </span><span class="nt">&quot;episodeUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:episode:1xouj0WrH2klavXKzDWZbq&quot;</span><span class="p">,</span>
-</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">  </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What is your favourite podcast genre?&quot;</span><span class="p">,</span>
-</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="w">  </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Talk shows&quot;</span><span class="w"> </span><span class="p">},</span>
-</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;News / information&quot;</span><span class="w"> </span><span class="p">}</span>
-</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">  </span><span class="p">],</span>
-</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SINGLE_CHOICE&quot;</span><span class="p">,</span>
-</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="w">  </span><span class="nt">&quot;openingDate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1779721200</span><span class="p">,</span>
-</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="w">  </span><span class="nt">&quot;closingDate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1780412399</span>
-</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="nt">&quot;episodeUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:episode:1xouj0WrH2klavXKzDWZbq&quot;</span><span class="p">,</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">  </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What is your favourite podcast genre?&quot;</span><span class="p">,</span>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="w">  </span><span class="nt">&quot;options&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Talk shows&quot;</span><span class="w"> </span><span class="p">},</span>
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;News / information&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SINGLE_CHOICE&quot;</span><span class="p">,</span>
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="w">  </span><span class="nt">&quot;openingDate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1779721200</span><span class="p">,</span>
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="w">  </span><span class="nt">&quot;closingDate&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1780412399</span>
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <table>
 <thead>
@@ -2279,11 +2748,11 @@ There is no separate <code>updatePollForEpisode</code> mutation.</p>
 </tbody>
 </table>
 <h3 id="delete-a-poll">Delete a Poll<a class="headerlink" href="#delete-a-poll" title="Permanent link">&para;</a></h3>
-<div class="language-graphql highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">deletePollForEpisode</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="n">deletePollForEpisode</span><span class="p">(</span><span class="n">episodeUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
-</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="p">}</span>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="k">mutation</span><span class="w"> </span><span class="nf">deletePollForEpisode</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">  </span><span class="n">deletePollForEpisode</span><span class="p">(</span><span class="n">episodeUri</span><span class="p">:</span><span class="w"> </span><span class="no">String</span><span class="err">!</span><span class="p">)</span>
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="p">}</span>
 </span></code></pre></div>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;episodeUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:episode:1xouj0WrH2klavXKzDWZbq&quot;</span><span class="w"> </span><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;episodeUri&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify:episode:1xouj0WrH2klavXKzDWZbq&quot;</span><span class="w"> </span><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>

@@ -666,6 +666,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026611-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月11日 — アナリティクス Query 実測確定
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#202652526" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -750,6 +761,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026611-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月11日 — アナリティクス Query 実測確定
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#202652526" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -817,6 +839,17 @@
 
 
 <h1 id="_1">更新履歴<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="2026611-query">2026年6月11日 — アナリティクス Query 実測確定<a class="headerlink" href="#2026611-query" title="Permanent link">&para;</a></h2>
+<p><strong>調査方法</strong>: スキーマイントロスペクション + 本番ショーへの実 GraphQL クエリ</p>
+<ul>
+<li><strong><code>/v2/graph-pq</code> が完全な GraphQL クエリ文字列を受け付けることを確認</strong> — Persisted Query は必須ではなく、イントロスペクションも有効</li>
+<li>アナリティクスデータの実際のアクセス経路を発見：ブラウザ観測のオペレーション名（<code>getShowAudienceAllPlatformsStats</code> 等）はトップレベル Query フィールドには<strong>存在せず</strong>、<code>showByShowUri → Show.analytics(getShowAnalyticsRequest)</code> / <code>episodeByUri → Episode.analytics(getEpisodePlayCountRequest)</code> のネスト構造でアクセスする</li>
+<li><code>ShowAnalyticsMetricType</code> / <code>EpisodeAnalyticsMetricType</code> / <code>AggregationType</code> / <code>AnalyticsWindow</code> の enum を実測セマンティクス付きで文書化</li>
+<li><strong>重要発見 — metric 名は誤解を招く</strong>：<code>SHOW_PLAYS</code> は Spotify 単体。ダッシュボード「すべてのプラットフォーム」に対応する全プラットフォーム値は <code>*_AND_DOWNLOADS</code> 系</li>
+<li><code>SHOW_STREAMS_AND_DOWNLOADS</code> = 全エピソードの <code>EPISODE_STREAMS_AND_DOWNLOADS</code> 合算（誤差 &lt;0.01%）を実証 — エピソードループは1コールで置き換え可能</li>
+<li>日次/週次/月次の時系列・ウィンドウ指定・<code>ShowUri</code> / <code>EpisodeUri</code> スカラー・引数なし <code>analyticsStarts { startsCount }</code>（Spotify 単体 starts）を文書化</li>
+</ul>
+<p>詳細は <a href="../graphql/">GraphQL API → アナリティクス Query（実測確定）</a> を参照。</p>
 <h2 id="202652526">2026年5月25日〜26日 — 初回調査<a class="headerlink" href="#202652526" title="Permanent link">&para;</a></h2>
 <p><strong>調査方法</strong>: Claude in Chrome MCP による JavaScript fetch/XHR インターセプター計測</p>
 <h3 id="2026-05-25-api">2026-05-25 — コア API 発見<a class="headerlink" href="#2026-05-25-api" title="Permanent link">&para;</a></h3>
