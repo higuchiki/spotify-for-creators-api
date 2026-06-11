@@ -1058,6 +1058,89 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#show_segmented_audience-audience-segmentation-new-may-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SHOW_SEGMENTED_AUDIENCE — Audience Segmentation (New: May 2026)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SHOW_SEGMENTED_AUDIENCE — Audience Segmentation (New: May 2026)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#total-aggregate-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Total (aggregate) query
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#daily-time-series-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Daily time-series query
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metric-semantics-verified-asymmetry-important" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metric semantics — verified asymmetry (important)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show_discovery_funnel-impressions-plays-funnel-new-may-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SHOW_DISCOVERY_FUNNEL — Impressions → Plays Funnel (New: May 2026)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show_windowed_average_completion_rate-period-average-completion-rate-new-may-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SHOW_WINDOWED_AVERAGE_COMPLETION_RATE — Period Average Completion Rate (New: May 2026)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-show-fields-existence-confirmed-not-yet-tested-may-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Show fields — existence confirmed, not yet tested (May 2026)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1655,6 +1738,89 @@
     <span class="md-ellipsis">
       
         Delete a Poll
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show_segmented_audience-audience-segmentation-new-may-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SHOW_SEGMENTED_AUDIENCE — Audience Segmentation (New: May 2026)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SHOW_SEGMENTED_AUDIENCE — Audience Segmentation (New: May 2026)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#total-aggregate-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Total (aggregate) query
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#daily-time-series-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Daily time-series query
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metric-semantics-verified-asymmetry-important" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metric semantics — verified asymmetry (important)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show_discovery_funnel-impressions-plays-funnel-new-may-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SHOW_DISCOVERY_FUNNEL — Impressions → Plays Funnel (New: May 2026)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#show_windowed_average_completion_rate-period-average-completion-rate-new-may-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SHOW_WINDOWED_AVERAGE_COMPLETION_RATE — Period Average Completion Rate (New: May 2026)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-show-fields-existence-confirmed-not-yet-tested-may-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Show fields — existence confirmed, not yet tested (May 2026)
       
     </span>
   </a>
@@ -2758,6 +2924,308 @@ There is no separate <code>updatePollForEpisode</code> mutation.</p>
 <p class="admonition-title">Warning</p>
 <p>Deleting a poll also deletes all votes already cast.</p>
 </div>
+<hr />
+<h3 id="show_segmented_audience-audience-segmentation-new-may-2026"><code>SHOW_SEGMENTED_AUDIENCE</code> — Audience Segmentation (New: May 2026)<a class="headerlink" href="#show_segmented_audience-audience-segmentation-new-may-2026" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Verified 2026-06-12. Added in the May 2026 dashboard refresh (believed to be
+tied to the Investor Day announcement).</p>
+</blockquote>
+<p>Corresponds to the "Audience Segment" view in the S4C dashboard. Returns
+the split between new and returning listeners.</p>
+<h4 id="total-aggregate-query">Total (aggregate) query<a class="headerlink" href="#total-aggregate-query" title="Permanent link">&para;</a></h4>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="k">query</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="w">  </span><span class="n">showByShowUri</span><span class="p">(</span><span class="n">getShowByShowUriRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">showUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spotify:show:YOUR_SHOW_ID&quot;</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="w">    </span><span class="n">analytics</span><span class="p">(</span><span class="n">getShowAnalyticsRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="w">      </span><span class="n">showAnalyticsMetricType</span><span class="p">:</span><span class="w"> </span><span class="no">SHOW_SEGMENTED_AUDIENCE</span><span class="p">,</span>
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="w">      </span><span class="n">aggregationType</span><span class="p">:</span><span class="w"> </span><span class="no">AGGREGATION_TYPE_TOTAL</span><span class="p">,</span>
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a><span class="w">      </span><span class="n">window</span><span class="p">:</span><span class="w"> </span><span class="no">WINDOW_LAST_NINETY_DAYS</span>
+</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="w">    </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="w">      </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a><span class="w">        </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-35-10"><a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a><span class="w">          </span><span class="n">__typename</span>
+</span><span id="__span-35-11"><a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a><span class="w">          </span><span class="p">...</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nc">SegmentedAudienceValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-35-12"><a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a><span class="w">            </span><span class="n">totalAudience</span>
+</span><span id="__span-35-13"><a id="__codelineno-35-13" name="__codelineno-35-13" href="#__codelineno-35-13"></a><span class="w">            </span><span class="n">newAudience</span>
+</span><span id="__span-35-14"><a id="__codelineno-35-14" name="__codelineno-35-14" href="#__codelineno-35-14"></a><span class="w">            </span><span class="n">returningAudience</span>
+</span><span id="__span-35-15"><a id="__codelineno-35-15" name="__codelineno-35-15" href="#__codelineno-35-15"></a><span class="w">          </span><span class="p">}</span>
+</span><span id="__span-35-16"><a id="__codelineno-35-16" name="__codelineno-35-16" href="#__codelineno-35-16"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-35-17"><a id="__codelineno-35-17" name="__codelineno-35-17" href="#__codelineno-35-17"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-35-18"><a id="__codelineno-35-18" name="__codelineno-35-18" href="#__codelineno-35-18"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-35-19"><a id="__codelineno-35-19" name="__codelineno-35-19" href="#__codelineno-35-19"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-35-20"><a id="__codelineno-35-20" name="__codelineno-35-20" href="#__codelineno-35-20"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Response type:</strong> <code>SegmentedAudienceValue</code></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>totalAudience</code></td>
+<td><code>Long</code></td>
+<td>Unique listeners for the period (Spotify-scoped)</td>
+</tr>
+<tr>
+<td><code>newAudience</code></td>
+<td><code>Long</code></td>
+<td>Listeners who heard the show for the first time in this period</td>
+</tr>
+<tr>
+<td><code>returningAudience</code></td>
+<td><code>Long</code></td>
+<td>Listeners who already knew the show before this period</td>
+</tr>
+</tbody>
+</table>
+<h4 id="daily-time-series-query">Daily time-series query<a class="headerlink" href="#daily-time-series-query" title="Permanent link">&para;</a></h4>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="k">query</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="w">  </span><span class="n">showByShowUri</span><span class="p">(</span><span class="n">getShowByShowUriRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">showUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spotify:show:YOUR_SHOW_ID&quot;</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="w">    </span><span class="n">analytics</span><span class="p">(</span><span class="n">getShowAnalyticsRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="w">      </span><span class="n">showAnalyticsMetricType</span><span class="p">:</span><span class="w"> </span><span class="no">SHOW_SEGMENTED_AUDIENCE</span><span class="p">,</span>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="w">      </span><span class="n">aggregationType</span><span class="p">:</span><span class="w"> </span><span class="no">AGGREGATION_TYPE_DAILY</span><span class="p">,</span>
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a><span class="w">      </span><span class="n">window</span><span class="p">:</span><span class="w"> </span><span class="no">WINDOW_LAST_NINETY_DAYS</span>
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a><span class="w">    </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a><span class="w">      </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a><span class="w">        </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a><span class="w">          </span><span class="n">__typename</span>
+</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a><span class="w">          </span><span class="p">...</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nc">TimeSeriesValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-36-12"><a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a><span class="w">            </span><span class="n">points</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-36-13"><a id="__codelineno-36-13" name="__codelineno-36-13" href="#__codelineno-36-13"></a><span class="w">              </span><span class="n">date</span>
+</span><span id="__span-36-14"><a id="__codelineno-36-14" name="__codelineno-36-14" href="#__codelineno-36-14"></a><span class="w">              </span><span class="n">value</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-36-15"><a id="__codelineno-36-15" name="__codelineno-36-15" href="#__codelineno-36-15"></a><span class="w">                </span><span class="p">...</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nc">SegmentedAudienceValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-36-16"><a id="__codelineno-36-16" name="__codelineno-36-16" href="#__codelineno-36-16"></a><span class="w">                  </span><span class="n">totalAudience</span>
+</span><span id="__span-36-17"><a id="__codelineno-36-17" name="__codelineno-36-17" href="#__codelineno-36-17"></a><span class="w">                  </span><span class="n">newAudience</span>
+</span><span id="__span-36-18"><a id="__codelineno-36-18" name="__codelineno-36-18" href="#__codelineno-36-18"></a><span class="w">                  </span><span class="n">returningAudience</span>
+</span><span id="__span-36-19"><a id="__codelineno-36-19" name="__codelineno-36-19" href="#__codelineno-36-19"></a><span class="w">                </span><span class="p">}</span>
+</span><span id="__span-36-20"><a id="__codelineno-36-20" name="__codelineno-36-20" href="#__codelineno-36-20"></a><span class="w">              </span><span class="p">}</span>
+</span><span id="__span-36-21"><a id="__codelineno-36-21" name="__codelineno-36-21" href="#__codelineno-36-21"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-36-22"><a id="__codelineno-36-22" name="__codelineno-36-22" href="#__codelineno-36-22"></a><span class="w">          </span><span class="p">}</span>
+</span><span id="__span-36-23"><a id="__codelineno-36-23" name="__codelineno-36-23" href="#__codelineno-36-23"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-36-24"><a id="__codelineno-36-24" name="__codelineno-36-24" href="#__codelineno-36-24"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-36-25"><a id="__codelineno-36-25" name="__codelineno-36-25" href="#__codelineno-36-25"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-36-26"><a id="__codelineno-36-26" name="__codelineno-36-26" href="#__codelineno-36-26"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-36-27"><a id="__codelineno-36-27" name="__codelineno-36-27" href="#__codelineno-36-27"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>Note:</strong> When <code>aggregationType</code> is <code>AGGREGATION_TYPE_DAILY</code>, the return type is
+<code>TimeSeriesValue</code> where each <code>points[].value</code> resolves to <code>SegmentedAudienceValue</code>
+— an inline fragment is required as shown above.</p>
+<h4 id="metric-semantics-verified-asymmetry-important">Metric semantics — verified asymmetry (important)<a class="headerlink" href="#metric-semantics-verified-asymmetry-important" title="Permanent link">&para;</a></h4>
+<p><code>newAudience</code> and <code>returningAudience</code> have fundamentally different counting
+semantics:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Counting method</th>
+<th>Sum of daily values vs. period total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>newAudience</code></td>
+<td>Period-unique — a listener is counted <strong>once</strong> no matter how many days they appear</td>
+<td>Daily sum <strong>equals</strong> the period total</td>
+</tr>
+<tr>
+<td><code>returningAudience</code></td>
+<td>Daily count — a returning listener is counted <strong>every day</strong> they listen</td>
+<td>Daily sum is <strong>much larger</strong> than the period total (e.g. ~9× in a 90-day window)</td>
+</tr>
+<tr>
+<td><code>totalAudience</code></td>
+<td>Period-unique listeners</td>
+<td>Daily sum is <strong>larger</strong> than the period total (because a single listener can appear on multiple days)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Verification method (confirmed 2026-06-12):</strong> <code>newAudience + returningAudience == totalAudience</code>
+holds exactly for every single day in a 90-day series, confirming the internal
+consistency of the data.</p>
+<div class="admonition warning">
+<p class="admonition-title">Do not sum daily <code>returningAudience</code> to get a period total</p>
+<p>The daily <code>returningAudience</code> value counts each returning listener once per
+day they listen. Summing it over 90 days produces a cumulative listen-day
+count, not a unique-listener count. Use <code>AGGREGATION_TYPE_TOTAL</code> for the
+period-unique figure.</p>
+</div>
+<hr />
+<h3 id="show_discovery_funnel-impressions-plays-funnel-new-may-2026"><code>SHOW_DISCOVERY_FUNNEL</code> — Impressions → Plays Funnel (New: May 2026)<a class="headerlink" href="#show_discovery_funnel-impressions-plays-funnel-new-may-2026" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Observed 2026-06-12 alongside <code>SHOW_SEGMENTED_AUDIENCE</code> work.</p>
+</blockquote>
+<p>Returns an Impressions → Plays → Average Completion Rate funnel with
+period-over-period comparison values.</p>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="k">query</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="w">  </span><span class="n">showByShowUri</span><span class="p">(</span><span class="n">getShowByShowUriRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">showUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spotify:show:YOUR_SHOW_ID&quot;</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="w">    </span><span class="n">analytics</span><span class="p">(</span><span class="n">getShowAnalyticsRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="w">      </span><span class="n">showAnalyticsMetricType</span><span class="p">:</span><span class="w"> </span><span class="no">SHOW_DISCOVERY_FUNNEL</span><span class="p">,</span>
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="w">      </span><span class="n">aggregationType</span><span class="p">:</span><span class="w"> </span><span class="no">AGGREGATION_TYPE_TOTAL</span><span class="p">,</span>
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a><span class="w">      </span><span class="n">window</span><span class="p">:</span><span class="w"> </span><span class="no">WINDOW_LAST_NINETY_DAYS</span>
+</span><span id="__span-37-7"><a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a><span class="w">    </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-37-8"><a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a><span class="w">      </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-37-9"><a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a><span class="w">        </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-37-10"><a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a><span class="w">          </span><span class="n">__typename</span>
+</span><span id="__span-37-11"><a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a><span class="w">          </span><span class="p">...</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nc">DiscoveryFunnelValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-37-12"><a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a><span class="w">            </span><span class="n">steps</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-37-13"><a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a><span class="w">              </span><span class="n">stepName</span>
+</span><span id="__span-37-14"><a id="__codelineno-37-14" name="__codelineno-37-14" href="#__codelineno-37-14"></a><span class="w">              </span><span class="n">displayName</span>
+</span><span id="__span-37-15"><a id="__codelineno-37-15" name="__codelineno-37-15" href="#__codelineno-37-15"></a><span class="w">              </span><span class="n">value</span>
+</span><span id="__span-37-16"><a id="__codelineno-37-16" name="__codelineno-37-16" href="#__codelineno-37-16"></a><span class="w">              </span><span class="n">conversionRateToNext</span>
+</span><span id="__span-37-17"><a id="__codelineno-37-17" name="__codelineno-37-17" href="#__codelineno-37-17"></a><span class="w">              </span><span class="n">periodOverPeriodPercentageDiff</span>
+</span><span id="__span-37-18"><a id="__codelineno-37-18" name="__codelineno-37-18" href="#__codelineno-37-18"></a><span class="w">            </span><span class="p">}</span>
+</span><span id="__span-37-19"><a id="__codelineno-37-19" name="__codelineno-37-19" href="#__codelineno-37-19"></a><span class="w">          </span><span class="p">}</span>
+</span><span id="__span-37-20"><a id="__codelineno-37-20" name="__codelineno-37-20" href="#__codelineno-37-20"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-37-21"><a id="__codelineno-37-21" name="__codelineno-37-21" href="#__codelineno-37-21"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-37-22"><a id="__codelineno-37-22" name="__codelineno-37-22" href="#__codelineno-37-22"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-37-23"><a id="__codelineno-37-23" name="__codelineno-37-23" href="#__codelineno-37-23"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-37-24"><a id="__codelineno-37-24" name="__codelineno-37-24" href="#__codelineno-37-24"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong><code>DiscoveryFunnelStep</code> fields:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stepName</code></td>
+<td><code>String</code></td>
+<td>Internal name (<code>"impressions"</code>, <code>"plays"</code>, <code>"average_completion_rate"</code>)</td>
+</tr>
+<tr>
+<td><code>displayName</code></td>
+<td><code>String</code></td>
+<td>Human-readable label (<code>"Impressions"</code>, <code>"Plays"</code>, <code>"Average Completion Rate"</code>)</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>Long</code></td>
+<td>Raw count (absent for <code>average_completion_rate</code>)</td>
+</tr>
+<tr>
+<td><code>conversionRateToNext</code></td>
+<td><code>Float</code></td>
+<td>Step-to-step conversion rate (e.g. <code>0.15</code> = 15% impression-to-play rate)</td>
+</tr>
+<tr>
+<td><code>periodOverPeriodPercentageDiff</code></td>
+<td><code>Float</code></td>
+<td>Change vs. previous equivalent period (e.g. <code>0.42</code> = +42%)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="show_windowed_average_completion_rate-period-average-completion-rate-new-may-2026"><code>SHOW_WINDOWED_AVERAGE_COMPLETION_RATE</code> — Period Average Completion Rate (New: May 2026)<a class="headerlink" href="#show_windowed_average_completion_rate-period-average-completion-rate-new-may-2026" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>Observed 2026-06-12.</p>
+</blockquote>
+<p>Returns the average completion rate across all episodes within the window,
+as a <code>PercentageValueFloat</code> (e.g. <code>0.60</code> = 60%).</p>
+<div class="language-graphql highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="k">query</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">  </span><span class="n">showByShowUri</span><span class="p">(</span><span class="n">getShowByShowUriRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">showUri</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;spotify:show:YOUR_SHOW_ID&quot;</span><span class="w"> </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="w">    </span><span class="n">analytics</span><span class="p">(</span><span class="n">getShowAnalyticsRequest</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="w">      </span><span class="n">showAnalyticsMetricType</span><span class="p">:</span><span class="w"> </span><span class="no">SHOW_WINDOWED_AVERAGE_COMPLETION_RATE</span><span class="p">,</span>
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a><span class="w">      </span><span class="n">aggregationType</span><span class="p">:</span><span class="w"> </span><span class="no">AGGREGATION_TYPE_TOTAL</span><span class="p">,</span>
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a><span class="w">      </span><span class="n">window</span><span class="p">:</span><span class="w"> </span><span class="no">WINDOW_LAST_NINETY_DAYS</span>
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="w">    </span><span class="p">})</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a><span class="w">      </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-38-9"><a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a><span class="w">        </span><span class="n">analyticsValue</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-38-10"><a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a><span class="w">          </span><span class="n">__typename</span>
+</span><span id="__span-38-11"><a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a><span class="w">          </span><span class="p">...</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="nc">PercentageValueFloat</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-38-12"><a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a><span class="w">            </span><span class="n">value</span>
+</span><span id="__span-38-13"><a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a><span class="w">          </span><span class="p">}</span>
+</span><span id="__span-38-14"><a id="__codelineno-38-14" name="__codelineno-38-14" href="#__codelineno-38-14"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-38-15"><a id="__codelineno-38-15" name="__codelineno-38-15" href="#__codelineno-38-15"></a><span class="w">      </span><span class="p">}</span>
+</span><span id="__span-38-16"><a id="__codelineno-38-16" name="__codelineno-38-16" href="#__codelineno-38-16"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-38-17"><a id="__codelineno-38-17" name="__codelineno-38-17" href="#__codelineno-38-17"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-38-18"><a id="__codelineno-38-18" name="__codelineno-38-18" href="#__codelineno-38-18"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>This is distinct from the episode-level <code>EPISODE_PERFORMANCE</code> (audience
+retention curve). It is also distinct from <code>completion_rate</code> derived from
+streams/starts — this is an aggregate average across the full window.</p>
+<hr />
+<h3 id="new-show-fields-existence-confirmed-not-yet-tested-may-2026">New <code>Show</code> fields — existence confirmed, not yet tested (May 2026)<a class="headerlink" href="#new-show-fields-existence-confirmed-not-yet-tested-may-2026" title="Permanent link">&para;</a></h3>
+<p>The following fields were added to the <code>Show</code> type in the May 2026 update.
+They appear in the schema via introspection but have <strong>not been tested with
+live queries</strong>. Use with caution.</p>
+<p><strong>Core fan metrics:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Return type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>coreFanTimeSeries</code></td>
+<td><code>GetCoreFanTimeSeriesResponse</code></td>
+<td>Core fan (highly engaged listener) time series</td>
+</tr>
+<tr>
+<td><code>coreFanMetricSummary</code></td>
+<td><code>GetCoreFanMetricSummaryResponse</code></td>
+<td>Core fan metric summary</td>
+</tr>
+<tr>
+<td><code>coreFanInsight</code></td>
+<td><code>GetCoreFanInsightResponse</code></td>
+<td>Insights about core fans</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sponsorship:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Return type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sponsorshipAnalytics</code></td>
+<td><code>ShowSponsorshipAnalytics</code></td>
+<td>Sponsorship analytics</td>
+</tr>
+<tr>
+<td><code>listSponsorships</code></td>
+<td><code>ListSponsorshipsResponse</code></td>
+<td>List of sponsorships</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AI Insights:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Return type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>analyticsInsight</code></td>
+<td><code>InsightResponse</code></td>
+<td>Analytics insights (possibly AI-generated)</td>
+</tr>
+<tr>
+<td><code>getEpisodeInsights</code></td>
+<td><code>GetEpisodeInsightsByShowResponse</code></td>
+<td>Per-episode insights</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="known-limitations">Known Limitations<a class="headerlink" href="#known-limitations" title="Permanent link">&para;</a></h2>
 <table>

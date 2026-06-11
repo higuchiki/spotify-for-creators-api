@@ -666,6 +666,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026612-20265" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月12日 — 2026年5月追加メトリクスの文書化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026611-query" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -761,6 +772,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026612-20265" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月12日 — 2026年5月追加メトリクスの文書化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026611-query" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -839,6 +861,29 @@
 
 
 <h1 id="_1">更新履歴<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="2026612-20265">2026年6月12日 — 2026年5月追加メトリクスの文書化<a class="headerlink" href="#2026612-20265" title="Permanent link">&para;</a></h2>
+<p><strong>調査方法：</strong> スキーマイントロスペクション + 本番ショーへの実クエリ。
+2026年5月下旬のダッシュボード刷新（Investor Day 発表に連動とみられる）で追加されたメトリクス。</p>
+<ul>
+<li><strong><code>SHOW_SEGMENTED_AUDIENCE</code></strong> — <code>SegmentedAudienceValue</code>（<code>totalAudience</code> / <code>newAudience</code> /
+  <code>returningAudience</code>）を返す新メトリクス。<code>AGGREGATION_TYPE_TOTAL</code> および
+  <code>AGGREGATION_TYPE_DAILY</code> の両方で動作確認済み。日次モードでは各 point の value が
+  <code>SegmentedAudienceValue</code> に解決される（インラインフラグメント必須）。</li>
+<li><strong>重要な指標セマンティクス — <code>newAudience</code> と <code>returningAudience</code> の非対称性：</strong>
+  <code>newAudience</code> は期間ユニーク（日次合計 = 期間合計）。
+  <code>returningAudience</code> はリスナーが聴いた日ごとにカウント（日次合計 &gt;&gt; 期間合計 — 90日窓で約9倍の例も）。
+  90日分全日付で <code>new + returning == total</code> が完全一致することで整合性を検証済み。</li>
+<li><strong><code>SHOW_DISCOVERY_FUNNEL</code></strong> — <code>DiscoveryFunnelValue</code> を返す新メトリクス。
+  Impressions → Plays → 平均完了率の3ステップファネルで、各ステップに
+  <code>conversionRateToNext</code>（転換率）と <code>periodOverPeriodPercentageDiff</code>（前期比）を含む。</li>
+<li><strong><code>SHOW_WINDOWED_AVERAGE_COMPLETION_RATE</code></strong> — <code>PercentageValueFloat</code> を返すことを確認。
+  期間内の全エピソードを横断した平均完了率。</li>
+<li><strong><code>Show</code> 型の新フィールド（スキーマ確認済み・未テスト）：</strong>
+  <code>coreFanTimeSeries</code>、<code>coreFanMetricSummary</code>、<code>coreFanInsight</code>（コアファン関連）、
+  <code>sponsorshipAnalytics</code>、<code>listSponsorships</code>（スポンサーシップ）、
+  <code>analyticsInsight</code>、<code>getEpisodeInsights</code>（AI インサイト）。</li>
+</ul>
+<p>詳細は <a href="../graphql/">GraphQL API → 新メトリクス（2026年5月ダッシュボード刷新で追加）</a> を参照。</p>
 <h2 id="2026611-query">2026年6月11日 — アナリティクス Query 実測確定<a class="headerlink" href="#2026611-query" title="Permanent link">&para;</a></h2>
 <p><strong>調査方法</strong>: スキーマイントロスペクション + 本番ショーへの実 GraphQL クエリ</p>
 <ul>

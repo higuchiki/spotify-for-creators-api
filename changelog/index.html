@@ -666,6 +666,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-12-may-2026-new-metrics-documented" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-12 — May 2026 New Metrics Documented
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-11-analytics-queries-verified" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -761,6 +772,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-12-may-2026-new-metrics-documented" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-12 — May 2026 New Metrics Documented
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-11-analytics-queries-verified" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -839,6 +861,30 @@
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h2 id="2026-06-12-may-2026-new-metrics-documented">2026-06-12 — May 2026 New Metrics Documented<a class="headerlink" href="#2026-06-12-may-2026-new-metrics-documented" title="Permanent link">&para;</a></h2>
+<p><strong>Research method:</strong> schema introspection + live GraphQL queries against a
+production show. Metrics believed to have been added in the May 2026
+dashboard refresh (tied to Spotify Investor Day announcement).</p>
+<ul>
+<li><strong><code>SHOW_SEGMENTED_AUDIENCE</code></strong> — new metric returning <code>SegmentedAudienceValue</code>
+  (<code>totalAudience</code> / <code>newAudience</code> / <code>returningAudience</code>). Both
+  <code>AGGREGATION_TYPE_TOTAL</code> and <code>AGGREGATION_TYPE_DAILY</code> verified. Daily mode
+  returns <code>TimeSeriesValue</code> with inline <code>SegmentedAudienceValue</code> per point.</li>
+<li><strong>Key semantic finding — <code>newAudience</code> vs <code>returningAudience</code> are asymmetric:</strong>
+  <code>newAudience</code> is period-unique (daily sum = period total);
+  <code>returningAudience</code> is counted every day a returning listener appears
+  (daily sum &gt;&gt; period total — roughly 9× in a 90-day window). Verified by
+  confirming <code>new + returning == total</code> holds for every day in a 90-day series.</li>
+<li><strong><code>SHOW_DISCOVERY_FUNNEL</code></strong> — new metric returning <code>DiscoveryFunnelValue</code>.
+  Three-step funnel: Impressions → Plays → Average Completion Rate, with
+  <code>conversionRateToNext</code> and <code>periodOverPeriodPercentageDiff</code> on each step.</li>
+<li><strong><code>SHOW_WINDOWED_AVERAGE_COMPLETION_RATE</code></strong> — confirmed returning
+  <code>PercentageValueFloat</code> for the window-average completion rate.</li>
+<li><strong>New <code>Show</code> fields (schema-confirmed, untested):</strong> <code>coreFanTimeSeries</code>,
+  <code>coreFanMetricSummary</code>, <code>coreFanInsight</code>; <code>sponsorshipAnalytics</code>,
+  <code>listSponsorships</code>; <code>analyticsInsight</code>, <code>getEpisodeInsights</code>.</li>
+</ul>
+<p>See <a href="../graphql/#analytics-queries-verified">GraphQL API → Analytics Queries</a>.</p>
 <h2 id="2026-06-11-analytics-queries-verified">2026-06-11 — Analytics Queries Verified<a class="headerlink" href="#2026-06-11-analytics-queries-verified" title="Permanent link">&para;</a></h2>
 <p><strong>Research method:</strong> schema introspection + live GraphQL queries against a
 production show.</p>
