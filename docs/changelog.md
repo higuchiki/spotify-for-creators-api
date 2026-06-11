@@ -1,5 +1,31 @@
 # Changelog
 
+## 2026-06-11 — Analytics Queries Verified
+
+**Research method:** schema introspection + live GraphQL queries against a
+production show.
+
+- **Confirmed `/v2/graph-pq` accepts full GraphQL query strings** — Persisted
+  Queries are not required, and schema introspection is enabled
+- Discovered the real access path for analytics data: browser-captured
+  operation names (`getShowAudienceAllPlatformsStats` etc.) are **not**
+  top-level Query fields; data is accessed via
+  `showByShowUri → Show.analytics(getShowAnalyticsRequest)` and
+  `episodeByUri → Episode.analytics(getEpisodePlayCountRequest)`
+- Documented `ShowAnalyticsMetricType` / `EpisodeAnalyticsMetricType` /
+  `AggregationType` / `AnalyticsWindow` enums with verified semantics
+- **Key finding — metric names are misleading:** `SHOW_PLAYS` is
+  Spotify-only; the all-platforms figures (matching the dashboard
+  "All platforms" view) are the `*_AND_DOWNLOADS` metrics
+- Verified `SHOW_STREAMS_AND_DOWNLOADS` equals the sum of per-episode
+  `EPISODE_STREAMS_AND_DOWNLOADS` (within <0.01%) — one call replaces a
+  per-episode loop
+- Documented daily/weekly/monthly time series and window options, the
+  `ShowUri` / `EpisodeUri` scalars, and the no-argument
+  `analyticsStarts { startsCount }` field (Spotify-only starts)
+
+See [GraphQL API → Analytics Queries](graphql.md#analytics-queries-verified).
+
 ## 2026-05-25 to 2026-05-26 — Initial Research
 
 **Research method:** Claude in Chrome MCP with JavaScript fetch/XHR

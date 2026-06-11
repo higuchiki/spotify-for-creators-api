@@ -25,8 +25,9 @@ anchor.fm REST API.
     from a server-side registry.
 
     When calling from Python, include the full GraphQL query string in the
-    `query` field. Whether the server accepts this as a fallback is not
-    confirmed for all operations.
+    `query` field. **Confirmed (2026-06-11):** the server accepts full query
+    strings, and schema introspection is enabled — see
+    [Analytics Queries](#analytics-queries-verified) below.
 
 ---
 
@@ -135,6 +136,159 @@ Called from the episode detail and analytics pages.
 |-----------|------|-------------|
 | `getCommentsAcrossEpisodes` | query | All comments across all episodes |
 | `getEpisodesWithSearch` | query | Episode search (used for comment filters) |
+
+---
+
+## Analytics Queries (Verified)
+
+> Verified 2026-06-11 by schema introspection and live queries against a
+> production show.
+
+### Architecture: analytics are nested fields, not top-level operations
+
+The operation names captured from browser traffic (e.g.
+`getShowAudienceAllPlatformsStats`) are **not top-level Query fields** on
+`/v2/graph-pq` — sending them as ad-hoc queries returns a `ValidationError`.
+Analytics data is accessed through a nested structure instead:
+
+- Show level: `showByShowUri` → `Show.analytics(getShowAnalyticsRequest: …)`
+- Episode level: `episodeByUri` → `Episode.analytics(getEpisodePlayCountRequest: …)`
+
+!!! tip "Introspection is enabled — Persisted Queries are not required"
+    `/v2/graph-pq` accepts full GraphQL query strings, and standard schema
+    introspection works. You can discover the complete schema (including all
+    metric enums below) with a normal introspection query.
+
+### Show-Level Analytics
+
+```graphql
+query {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_STREAMS_AND_DOWNLOADS,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: WINDOW_ALL_TIME
+    }) {
+      type
+      startDate
+      endDate
+      followerCount
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on SingleValueLong { value }
+          ... on AudienceValue { totalAudienceSize foregroundAudienceSize foregroundAudiencePercent }
+          ... on TimeSeriesValue {
+            points {
+              date
+              value {
+                ... on CountValueLong { value }
+                ... on RatioValueFloat { value }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+`showUri` is a `ShowUri` scalar — pass the string `"spotify:show:YOUR_SHOW_ID"`.
+
+#### `ShowAnalyticsMetricType` (selected values)
+
+| Enum value | What it actually measures |
+|-----------|---------------------------|
+| `SHOW_PLAYS` | **Spotify-only** plays (matches the Spotify-only starts total from the podcasters API) |
+| `SHOW_STREAMS` | **Spotify-only** streams (60s+ plays) |
+| `SHOW_STREAMS_AND_DOWNLOADS` | **All platforms** streams + downloads — matches the dashboard "All platforms" figure |
+| `SHOW_PLAYS_AND_DOWNLOADS` | All platforms plays + downloads (larger than streams + downloads) |
+| `SHOW_ALL_PLATFORMS_LISTENERS` | All-platforms unique listeners |
+| `SHOW_DOWNLOAD_LISTENERS` | Download listeners |
+| `SHOW_OFF_PLATFORM_DOWNLOADS` | Off-platform downloads (RSS apps etc.) |
+| `SHOW_LISTENERS` | Unique listeners (Spotify-scoped) |
+| `SHOW_FOLLOWERS` | Follower count |
+| `AUDIENCE_SIZE` | Audience size (returns `AudienceValue`) |
+
+!!! warning "Metric names are misleading"
+    Despite the generic name, `SHOW_PLAYS` matched the **Spotify-only**
+    starts total from the podcasters API in our tests — it is *not* an
+    all-platforms number. The true all-platforms figures are the
+    `*_AND_DOWNLOADS` metrics. For our test show, the all-platforms total
+    (`SHOW_STREAMS_AND_DOWNLOADS`) was roughly **1.6×** the Spotify-only
+    total.
+
+!!! tip "One call replaces a per-episode loop"
+    The sum of `EPISODE_STREAMS_AND_DOWNLOADS` across all episodes equals
+    `SHOW_STREAMS_AND_DOWNLOADS` (matched within <0.01% in our tests). If
+    you need the show-level all-platforms total, one show-level call is
+    enough — no need to loop over episodes.
+
+#### `AggregationType`
+
+| Value | Description |
+|-------|-------------|
+| `AGGREGATION_TYPE_TOTAL` | Total over the window |
+| `AGGREGATION_TYPE_DAILY` | Daily time series |
+| `AGGREGATION_TYPE_WEEKLY` | Weekly time series |
+| `AGGREGATION_TYPE_MONTHLY` | Monthly time series |
+
+#### `AnalyticsWindow`
+
+| Value | Description |
+|-------|-------------|
+| `WINDOW_ALL_TIME` | All time |
+| `WINDOW_LAST_SEVEN_DAYS` | Last 7 days |
+| `WINDOW_LAST_THIRTY_DAYS` | Last 30 days |
+| `WINDOW_LAST_NINETY_DAYS` | Last 90 days |
+| `WINDOW_YEAR_TO_DATE` | Year to date |
+| `WINDOW_CUSTOM` | Custom range (pass `customDateRange: { startDate, endDate }`) |
+
+### Episode-Level Analytics
+
+```graphql
+query {
+  episodeByUri(getEpisodeRequest: { episodeUri: "spotify:episode:YOUR_EPISODE_ID" }) {
+    title
+    analytics(getEpisodePlayCountRequest: {
+      episodeAnalyticsMetricType: EPISODE_STREAMS_AND_DOWNLOADS,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: WINDOW_ALL_TIME
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on SingleValueLong { value }
+        }
+      }
+    }
+    analyticsStarts {
+      startsCount  # Spotify-only starts (no arguments)
+    }
+  }
+}
+```
+
+`episodeUri` is an `EpisodeUri` scalar — pass `"spotify:episode:YOUR_EPISODE_ID"`.
+
+#### `EpisodeAnalyticsMetricType` (selected values)
+
+| Enum value | What it actually measures |
+|-----------|---------------------------|
+| `EPISODE_PLAYS` | Plays (Spotify-scoped in our tests) |
+| `EPISODE_STREAMS` | Streams, 60s+ (Spotify-only) |
+| `EPISODE_LISTENERS` | Unique listeners |
+| `EPISODE_ALL_PLATFORMS_LISTENERS` | All-platforms unique listeners |
+| `EPISODE_STREAMS_AND_DOWNLOADS` | **All platforms** streams + downloads |
+| `EPISODE_PLAYS_AND_DOWNLOADS` | All platforms plays + downloads |
+| `EPISODE_OFF_PLATFORM_DOWNLOADS` | Off-platform downloads |
+| `EPISODE_DOWNLOAD_LISTENERS` | Download listeners |
+| `EPISODE_PERFORMANCE` | Audience retention |
+
+For a recent episode of our test show, `EPISODE_STREAMS_AND_DOWNLOADS` was
+roughly **2.5×** the Spotify-only starts — RSS-distributed platforms (Apple
+Podcasts etc.) can account for the majority of early plays.
 
 ---
 

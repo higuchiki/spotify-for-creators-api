@@ -1,5 +1,18 @@
 # 更新履歴
 
+## 2026年6月11日 — アナリティクス Query 実測確定
+
+**調査方法**: スキーマイントロスペクション + 本番ショーへの実 GraphQL クエリ
+
+- **`/v2/graph-pq` が完全な GraphQL クエリ文字列を受け付けることを確認** — Persisted Query は必須ではなく、イントロスペクションも有効
+- アナリティクスデータの実際のアクセス経路を発見：ブラウザ観測のオペレーション名（`getShowAudienceAllPlatformsStats` 等）はトップレベル Query フィールドには**存在せず**、`showByShowUri → Show.analytics(getShowAnalyticsRequest)` / `episodeByUri → Episode.analytics(getEpisodePlayCountRequest)` のネスト構造でアクセスする
+- `ShowAnalyticsMetricType` / `EpisodeAnalyticsMetricType` / `AggregationType` / `AnalyticsWindow` の enum を実測セマンティクス付きで文書化
+- **重要発見 — metric 名は誤解を招く**：`SHOW_PLAYS` は Spotify 単体。ダッシュボード「すべてのプラットフォーム」に対応する全プラットフォーム値は `*_AND_DOWNLOADS` 系
+- `SHOW_STREAMS_AND_DOWNLOADS` = 全エピソードの `EPISODE_STREAMS_AND_DOWNLOADS` 合算（誤差 <0.01%）を実証 — エピソードループは1コールで置き換え可能
+- 日次/週次/月次の時系列・ウィンドウ指定・`ShowUri` / `EpisodeUri` スカラー・引数なし `analyticsStarts { startsCount }`（Spotify 単体 starts）を文書化
+
+詳細は [GraphQL API → アナリティクス Query（実測確定）](graphql.ja.md) を参照。
+
 ## 2026年5月25日〜26日 — 初回調査
 
 **調査方法**: Claude in Chrome MCP による JavaScript fetch/XHR インターセプター計測

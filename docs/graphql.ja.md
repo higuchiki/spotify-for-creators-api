@@ -23,8 +23,9 @@ anchor.fm と同じ Bearer トークンを使用する（同じ `spotifyconnecto
 !!! note "Persisted Query について"
     S4C の GraphQL は **Persisted Query（PQ）** を使用している。
     - ブラウザはリクエスト URL `/v2/graph-pq` に `query` フィールドを含まない（空文字列で送信）
-    - Python から叩く場合は `query` フィールドに実際の GraphQL クエリ文字列を含める必要がある
-      （サーバー側がフォールバックで受け付けるかは未確認）
+    - Python から叩く場合は `query` フィールドに実際の GraphQL クエリ文字列を含める
+    - **確認済み（2026-06-11）**：サーバーは完全なクエリ文字列を受け付け、イントロスペクションも有効
+      （下記「アナリティクス Query（実測確定）」参照）
 
 ---
 
@@ -127,6 +128,153 @@ anchor.fm と同じ Bearer トークンを使用する（同じ `spotifyconnecto
 | `getLatestCommentsForShow` | query | ショー最新コメント一覧取得 |
 | `WebGetIndexedEpisodeList` | query | インデックス済みエピソード一覧取得 |
 | `getEpisodesForShow` | query | ショーのエピソード一覧取得（投票ページ） |
+
+---
+
+## アナリティクス Query（実測確定）
+
+> 調査日：2026-06-11。スキーマイントロスペクション + 本番ショーへの実クエリで確認。
+
+### アーキテクチャ：アナリティクスはネストフィールド（トップレベル操作ではない）
+
+ブラウザ通信で観測されるオペレーション名（`getShowAudienceAllPlatformsStats` 等）は
+`/v2/graph-pq` の**トップレベル Query フィールドには存在しない**（ad-hoc クエリとして
+送ると `ValidationError`）。実際のアクセス経路は以下のネスト構造：
+
+- ショーレベル：`showByShowUri` → `Show.analytics(getShowAnalyticsRequest: …)`
+- エピソードレベル：`episodeByUri` → `Episode.analytics(getEpisodePlayCountRequest: …)`
+
+!!! tip "イントロスペクション対応 — Persisted Query は必須ではない"
+    `/v2/graph-pq` は通常の GraphQL クエリ文字列を受け付け、スキーマイントロスペクション
+    も有効。下記の metric enum 一覧も標準のイントロスペクションクエリで取得できる。
+
+### ショーレベル統計
+
+```graphql
+query {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_STREAMS_AND_DOWNLOADS,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: WINDOW_ALL_TIME
+    }) {
+      type
+      startDate
+      endDate
+      followerCount
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on SingleValueLong { value }
+          ... on AudienceValue { totalAudienceSize foregroundAudienceSize foregroundAudiencePercent }
+          ... on TimeSeriesValue {
+            points {
+              date
+              value {
+                ... on CountValueLong { value }
+                ... on RatioValueFloat { value }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+`showUri` は `ShowUri` スカラー型。文字列 `"spotify:show:YOUR_SHOW_ID"` を渡す。
+
+#### `ShowAnalyticsMetricType`（主要値）
+
+| ENUM 値 | 実際に測っているもの |
+|---------|---------------------|
+| `SHOW_PLAYS` | **Spotify 単体**の再生数（podcasters API の Spotify 単体 starts と一致） |
+| `SHOW_STREAMS` | **Spotify 単体**の streams（60秒以上再生） |
+| `SHOW_STREAMS_AND_DOWNLOADS` | **全プラットフォーム** streams + downloads — ダッシュボード「すべてのプラットフォーム」と一致 |
+| `SHOW_PLAYS_AND_DOWNLOADS` | 全プラットフォーム plays + downloads（streams+downloads より大きい） |
+| `SHOW_ALL_PLATFORMS_LISTENERS` | 全プラットフォームのユニークリスナー |
+| `SHOW_DOWNLOAD_LISTENERS` | ダウンロードリスナー |
+| `SHOW_OFF_PLATFORM_DOWNLOADS` | プラットフォーム外ダウンロード（RSSアプリ等） |
+| `SHOW_LISTENERS` | ユニークリスナー（Spotify スコープ） |
+| `SHOW_FOLLOWERS` | フォロワー数 |
+| `AUDIENCE_SIZE` | オーディエンスサイズ（`AudienceValue` を返す） |
+
+!!! warning "metric 名は誤解を招く"
+    名前に反して、`SHOW_PLAYS` は実測で **Spotify 単体**の starts 合計と一致した。
+    全プラットフォーム値ではない。真の全プラットフォーム値は `*_AND_DOWNLOADS` 系。
+    テストショーでは全プラットフォーム合計（`SHOW_STREAMS_AND_DOWNLOADS`）が
+    Spotify 単体の約 **1.6倍** だった。
+
+!!! tip "1コールでエピソードループを置き換えられる"
+    全エピソードの `EPISODE_STREAMS_AND_DOWNLOADS` 合算と `SHOW_STREAMS_AND_DOWNLOADS`
+    が一致することを実測確認（誤差 <0.01%）。ショー全体の全プラットフォーム累計が
+    欲しい場合、ショーレベル1コールで足りる。
+
+#### `AggregationType`
+
+| 値 | 説明 |
+|----|------|
+| `AGGREGATION_TYPE_TOTAL` | 期間合計 |
+| `AGGREGATION_TYPE_DAILY` | 日次時系列 |
+| `AGGREGATION_TYPE_WEEKLY` | 週次時系列 |
+| `AGGREGATION_TYPE_MONTHLY` | 月次時系列 |
+
+#### `AnalyticsWindow`
+
+| 値 | 説明 |
+|----|------|
+| `WINDOW_ALL_TIME` | 全期間 |
+| `WINDOW_LAST_SEVEN_DAYS` | 直近7日 |
+| `WINDOW_LAST_THIRTY_DAYS` | 直近30日 |
+| `WINDOW_LAST_NINETY_DAYS` | 直近90日 |
+| `WINDOW_YEAR_TO_DATE` | 年初来 |
+| `WINDOW_CUSTOM` | カスタム期間（`customDateRange: { startDate, endDate }` を渡す） |
+
+### エピソードレベル統計
+
+```graphql
+query {
+  episodeByUri(getEpisodeRequest: { episodeUri: "spotify:episode:YOUR_EPISODE_ID" }) {
+    title
+    analytics(getEpisodePlayCountRequest: {
+      episodeAnalyticsMetricType: EPISODE_STREAMS_AND_DOWNLOADS,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: WINDOW_ALL_TIME
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on SingleValueLong { value }
+        }
+      }
+    }
+    analyticsStarts {
+      startsCount  # Spotify 単体の starts（引数なし）
+    }
+  }
+}
+```
+
+`episodeUri` は `EpisodeUri` スカラー型。文字列 `"spotify:episode:YOUR_EPISODE_ID"` を渡す。
+
+#### `EpisodeAnalyticsMetricType`（主要値）
+
+| ENUM 値 | 実際に測っているもの |
+|---------|---------------------|
+| `EPISODE_PLAYS` | 再生数（実測では Spotify スコープ） |
+| `EPISODE_STREAMS` | streams・60秒以上（Spotify 単体） |
+| `EPISODE_LISTENERS` | ユニークリスナー |
+| `EPISODE_ALL_PLATFORMS_LISTENERS` | 全プラットフォームのユニークリスナー |
+| `EPISODE_STREAMS_AND_DOWNLOADS` | **全プラットフォーム** streams + downloads |
+| `EPISODE_PLAYS_AND_DOWNLOADS` | 全プラットフォーム plays + downloads |
+| `EPISODE_OFF_PLATFORM_DOWNLOADS` | プラットフォーム外ダウンロード |
+| `EPISODE_DOWNLOAD_LISTENERS` | ダウンロードリスナー |
+| `EPISODE_PERFORMANCE` | 視聴維持率（Audience Retention） |
+
+テストショーの直近エピソードでは `EPISODE_STREAMS_AND_DOWNLOADS` が Spotify 単体
+starts の約 **2.5倍** だった。公開直後の再生は RSS 配信先（Apple Podcasts 等）が
+過半を占めることがある。
 
 ---
 
