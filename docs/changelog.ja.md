@@ -1,5 +1,30 @@
 # 更新履歴
 
+## 2026年6月12日 — 2026年5月追加メトリクスの文書化
+
+**調査方法：** スキーマイントロスペクション + 本番ショーへの実クエリ。
+2026年5月下旬のダッシュボード刷新（Investor Day 発表に連動とみられる）で追加されたメトリクス。
+
+- **`SHOW_SEGMENTED_AUDIENCE`** — `SegmentedAudienceValue`（`totalAudience` / `newAudience` /
+  `returningAudience`）を返す新メトリクス。`AGGREGATION_TYPE_TOTAL` および
+  `AGGREGATION_TYPE_DAILY` の両方で動作確認済み。日次モードでは各 point の value が
+  `SegmentedAudienceValue` に解決される（インラインフラグメント必須）。
+- **重要な指標セマンティクス — `newAudience` と `returningAudience` の非対称性：**
+  `newAudience` は期間ユニーク（日次合計 = 期間合計）。
+  `returningAudience` はリスナーが聴いた日ごとにカウント（日次合計 >> 期間合計 — 90日窓で約9倍の例も）。
+  90日分全日付で `new + returning == total` が完全一致することで整合性を検証済み。
+- **`SHOW_DISCOVERY_FUNNEL`** — `DiscoveryFunnelValue` を返す新メトリクス。
+  Impressions → Plays → 平均完了率の3ステップファネルで、各ステップに
+  `conversionRateToNext`（転換率）と `periodOverPeriodPercentageDiff`（前期比）を含む。
+- **`SHOW_WINDOWED_AVERAGE_COMPLETION_RATE`** — `PercentageValueFloat` を返すことを確認。
+  期間内の全エピソードを横断した平均完了率。
+- **`Show` 型の新フィールド（スキーマ確認済み・未テスト）：**
+  `coreFanTimeSeries`、`coreFanMetricSummary`、`coreFanInsight`（コアファン関連）、
+  `sponsorshipAnalytics`、`listSponsorships`（スポンサーシップ）、
+  `analyticsInsight`、`getEpisodeInsights`（AI インサイト）。
+
+詳細は [GraphQL API → 新メトリクス（2026年5月ダッシュボード刷新で追加）](graphql.ja.md) を参照。
+
 ## 2026年6月11日 — アナリティクス Query 実測確定
 
 **調査方法**: スキーマイントロスペクション + 本番ショーへの実 GraphQL クエリ

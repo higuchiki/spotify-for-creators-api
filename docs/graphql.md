@@ -695,6 +695,216 @@ mutation deletePollForEpisode {
 
 ---
 
+### `SHOW_SEGMENTED_AUDIENCE` — Audience Segmentation (New: May 2026)
+
+> Verified 2026-06-12. Added in the May 2026 dashboard refresh (believed to be
+> tied to the Investor Day announcement).
+
+Corresponds to the "Audience Segment" view in the S4C dashboard. Returns
+the split between new and returning listeners.
+
+#### Total (aggregate) query
+
+```graphql
+query {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_SEGMENTED_AUDIENCE,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: WINDOW_LAST_NINETY_DAYS
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on SegmentedAudienceValue {
+            totalAudience
+            newAudience
+            returningAudience
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Response type:** `SegmentedAudienceValue`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `totalAudience` | `Long` | Unique listeners for the period (Spotify-scoped) |
+| `newAudience` | `Long` | Listeners who heard the show for the first time in this period |
+| `returningAudience` | `Long` | Listeners who already knew the show before this period |
+
+#### Daily time-series query
+
+```graphql
+query {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_SEGMENTED_AUDIENCE,
+      aggregationType: AGGREGATION_TYPE_DAILY,
+      window: WINDOW_LAST_NINETY_DAYS
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              value {
+                ... on SegmentedAudienceValue {
+                  totalAudience
+                  newAudience
+                  returningAudience
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Note:** When `aggregationType` is `AGGREGATION_TYPE_DAILY`, the return type is
+`TimeSeriesValue` where each `points[].value` resolves to `SegmentedAudienceValue`
+— an inline fragment is required as shown above.
+
+#### Metric semantics — verified asymmetry (important)
+
+`newAudience` and `returningAudience` have fundamentally different counting
+semantics:
+
+| Metric | Counting method | Sum of daily values vs. period total |
+|--------|----------------|--------------------------------------|
+| `newAudience` | Period-unique — a listener is counted **once** no matter how many days they appear | Daily sum **equals** the period total |
+| `returningAudience` | Daily count — a returning listener is counted **every day** they listen | Daily sum is **much larger** than the period total (e.g. ~9× in a 90-day window) |
+| `totalAudience` | Period-unique listeners | Daily sum is **larger** than the period total (because a single listener can appear on multiple days) |
+
+**Verification method (confirmed 2026-06-12):** `newAudience + returningAudience == totalAudience`
+holds exactly for every single day in a 90-day series, confirming the internal
+consistency of the data.
+
+!!! warning "Do not sum daily `returningAudience` to get a period total"
+    The daily `returningAudience` value counts each returning listener once per
+    day they listen. Summing it over 90 days produces a cumulative listen-day
+    count, not a unique-listener count. Use `AGGREGATION_TYPE_TOTAL` for the
+    period-unique figure.
+
+---
+
+### `SHOW_DISCOVERY_FUNNEL` — Impressions → Plays Funnel (New: May 2026)
+
+> Observed 2026-06-12 alongside `SHOW_SEGMENTED_AUDIENCE` work.
+
+Returns an Impressions → Plays → Average Completion Rate funnel with
+period-over-period comparison values.
+
+```graphql
+query {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_DISCOVERY_FUNNEL,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: WINDOW_LAST_NINETY_DAYS
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on DiscoveryFunnelValue {
+            steps {
+              stepName
+              displayName
+              value
+              conversionRateToNext
+              periodOverPeriodPercentageDiff
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**`DiscoveryFunnelStep` fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `stepName` | `String` | Internal name (`"impressions"`, `"plays"`, `"average_completion_rate"`) |
+| `displayName` | `String` | Human-readable label (`"Impressions"`, `"Plays"`, `"Average Completion Rate"`) |
+| `value` | `Long` | Raw count (absent for `average_completion_rate`) |
+| `conversionRateToNext` | `Float` | Step-to-step conversion rate (e.g. `0.15` = 15% impression-to-play rate) |
+| `periodOverPeriodPercentageDiff` | `Float` | Change vs. previous equivalent period (e.g. `0.42` = +42%) |
+
+---
+
+### `SHOW_WINDOWED_AVERAGE_COMPLETION_RATE` — Period Average Completion Rate (New: May 2026)
+
+> Observed 2026-06-12.
+
+Returns the average completion rate across all episodes within the window,
+as a `PercentageValueFloat` (e.g. `0.60` = 60%).
+
+```graphql
+query {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_WINDOWED_AVERAGE_COMPLETION_RATE,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: WINDOW_LAST_NINETY_DAYS
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on PercentageValueFloat {
+            value
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+This is distinct from the episode-level `EPISODE_PERFORMANCE` (audience
+retention curve). It is also distinct from `completion_rate` derived from
+streams/starts — this is an aggregate average across the full window.
+
+---
+
+### New `Show` fields — existence confirmed, not yet tested (May 2026)
+
+The following fields were added to the `Show` type in the May 2026 update.
+They appear in the schema via introspection but have **not been tested with
+live queries**. Use with caution.
+
+**Core fan metrics:**
+
+| Field | Return type | Notes |
+|-------|-------------|-------|
+| `coreFanTimeSeries` | `GetCoreFanTimeSeriesResponse` | Core fan (highly engaged listener) time series |
+| `coreFanMetricSummary` | `GetCoreFanMetricSummaryResponse` | Core fan metric summary |
+| `coreFanInsight` | `GetCoreFanInsightResponse` | Insights about core fans |
+
+**Sponsorship:**
+
+| Field | Return type | Notes |
+|-------|-------------|-------|
+| `sponsorshipAnalytics` | `ShowSponsorshipAnalytics` | Sponsorship analytics |
+| `listSponsorships` | `ListSponsorshipsResponse` | List of sponsorships |
+
+**AI Insights:**
+
+| Field | Return type | Notes |
+|-------|-------------|-------|
+| `analyticsInsight` | `InsightResponse` | Analytics insights (possibly AI-generated) |
+| `getEpisodeInsights` | `GetEpisodeInsightsByShowResponse` | Per-episode insights |
+
+---
+
 ## Known Limitations
 
 | Feature | Status |

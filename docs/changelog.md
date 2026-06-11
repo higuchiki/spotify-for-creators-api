@@ -1,5 +1,31 @@
 # Changelog
 
+## 2026-06-12 — May 2026 New Metrics Documented
+
+**Research method:** schema introspection + live GraphQL queries against a
+production show. Metrics believed to have been added in the May 2026
+dashboard refresh (tied to Spotify Investor Day announcement).
+
+- **`SHOW_SEGMENTED_AUDIENCE`** — new metric returning `SegmentedAudienceValue`
+  (`totalAudience` / `newAudience` / `returningAudience`). Both
+  `AGGREGATION_TYPE_TOTAL` and `AGGREGATION_TYPE_DAILY` verified. Daily mode
+  returns `TimeSeriesValue` with inline `SegmentedAudienceValue` per point.
+- **Key semantic finding — `newAudience` vs `returningAudience` are asymmetric:**
+  `newAudience` is period-unique (daily sum = period total);
+  `returningAudience` is counted every day a returning listener appears
+  (daily sum >> period total — roughly 9× in a 90-day window). Verified by
+  confirming `new + returning == total` holds for every day in a 90-day series.
+- **`SHOW_DISCOVERY_FUNNEL`** — new metric returning `DiscoveryFunnelValue`.
+  Three-step funnel: Impressions → Plays → Average Completion Rate, with
+  `conversionRateToNext` and `periodOverPeriodPercentageDiff` on each step.
+- **`SHOW_WINDOWED_AVERAGE_COMPLETION_RATE`** — confirmed returning
+  `PercentageValueFloat` for the window-average completion rate.
+- **New `Show` fields (schema-confirmed, untested):** `coreFanTimeSeries`,
+  `coreFanMetricSummary`, `coreFanInsight`; `sponsorshipAnalytics`,
+  `listSponsorships`; `analyticsInsight`, `getEpisodeInsights`.
+
+See [GraphQL API → Analytics Queries](graphql.md#analytics-queries-verified).
+
 ## 2026-06-11 — Analytics Queries Verified
 
 **Research method:** schema introspection + live GraphQL queries against a

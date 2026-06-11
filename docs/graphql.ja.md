@@ -511,6 +511,214 @@ query getCommentsForEpisode {
 
 ---
 
+## 新メトリクス（2026年5月ダッシュボード刷新で追加）
+
+> 2026-06-12 動作確認済み。2026年5月下旬のダッシュボード刷新（Investor Day
+> 発表に連動とみられる）で追加されたメトリクス。
+
+### `SHOW_SEGMENTED_AUDIENCE` — オーディエンスセグメント
+
+S4C ダッシュボードの「オーディエンスセグメント」画面に対応する。
+新規リスナーとリピーターの内訳を取得できる。
+
+#### 期間合計クエリ
+
+```graphql
+query {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_SEGMENTED_AUDIENCE,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: WINDOW_LAST_NINETY_DAYS
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on SegmentedAudienceValue {
+            totalAudience
+            newAudience
+            returningAudience
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**レスポンス型：** `SegmentedAudienceValue`
+
+| フィールド | 型 | 説明 |
+|-----------|-----|------|
+| `totalAudience` | `Long` | 期間内のユニークリスナー数（Spotify スコープ） |
+| `newAudience` | `Long` | 期間内に番組を初めて聴いたリスナー数 |
+| `returningAudience` | `Long` | 期間前から番組を知っていたリスナー数 |
+
+#### 日次時系列クエリ
+
+```graphql
+query {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_SEGMENTED_AUDIENCE,
+      aggregationType: AGGREGATION_TYPE_DAILY,
+      window: WINDOW_LAST_NINETY_DAYS
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              value {
+                ... on SegmentedAudienceValue {
+                  totalAudience
+                  newAudience
+                  returningAudience
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**注意：** `aggregationType` が `AGGREGATION_TYPE_DAILY` のとき、返り値は
+`TimeSeriesValue` になり、各 `points[].value` が `SegmentedAudienceValue` に解決される。
+上記のようにインラインフラグメントが必要。
+
+#### 指標のセマンティクス — 重要な非対称性（2026-06-12 検証済み）
+
+`newAudience` と `returningAudience` はカウント方法が根本的に異なる。
+
+| 指標 | カウント方式 | 日次合計 vs. 期間合計 |
+|------|------------|----------------------|
+| `newAudience` | 期間ユニーク — 何日聴いても1回だけカウント | 日次合計 **= 期間合計** |
+| `returningAudience` | 日次カウント — リピーターが聴いた**日ごとに**カウント | 日次合計 **>> 期間合計**（90日窓では約9倍になる例も） |
+| `totalAudience` | 期間ユニークリスナー | 日次合計 > 期間合計（同一リスナーが複数日に出現するため） |
+
+**検証方法（2026-06-12 確認）：** 90日分の全日付で
+`newAudience + returningAudience == totalAudience` が完全一致することを確認。
+データの内部整合性が保証されている。
+
+!!! warning "日次 `returningAudience` を合算して期間合計にしてはいけない"
+    日次の `returningAudience` は、リピーターが聴いた日ごとにカウントされる。
+    90日分を合算すると「ユニークリスナー数」ではなく「リスナー延べ日数」になる。
+    期間内のユニーク数が必要な場合は `AGGREGATION_TYPE_TOTAL` を使うこと。
+
+---
+
+### `SHOW_DISCOVERY_FUNNEL` — Impressions → Plays ファネル（2026年5月追加）
+
+> 2026-06-12 動作確認済み。
+
+Impressions → Plays → 平均完了率の3ステップファネルを取得できる。
+前期比較値も含まれる。
+
+```graphql
+query {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_DISCOVERY_FUNNEL,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: WINDOW_LAST_NINETY_DAYS
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on DiscoveryFunnelValue {
+            steps {
+              stepName
+              displayName
+              value
+              conversionRateToNext
+              periodOverPeriodPercentageDiff
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**`DiscoveryFunnelStep` フィールド：**
+
+| フィールド | 型 | 説明 |
+|-----------|-----|------|
+| `stepName` | `String` | 内部名（`"impressions"`、`"plays"`、`"average_completion_rate"`） |
+| `displayName` | `String` | 表示名（`"Impressions"`、`"Plays"`、`"Average Completion Rate"`） |
+| `value` | `Long` | カウント値（`average_completion_rate` ステップには存在しない） |
+| `conversionRateToNext` | `Float` | 次ステップへの転換率（例：`0.15` = 15%） |
+| `periodOverPeriodPercentageDiff` | `Float` | 前期比増減率（例：`0.42` = +42%） |
+
+---
+
+### `SHOW_WINDOWED_AVERAGE_COMPLETION_RATE` — 期間平均完了率（2026年5月追加）
+
+> 2026-06-12 動作確認済み。
+
+期間内の全エピソードを横断した平均完了率を `PercentageValueFloat` で返す
+（例：`0.60` = 60%）。
+
+```graphql
+query {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_WINDOWED_AVERAGE_COMPLETION_RATE,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: WINDOW_LAST_NINETY_DAYS
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on PercentageValueFloat {
+            value
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+エピソードレベルの `EPISODE_PERFORMANCE`（視聴維持率カーブ）とは別指標。
+streams/starts から導出する完了率とも異なり、期間全体の集計平均値。
+
+---
+
+### `Show` 型の新フィールド — スキーマ確認済み・未テスト（2026年5月追加）
+
+以下のフィールドが 2026年5月アップデートで `Show` 型に追加された。
+イントロスペクションでスキーマ上の存在は確認済みだが、**実クエリによる動作検証は未実施**。
+
+**コアファン指標：**
+
+| フィールド | 返り型 | 備考 |
+|-----------|--------|------|
+| `coreFanTimeSeries` | `GetCoreFanTimeSeriesResponse` | 熱心なリスナーの時系列 |
+| `coreFanMetricSummary` | `GetCoreFanMetricSummaryResponse` | コアファン指標サマリー |
+| `coreFanInsight` | `GetCoreFanInsightResponse` | コアファンに関するインサイト |
+
+**スポンサーシップ：**
+
+| フィールド | 返り型 | 備考 |
+|-----------|--------|------|
+| `sponsorshipAnalytics` | `ShowSponsorshipAnalytics` | スポンサーシップ分析 |
+| `listSponsorships` | `ListSponsorshipsResponse` | スポンサーシップ一覧 |
+
+**AI インサイト：**
+
+| フィールド | 返り型 | 備考 |
+|-----------|--------|------|
+| `analyticsInsight` | `InsightResponse` | アナリティクスインサイト（AI生成の可能性） |
+| `getEpisodeInsights` | `GetEpisodeInsightsByShowResponse` | エピソードごとのインサイト |
+
+---
+
 ## 未取得・取得不可のオペレーション
 
 | オペレーション名 | 取得不可の理由 |
