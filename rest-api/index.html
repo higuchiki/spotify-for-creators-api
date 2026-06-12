@@ -1172,6 +1172,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#1-z-delete-episode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Z. Delete Episode
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-Z. Delete Episode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#known-quirks" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2044,6 +2083,45 @@
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-z-delete-episode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Z. Delete Episode
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-Z. Delete Episode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request-body_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Request body
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3070,6 +3148,36 @@ Body: <code>{}</code> or empty.</p>
 <p><code>/v3/stations/status</code> returns a list of all shows associated with the
 currently authenticated user.</p>
 <hr />
+<h2 id="1-z-delete-episode">1-Z. Delete Episode<a class="headerlink" href="#1-z-delete-episode" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>POST /v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true
+</span></code></pre></div>
+<p>Permanently deletes an episode. Works on drafts, scheduled (not yet
+published) episodes, and published episodes alike.</p>
+<h3 id="request-body_6">Request body<a class="headerlink" href="#request-body_6" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="p">{}</span>
+</span></code></pre></div>
+<p>An empty JSON body is sufficient. The episode is identified entirely by the
+<code>{ANCHOR_ID}</code> path segment (the numeric Anchor ID, not the Spotify episode
+URI — resolve it first via 1-A if you only have the Spotify ID).</p>
+<h3 id="response_4">Response<a class="headerlink" href="#response_4" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="p">{}</span>
+</span></code></pre></div>
+<p>Returns <code>200</code> on success.</p>
+<div class="admonition warning">
+<p class="admonition-title">Irreversible</p>
+<p>There is no trash/restore step — a successful call removes the episode
+immediately. Confirm the <code>{ANCHOR_ID}</code> resolves to the intended episode
+(e.g. via <code>/overview</code>, 1-B) before calling.</p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="si">${</span><span class="nv">BEARER</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anchor-client-type: web&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-58-6"><a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anchor-api-version: 3.8.3&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-58-7"><a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{}&#39;</span>
+</span></code></pre></div>
+<hr />
 <h2 id="known-quirks">Known Quirks<a class="headerlink" href="#known-quirks" title="Permanent link">&para;</a></h2>
 <h3 id="description-field-server-side-transformations">description field — server-side transformations<a class="headerlink" href="#description-field-server-side-transformations" title="Permanent link">&para;</a></h3>
 <p>When the server stores the <code>description</code> field, it automatically applies
@@ -3125,7 +3233,7 @@ end-to-end Python example using endpoints <strong>6-A through 6-D</strong>.</p>
 </tbody>
 </table>
 <h3 id="6-a-get-a-signed-upload-url">6-A. Get a Signed Upload URL<a class="headerlink" href="#6-a-get-a-signed-upload-url" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&amp;type={MIME_TYPE}&amp;isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&amp;type={MIME_TYPE}&amp;isMumsCompatible=true
 </span></code></pre></div>
 <table>
 <thead>
@@ -3149,33 +3257,33 @@ end-to-end Python example using endpoints <strong>6-A through 6-D</strong>.</p>
 </tbody>
 </table>
 <p><strong>Response:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="p">{</span>
-</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
-</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor_exclusive_media_upload_production/...&quot;</span><span class="p">,</span>
-</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a><span class="w">  </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="p">{</span>
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor_exclusive_media_upload_production/...&quot;</span><span class="p">,</span>
+</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a><span class="w">  </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <h3 id="6-b-put-the-file-to-google-cloud-storage">6-B. PUT the File to Google Cloud Storage<a class="headerlink" href="#6-b-put-the-file-to-google-cloud-storage" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>PUT {signed_url}
-</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>Content-Type: {MIME_TYPE}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>PUT {signed_url}
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>Content-Type: {MIME_TYPE}
 </span></code></pre></div>
 <p>Save the <code>ETag</code> response header — you need it in the next step.</p>
 <h3 id="6-c-notify-upload-completion">6-C. Notify Upload Completion<a class="headerlink" href="#6-c-notify-upload-completion" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>Request body (video):</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="p">{</span>
-</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
-</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;video&quot;</span><span class="p">,</span>
-</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
-</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp4&quot;</span><span class="p">,</span>
-</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-59-7"><a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-59-8"><a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d49fffd0ed1c6a291577ac47d26b997&quot;</span><span class="w"> </span><span class="p">}],</span>
-</span><span id="__span-59-9"><a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
-</span><span id="__span-59-10"><a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
-</span><span id="__span-59-11"><a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
-</span><span id="__span-59-12"><a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="p">{</span>
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;video&quot;</span><span class="p">,</span>
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
+</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp4&quot;</span><span class="p">,</span>
+</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-63-7"><a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-63-8"><a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d49fffd0ed1c6a291577ac47d26b997&quot;</span><span class="w"> </span><span class="p">}],</span>
+</span><span id="__span-63-9"><a id="__codelineno-63-9" name="__codelineno-63-9" href="#__codelineno-63-9"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-63-10"><a id="__codelineno-63-10" name="__codelineno-63-10" href="#__codelineno-63-10"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
+</span><span id="__span-63-11"><a id="__codelineno-63-11" name="__codelineno-63-11" href="#__codelineno-63-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
+</span><span id="__span-63-12"><a id="__codelineno-63-12" name="__codelineno-63-12" href="#__codelineno-63-12"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <table>
 <thead>
@@ -3209,7 +3317,7 @@ end-to-end Python example using endpoints <strong>6-A through 6-D</strong>.</p>
 was confirmed against a live session in May 2026.</p>
 </div>
 <h3 id="6-d-poll-for-media-validation">6-D. Poll for Media Validation<a class="headerlink" href="#6-d-poll-for-media-validation" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&amp;isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&amp;isMumsCompatible=true
 </span></code></pre></div>
 <table>
 <thead>

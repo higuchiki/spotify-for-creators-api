@@ -666,6 +666,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-12-episode-delete-endpoint-documented" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-12 — Episode Delete Endpoint Documented
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-12-may-2026-new-metrics-documented" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -772,6 +783,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-12-episode-delete-endpoint-documented" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-12 — Episode Delete Endpoint Documented
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-12-may-2026-new-metrics-documented" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -861,6 +883,15 @@
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h2 id="2026-06-12-episode-delete-endpoint-documented">2026-06-12 — Episode Delete Endpoint Documented<a class="headerlink" href="#2026-06-12-episode-delete-endpoint-documented" title="Permanent link">&para;</a></h2>
+<p><strong>Research method:</strong> browser traffic capture during a live wizard
+upload + delete cycle on a production show, then direct API verification.</p>
+<ul>
+<li><strong><code>POST /v3/episodes/{ANCHOR_ID}/delete</code></strong> — documented the episode
+  deletion endpoint (REST API → 1-Z). Empty <code>{}</code> body, returns <code>200</code>.
+  Verified on disposable test episodes (works on drafts, scheduled, and
+  published episodes). Irreversible — no trash/restore step.</li>
+</ul>
 <h2 id="2026-06-12-may-2026-new-metrics-documented">2026-06-12 — May 2026 New Metrics Documented<a class="headerlink" href="#2026-06-12-may-2026-new-metrics-documented" title="Permanent link">&para;</a></h2>
 <p><strong>Research method:</strong> schema introspection + live GraphQL queries against a
 production show. Metrics believed to have been added in the May 2026

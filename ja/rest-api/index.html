@@ -907,6 +907,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#1-z" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Z. エピソード削除
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-Z. エピソード削除">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        リクエストボディ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        レスポンス
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#6-a-6-e" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -968,7 +1007,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         既知の注意事項
@@ -1529,6 +1568,45 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#1-z" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-Z. エピソード削除
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-Z. エピソード削除">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        リクエストボディ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        レスポンス
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#6-a-6-e" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1590,7 +1668,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         既知の注意事項
@@ -2359,10 +2437,40 @@ S4C 上で見える Spotify Episode ID（文字列）からの変換が必要。
 </span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>GET /v3/stations/status?isMumsCompatible=true
 </span></code></pre></div>
 <hr />
+<h2 id="1-z">1-Z. エピソード削除<a class="headerlink" href="#1-z" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>POST /v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true
+</span></code></pre></div>
+<p>エピソードを完全に削除する。下書き・予約公開（未公開）・公開済みのいずれの
+状態でも動作する。</p>
+<h3 id="_3">リクエストボディ<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="p">{}</span>
+</span></code></pre></div>
+<p>空のJSONボディでよい。エピソードはパスの <code>{ANCHOR_ID}</code>（Spotifyの
+エピソードURIではなく <strong>Anchorの数値ID</strong>）で特定される。Spotify IDしか
+持っていない場合は 1-A で先に数値IDへ変換する。</p>
+<h3 id="_4">レスポンス<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="p">{}</span>
+</span></code></pre></div>
+<p>成功時 <code>200</code> を返す。</p>
+<div class="admonition warning">
+<p class="admonition-title">取り消し不可</p>
+<p>ゴミ箱・復元の仕組みはなく、成功した時点で即座にエピソードが消える。
+呼ぶ前に <code>{ANCHOR_ID}</code> が意図したエピソードを指しているか
+（<code>/overview</code>（1-B）等で）確認すること。</p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="si">${</span><span class="nv">BEARER</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anchor-client-type: web&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-52-6"><a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anchor-api-version: 3.8.3&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-52-7"><a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{}&#39;</span>
+</span></code></pre></div>
+<hr />
 <h2 id="6-a-6-e">音声/動画アップロード（6-A 〜 6-E）<a class="headerlink" href="#6-a-6-e" title="Permanent link">&para;</a></h2>
 <p><strong>対応フォーマット</strong>：mp3, m4a, aifc, aiff, ogg, wav, flac, mp4, mov</p>
 <h3 id="6-a-url">6-A. アップロード署名付きURL取得<a class="headerlink" href="#6-a-url" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&amp;type={MIME_TYPE}&amp;isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&amp;type={MIME_TYPE}&amp;isMumsCompatible=true
 </span></code></pre></div>
 <table>
 <thead>
@@ -2386,35 +2494,35 @@ S4C 上で見える Spotify Episode ID（文字列）からの変換が必要。
 </tbody>
 </table>
 <p><strong>レスポンス例</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="p">{</span>
-</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
-</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor_exclusive_media_upload_production/...&quot;</span><span class="p">,</span>
-</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="w">  </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="p">{</span>
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor_exclusive_media_upload_production/...&quot;</span><span class="p">,</span>
+</span><span id="__span-54-4"><a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a><span class="w">  </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-54-5"><a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="6-b-google-cloud-storage-put">6-B. Google Cloud Storage への直接 PUT<a class="headerlink" href="#6-b-google-cloud-storage-put" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>PUT {signed_url}
-</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>Content-Type: {MIME_TYPE}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>PUT {signed_url}
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>Content-Type: {MIME_TYPE}
 </span></code></pre></div>
 <p>レスポンスヘッダーの <code>ETag</code> を記録する（<code>process_upload</code> で使う）。</p>
 <h3 id="6-c-process_upload">6-C. アップロード完了通知（process_upload）<a class="headerlink" href="#6-c-process_upload" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>リクエストボディ（ビデオの場合）</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="p">{</span>
-</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
-</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;video&quot;</span><span class="p">,</span>
-</span><span id="__span-53-4"><a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
-</span><span id="__span-53-5"><a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp4&quot;</span><span class="p">,</span>
-</span><span id="__span-53-6"><a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-53-7"><a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-53-8"><a id="__codelineno-53-8" name="__codelineno-53-8" href="#__codelineno-53-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-53-9"><a id="__codelineno-53-9" name="__codelineno-53-9" href="#__codelineno-53-9"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d49fffd0ed1c6a291577ac47d26b997&quot;</span><span class="w"> </span><span class="p">}</span>
-</span><span id="__span-53-10"><a id="__codelineno-53-10" name="__codelineno-53-10" href="#__codelineno-53-10"></a><span class="w">  </span><span class="p">],</span>
-</span><span id="__span-53-11"><a id="__codelineno-53-11" name="__codelineno-53-11" href="#__codelineno-53-11"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
-</span><span id="__span-53-12"><a id="__codelineno-53-12" name="__codelineno-53-12" href="#__codelineno-53-12"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
-</span><span id="__span-53-13"><a id="__codelineno-53-13" name="__codelineno-53-13" href="#__codelineno-53-13"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
-</span><span id="__span-53-14"><a id="__codelineno-53-14" name="__codelineno-53-14" href="#__codelineno-53-14"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="p">{</span>
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
+</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;video&quot;</span><span class="p">,</span>
+</span><span id="__span-57-4"><a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
+</span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp4&quot;</span><span class="p">,</span>
+</span><span id="__span-57-6"><a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-57-7"><a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-57-8"><a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-57-9"><a id="__codelineno-57-9" name="__codelineno-57-9" href="#__codelineno-57-9"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d49fffd0ed1c6a291577ac47d26b997&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-57-10"><a id="__codelineno-57-10" name="__codelineno-57-10" href="#__codelineno-57-10"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-57-11"><a id="__codelineno-57-11" name="__codelineno-57-11" href="#__codelineno-57-11"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-57-12"><a id="__codelineno-57-12" name="__codelineno-57-12" href="#__codelineno-57-12"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
+</span><span id="__span-57-13"><a id="__codelineno-57-13" name="__codelineno-57-13" href="#__codelineno-57-13"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
+</span><span id="__span-57-14"><a id="__codelineno-57-14" name="__codelineno-57-14" href="#__codelineno-57-14"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">uploadType の注意</p>
@@ -2422,7 +2530,7 @@ S4C 上で見える Spotify Episode ID（文字列）からの変換が必要。
 </div>
 <h3 id="6-d">6-D. メディア検証確認<a class="headerlink" href="#6-d" title="Permanent link">&para;</a></h3>
 <p><code>status</code> が <code>"completed"</code> になるまでポーリングする。</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&amp;isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&amp;isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>レスポンスフィールド（主要）</strong></p>
 <table>
@@ -2452,7 +2560,7 @@ S4C 上で見える Spotify Episode ID（文字列）からの変換が必要。
 </tbody>
 </table>
 <hr />
-<h2 id="_3">既知の注意事項<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_5">既知の注意事項<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <h3 id="description">description フィールドのサーバー側自動変換<a class="headerlink" href="#description" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -2476,12 +2584,12 @@ S4C 上で見える Spotify Episode ID（文字列）からの変換が必要。
 <p><code>isPublished: false</code>（draft 状態）のエピソードに対して <code>GET /v3/episodes/{ANCHOR_ID}/overview</code> を呼ぶと <strong>HTTP 403 Forbidden</strong> が返る。</p>
 <h3 id="publishon">publishOn のタイムゾーン<a class="headerlink" href="#publishon" title="Permanent link">&para;</a></h3>
 <p><code>publishOn</code> は <strong>UTC</strong> で指定する。JST 06:00 に公開したい場合は前日 21:00 UTC。</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
-</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>
-</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a><span class="n">JST</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))</span>
-</span><span id="__span-55-4"><a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="n">publish_jst</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">JST</span><span class="p">)</span>
-</span><span id="__span-55-5"><a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a><span class="n">publish_utc_str</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">)</span>
-</span><span id="__span-55-6"><a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a><span class="c1"># → &quot;2026-05-31T21:00:00.000Z&quot;</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="n">JST</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))</span>
+</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="n">publish_jst</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">JST</span><span class="p">)</span>
+</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a><span class="n">publish_utc_str</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">)</span>
+</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a><span class="c1"># → &quot;2026-05-31T21:00:00.000Z&quot;</span>
 </span></code></pre></div>
 <h3 id="publishon-ispublished-false-true">publishOn を isPublished: false → true に一発設定する挙動<a class="headerlink" href="#publishon-ispublished-false-true" title="Permanent link">&para;</a></h3>
 <p><code>isPublished: false</code> + <code>publishOn: "..."</code> で update を呼ぶと、サーバー側が <strong>自動的に <code>isPublished: true</code></strong> に変換する（予約公開として即公開状態になる）。</p>
