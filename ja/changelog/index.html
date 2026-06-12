@@ -666,6 +666,56 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026612-20266" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月12日 — エンゲージメントタブと新メトリクスの文書化（2026年6月調査）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026年6月12日 — エンゲージメントタブと新メトリクスの文書化（2026年6月調査）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        新規文書化されたオペレーション
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        新規文書化された enum 値
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        エンドポイント数の更新
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026612" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -738,7 +788,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         エンドポイント数サマリー
@@ -783,6 +833,56 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026612-20266" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月12日 — エンゲージメントタブと新メトリクスの文書化（2026年6月調査）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026年6月12日 — エンゲージメントタブと新メトリクスの文書化（2026年6月調査）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        新規文書化されたオペレーション
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        新規文書化された enum 値
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        エンドポイント数の更新
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026612" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -855,7 +955,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         エンドポイント数サマリー
@@ -883,6 +983,92 @@
 
 
 <h1 id="_1">更新履歴<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="2026612-20266">2026年6月12日 — エンゲージメントタブと新メトリクスの文書化（2026年6月調査）<a class="headerlink" href="#2026612-20266" title="Permanent link">&para;</a></h2>
+<p><strong>調査方法：</strong> JavaScript バンドル解析 — S4C アナリティクス マイクロフロントエンドの
+バンドル（<code>microfrontend-analytics-cdn.spotifycdn.com</code>）から GraphQL AST を
+抽出・再構成。すべてのオペレーション名とクエリ構造は本番バンドルから直接取得した。</p>
+<h3 id="_2">新規文書化されたオペレーション<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><strong>エンゲージメントタブ（確定）：</strong>
+- <strong><code>getEngagementStats</code></strong> — 視聴時間（<code>SHOW_CONSUMPTION</code> → <code>ConsumptionValue.totalConsumptionHours</code>）
+  と平均視聴時間（<code>SHOW_AVERAGE_CONSUMPTION_TIME</code> → <code>AverageConsumptionTimeValue.averageConsumptionSeconds</code>）
+  の日次時系列
+- <strong><code>getEngagementStatsNRT</code></strong> — 期間合計に <code>periodOverPeriodPercentageDiff</code> 付き
+  （ダッシュボードの <code>+36.6%</code> / <code>+7.4%</code> バッジの値）
+- <strong><code>getShowRetention</code></strong> — <code>SHOW_RETENTION</code> / <code>AGGREGATION_TYPE_WEEKLY</code> による
+  週次リテンション率時系列（<code>RatioValueFloat</code> —例：<code>0.537</code> = 53.7%）
+- <strong><code>getEpisodeCompletionRates</code></strong> — 最新10エピソードの完全再生率（<code>EPISODE_AVERAGE_COMPLETION_RATE</code> /
+  <code>WINDOW_FIRST_SEVEN_DAYS</code> → <code>PercentageValueFloat</code>）
+- <strong><code>getEpisodeTimeSeriesByMetric</code></strong> — 単一エピソードの任意メトリクス時系列（
+  <code>ConsumptionValue.foregroundConsumptionPercent</code> も取得可能）</p>
+<p><strong>オーディエンス成長（コアファン3層モデル確定）：</strong>
+- <strong><code>getAudienceGrowthTimeSeries</code></strong> — コアファン / 発展途上 / 新規オーディエンスの
+  日次時系列（<code>coreFanTimeSeries</code> フィールド使用。文字列日付、AnalyticsWindow enum ではない）
+- <strong><code>getAudienceGrowthMetricSummary</code></strong> — <code>gainedCoreFans</code>（獲得コアファン数）と
+  前期比付きサマリー
+- <strong><code>getAudienceGrowthInsights</code></strong> — コアファンと全体オーディエンスの
+  リテンション率・視聴時間比較</p>
+<p><strong>ベンチマーク：</strong>
+- <strong><code>getBenchmarkTotal</code></strong> / <strong><code>getBenchmarkTimeSeries</code></strong> — 類似ショーとの
+  パーセンタイル比較（20/40/50/60/80）
+- <code>BenchmarkMetricType</code> enum（13値）と <code>BenchmarkEpisodePool</code> enum
+  （<code>ALL_EPISODES</code>、<code>LAST_10_EPISODES</code>）を文書化</p>
+<p><strong>概要タブ：</strong>
+- <strong><code>getShowStreamsAndDownloadsDaily</code></strong> — 全プラットフォーム時系列（<code>$aggregationType</code> 変数で日次/週次/月次切り替え可能）
+- <strong><code>getShowTopEpisodesByMetric</code></strong> — 任意 <code>EpisodeAnalyticsMetricType</code> でエピソードランキング
+- <strong><code>getShowTopEpisodesByImpressions</code></strong> — ソース別内訳付きインプレッションランキング（新 enum <code>TOP_EPISODES_BY_IMPRESSIONS_FACETED</code>）
+- <strong><code>getShowStreams</code></strong> / <strong><code>getShowStreamsNRT</code></strong> — Spotify 専用ストリーム日次/合計
+- <strong><code>getShowAllPlatformsStats</code></strong> / <strong><code>getShowAllPlatformsStatsNRT</code></strong> — 全期間全プラットフォーム合計
+- <strong><code>getPerformanceStats</code></strong> / <strong><code>getPerformanceStatsNRT</code></strong> — 再生数・オーディエンス・フォロワー増減
+- <strong><code>getShowMetadata</code></strong> — ショーメタデータと全期間再生数合計
+- <strong><code>getShowEpisodesByMetric</code></strong> — メトリクス付きページネーションエピソード一覧</p>
+<p><strong>ディスカバリーファネル（修正）：</strong>
+- 名前付きオペレーション <strong><code>getShowDiscoveryFunnelStats</code></strong> を確定
+- <code>DiscoveryFunnelStep.stepValue</code> のフィールド構造を修正
+  （union 型：<code>CountValueLong</code>（インプレッション/再生）/ <code>RatioValueFloat</code>（完了率））</p>
+<p><strong>オーディエンスセグメント（名前付きオペレーション確定）：</strong>
+- 名前付きオペレーション <strong><code>getShowSegmentedAudienceTotal</code></strong> / <strong><code>getShowSegmentedAudienceTimeSeries</code></strong> を確定
+  （以前は無名クエリとして文書化していた）</p>
+<p><strong>AI インサイト：</strong>
+- <strong><code>generateAnalyticsInsight</code></strong>（mutation）、<strong><code>getAnalyticsInsight</code></strong>（query）、
+  <strong><code>submitAnalyticsInsightFeedback</code></strong>（mutation）を文書化</p>
+<h3 id="enum">新規文書化された enum 値<a class="headerlink" href="#enum" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>ShowAnalyticsMetricType</code>：<code>SHOW_CONSUMPTION</code>、<code>SHOW_AVERAGE_CONSUMPTION_TIME</code>、
+  <code>SHOW_RETENTION</code>、<code>SHOW_BENCHMARK_EPISODE</code>、<code>SHOW_STREAMS_AND_DOWNLOADS_AVERAGE</code>、
+  <code>SHOW_STREAMS_AND_DOWNLOADS_BY_APP</code>、<code>SHOW_STREAMS_AND_DOWNLOADS_BY_DEVICE</code>、
+  <code>SHOW_STREAMS_AND_DOWNLOADS_BY_GEO_ALL_PLATFORMS</code>、<code>TOP_EPISODES_BY_IMPRESSIONS_FACETED</code>、
+  <code>SHOW_IMPRESSIONS_FACETED</code>、<code>SHOW_STREAMS_FACETED</code>、<code>SHOW_FOLLOWER_GROWTH</code></li>
+<li><code>EpisodeAnalyticsMetricType</code>：<code>EPISODE_AVERAGE_COMPLETION_RATE</code>、
+  <code>EPISODE_AVERAGE_CONSUMPTION_TIME</code>、<code>EPISODE_CONSUMPTION</code>、
+  <code>EPISODE_AUDIENCE_SIZE</code>、<code>EPISODE_IMPRESSIONS</code>（＋8値）</li>
+<li><code>AnalyticsWindow</code>：<code>WINDOW_FIRST_SEVEN_DAYS</code>、<code>WINDOW_FIRST_THIRTY_DAYS</code>、
+  <code>WINDOW_FIRST_SIXTY_DAYS</code>、<code>WINDOW_LAST_SIXTY_DAYS</code>、<code>WINDOW_SINCE_PUBLISHED</code>、
+  <code>WINDOW_UNSPECIFIED</code></li>
+</ul>
+<h3 id="_3">エンドポイント数の更新<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>カテゴリ</th>
+<th>件数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>anchor.fm REST エンドポイント</td>
+<td>25</td>
+</tr>
+<tr>
+<td>GraphQL クエリ</td>
+<td>約50（+15件追加）</td>
+</tr>
+<tr>
+<td>GraphQL ミューテーション</td>
+<td>約15（+3件：AI インサイト系）</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h2 id="2026612">2026年6月12日 — エピソード削除エンドポイントの文書化<a class="headerlink" href="#2026612" title="Permanent link">&para;</a></h2>
 <p><strong>調査方法：</strong> 本番ショーでのウィザードによるアップロード＋削除サイクルの
 ブラウザトラフィック記録、およびAPI直接検証。</p>
@@ -1006,7 +1192,7 @@
 <li>チャプター作成・更新・削除 mutation：テストショーの資格なしで UI にアクセス不可</li>
 </ul>
 <hr />
-<h2 id="_2">エンドポイント数サマリー<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_4">エンドポイント数サマリー<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>

@@ -666,6 +666,56 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-12-engagement-tab-and-new-metrics-documented-jun-2026-research" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-12 — Engagement Tab and New Metrics Documented (Jun 2026 Research)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-06-12 — Engagement Tab and New Metrics Documented (Jun 2026 Research)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-operations-documented" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New operations documented
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-enum-values-documented" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New enum values documented
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endpoint-count-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Endpoint count update
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-12-episode-delete-endpoint-documented" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -783,6 +833,56 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-12-engagement-tab-and-new-metrics-documented-jun-2026-research" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-12 — Engagement Tab and New Metrics Documented (Jun 2026 Research)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-06-12 — Engagement Tab and New Metrics Documented (Jun 2026 Research)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-operations-documented" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New operations documented
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-enum-values-documented" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New enum values documented
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endpoint-count-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Endpoint count update
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-12-episode-delete-endpoint-documented" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -883,6 +983,113 @@
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h2 id="2026-06-12-engagement-tab-and-new-metrics-documented-jun-2026-research">2026-06-12 — Engagement Tab and New Metrics Documented (Jun 2026 Research)<a class="headerlink" href="#2026-06-12-engagement-tab-and-new-metrics-documented-jun-2026-research" title="Permanent link">&para;</a></h2>
+<p><strong>Research method:</strong> JavaScript bundle analysis — extracted and reconstructed
+GraphQL ASTs from the S4C analytics microfrontend bundle
+(<code>microfrontend-analytics-cdn.spotifycdn.com</code>). All operation names and
+query structures are taken directly from the production bundle.</p>
+<h3 id="new-operations-documented">New operations documented<a class="headerlink" href="#new-operations-documented" title="Permanent link">&para;</a></h3>
+<p><strong>Engagement Tab (newly confirmed):</strong>
+- <strong><code>getEngagementStats</code></strong> — daily time series for consumption time
+  (<code>SHOW_CONSUMPTION</code> → <code>ConsumptionValue.totalConsumptionHours</code>) and
+  average consumption time
+  (<code>SHOW_AVERAGE_CONSUMPTION_TIME</code> → <code>AverageConsumptionTimeValue.averageConsumptionSeconds</code>)
+- <strong><code>getEngagementStatsNRT</code></strong> — period totals with
+  <code>periodOverPeriodPercentageDiff</code> (source of the <code>+36.6%</code> / <code>+7.4%</code>
+  dashboard badges)
+- <strong><code>getShowRetention</code></strong> — weekly retention rate using
+  <code>SHOW_RETENTION</code> / <code>AGGREGATION_TYPE_WEEKLY</code> →
+  <code>TimeSeriesValue&lt;RatioValueFloat&gt;</code> (e.g. <code>0.537</code> = 53.7%)
+- <strong><code>getEpisodeCompletionRates</code></strong> — per-episode completion rate for latest
+  10 episodes using <code>EPISODE_AVERAGE_COMPLETION_RATE</code> /
+  <code>WINDOW_FIRST_SEVEN_DAYS</code> → <code>PercentageValueFloat</code>
+- <strong><code>getEpisodeTimeSeriesByMetric</code></strong> — single-episode time series for any
+  <code>EpisodeAnalyticsMetricType</code>; also exposes
+  <code>ConsumptionValue.foregroundConsumptionPercent</code></p>
+<p><strong>Audience Growth (three-tier core fan model):</strong>
+- <strong><code>getAudienceGrowthTimeSeries</code></strong> — daily breakdown into core fans /
+  developing audience / new audience via <code>coreFanTimeSeries</code> field
+  (uses string dates, not <code>AnalyticsWindow</code> enum)
+- <strong><code>getAudienceGrowthMetricSummary</code></strong> — summary with <code>gainedCoreFans</code> and
+  lookback period comparison via <code>coreFanMetricSummary</code>
+- <strong><code>getAudienceGrowthInsights</code></strong> — behavioral comparison between core fans
+  and total audience (retention %, consumption hours) via <code>coreFanInsight</code></p>
+<p><strong>Benchmark:</strong>
+- <strong><code>getBenchmarkTotal</code></strong> and <strong><code>getBenchmarkTimeSeries</code></strong> — compare show
+  metrics against percentile bands (20/40/50/60/80th) using
+  <code>SHOW_BENCHMARK_EPISODE</code> with <code>benchmarkParams</code>
+- Documented <code>BenchmarkMetricType</code> enum (13 values) and
+  <code>BenchmarkEpisodePool</code> enum (<code>ALL_EPISODES</code>, <code>LAST_10_EPISODES</code>)</p>
+<p><strong>Overview Tab:</strong>
+- <strong><code>getShowStreamsAndDownloadsDaily</code></strong> — all-platforms time series with
+  variable <code>$aggregationType</code> (daily / weekly / monthly)
+- <strong><code>getShowTopEpisodesByMetric</code></strong> — top episodes for any
+  <code>EpisodeAnalyticsMetricType</code> via <code>analyticsBatch</code> on episodes
+- <strong><code>getShowTopEpisodesByImpressions</code></strong> — top episodes by impressions with
+  per-source breakdown; uses new <code>TOP_EPISODES_BY_IMPRESSIONS_FACETED</code> metric
+- <strong><code>getShowStreams</code></strong>, <strong><code>getShowStreamsNRT</code></strong> — Spotify-only streams daily /
+  total
+- <strong><code>getShowAllPlatformsStats</code></strong>, <strong><code>getShowAllPlatformsStatsNRT</code></strong> — all-time
+  all-platforms totals using <code>SHOW_STREAMS_AND_DOWNLOADS_AVERAGE</code> /
+  <code>SHOW_STREAMS_AND_DOWNLOADS</code>
+- <strong><code>getPerformanceStats</code></strong>, <strong><code>getPerformanceStatsNRT</code></strong> — daily/total plays,
+  audience, follower growth
+- <strong><code>getShowMetadata</code></strong> — show metadata including all-time plays total
+- <strong><code>getShowEpisodesByMetric</code></strong> — paginated episode list with per-episode metric</p>
+<p><strong>Discovery Funnel (corrected):</strong>
+- Named operation <strong><code>getShowDiscoveryFunnelStats</code></strong> confirmed; corrected
+  <code>DiscoveryFunnelStep.stepValue</code> field structure (union:
+  <code>CountValueLong</code> for impressions/plays, <code>RatioValueFloat</code> for completion rate)</p>
+<p><strong>Segmented Audience (named operations confirmed):</strong>
+- Named operations <strong><code>getShowSegmentedAudienceTotal</code></strong> and
+  <strong><code>getShowSegmentedAudienceTimeSeries</code></strong> confirmed (previously documented
+  as anonymous queries)</p>
+<p><strong>AI Insights:</strong>
+- <strong><code>generateAnalyticsInsight</code></strong> (mutation), <strong><code>getAnalyticsInsight</code></strong> (query),
+  <strong><code>submitAnalyticsInsightFeedback</code></strong> (mutation) — AI-powered analytics
+  insight generation and feedback loop</p>
+<h3 id="new-enum-values-documented">New enum values documented<a class="headerlink" href="#new-enum-values-documented" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>ShowAnalyticsMetricType</code>: <code>SHOW_CONSUMPTION</code>, <code>SHOW_AVERAGE_CONSUMPTION_TIME</code>,
+  <code>SHOW_RETENTION</code>, <code>SHOW_BENCHMARK_EPISODE</code>, <code>SHOW_STREAMS_AND_DOWNLOADS_AVERAGE</code>,
+  <code>SHOW_STREAMS_AND_DOWNLOADS_BY_APP</code>, <code>SHOW_STREAMS_AND_DOWNLOADS_BY_DEVICE</code>,
+  <code>SHOW_STREAMS_AND_DOWNLOADS_BY_GEO_ALL_PLATFORMS</code>,
+  <code>TOP_EPISODES_BY_IMPRESSIONS_FACETED</code>, <code>SHOW_IMPRESSIONS_FACETED</code>,
+  <code>SHOW_STREAMS_FACETED</code>, <code>SHOW_FOLLOWER_GROWTH</code></li>
+<li><code>EpisodeAnalyticsMetricType</code>: <code>EPISODE_AVERAGE_COMPLETION_RATE</code>,
+  <code>EPISODE_AVERAGE_CONSUMPTION_TIME</code>, <code>EPISODE_CONSUMPTION</code>,
+  <code>EPISODE_AUDIENCE_SIZE</code>, <code>EPISODE_IMPRESSIONS</code>, <code>EPISODE_IMPRESSIONS_FACETED</code>,
+  <code>EPISODE_IMPRESSIONS_FUNNEL</code>, <code>EPISODE_IMPRESSIONS_TO_PLAYS_RATE</code>,
+  <code>EPISODE_DISCOVERY_FUNNEL</code>, <code>EPISODE_PLAYS_FACETED</code>, <code>EPISODE_STREAMS_FACETED</code>,
+  <code>EPISODE_RETENTION</code>, <code>EPISODE_SPOTIFY_PLAYS_BY_COUNTRY</code></li>
+<li><code>AnalyticsWindow</code>: <code>WINDOW_FIRST_SEVEN_DAYS</code>, <code>WINDOW_FIRST_THIRTY_DAYS</code>,
+  <code>WINDOW_FIRST_SIXTY_DAYS</code>, <code>WINDOW_LAST_SIXTY_DAYS</code>, <code>WINDOW_SINCE_PUBLISHED</code>,
+  <code>WINDOW_UNSPECIFIED</code></li>
+</ul>
+<h3 id="endpoint-count-update">Endpoint count update<a class="headerlink" href="#endpoint-count-update" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>anchor.fm REST endpoints</td>
+<td>25</td>
+</tr>
+<tr>
+<td>GraphQL queries</td>
+<td>~50 (+15 new)</td>
+</tr>
+<tr>
+<td>GraphQL mutations</td>
+<td>~15 (+3 new AI insight mutations)</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h2 id="2026-06-12-episode-delete-endpoint-documented">2026-06-12 — Episode Delete Endpoint Documented<a class="headerlink" href="#2026-06-12-episode-delete-endpoint-documented" title="Permanent link">&para;</a></h2>
 <p><strong>Research method:</strong> browser traffic capture during a live wizard
 upload + delete cycle on a production show, then direct API verification.</p>
