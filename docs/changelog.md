@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-12 — Episode Delete Endpoint Documented
+
+**Research method:** browser traffic capture during a live wizard
+upload + delete cycle on a production show, then direct API verification.
+
+- **`POST /v3/episodes/{ANCHOR_ID}/delete`** — documented the episode
+  deletion endpoint (REST API → 1-Z). Empty `{}` body, returns `200`.
+  Verified on disposable test episodes (works on drafts, scheduled, and
+  published episodes). Irreversible — no trash/restore step.
+
 ## 2026-06-12 — May 2026 New Metrics Documented
 
 **Research method:** schema introspection + live GraphQL queries against a

@@ -576,6 +576,50 @@ GET /v3/stations/status?isMumsCompatible=true
 
 ---
 
+## 1-Z. エピソード削除
+
+```
+POST /v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true
+```
+
+エピソードを完全に削除する。下書き・予約公開（未公開）・公開済みのいずれの
+状態でも動作する。
+
+### リクエストボディ
+
+```json
+{}
+```
+
+空のJSONボディでよい。エピソードはパスの `{ANCHOR_ID}`（Spotifyの
+エピソードURIではなく **Anchorの数値ID**）で特定される。Spotify IDしか
+持っていない場合は 1-A で先に数値IDへ変換する。
+
+### レスポンス
+
+```json
+{}
+```
+
+成功時 `200` を返す。
+
+!!! warning "取り消し不可"
+    ゴミ箱・復元の仕組みはなく、成功した時点で即座にエピソードが消える。
+    呼ぶ前に `{ANCHOR_ID}` が意図したエピソードを指しているか
+    （`/overview`（1-B）等で）確認すること。
+
+```bash
+curl -X POST \
+  "https://api-v5.anchor.fm/v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true" \
+  -H "Authorization: Bearer ${BEARER}" \
+  -H "Content-Type: application/json" \
+  -H "anchor-client-type: web" \
+  -H "anchor-api-version: 3.8.3" \
+  -d '{}'
+```
+
+---
+
 ## 音声/動画アップロード（6-A 〜 6-E）
 
 **対応フォーマット**：mp3, m4a, aifc, aiff, ogg, wav, flac, mp4, mov

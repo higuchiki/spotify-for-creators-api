@@ -727,6 +727,50 @@ currently authenticated user.
 
 ---
 
+## 1-Z. Delete Episode
+
+```
+POST /v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true
+```
+
+Permanently deletes an episode. Works on drafts, scheduled (not yet
+published) episodes, and published episodes alike.
+
+### Request body
+
+```json
+{}
+```
+
+An empty JSON body is sufficient. The episode is identified entirely by the
+`{ANCHOR_ID}` path segment (the numeric Anchor ID, not the Spotify episode
+URI — resolve it first via 1-A if you only have the Spotify ID).
+
+### Response
+
+```json
+{}
+```
+
+Returns `200` on success.
+
+!!! warning "Irreversible"
+    There is no trash/restore step — a successful call removes the episode
+    immediately. Confirm the `{ANCHOR_ID}` resolves to the intended episode
+    (e.g. via `/overview`, 1-B) before calling.
+
+```bash
+curl -X POST \
+  "https://api-v5.anchor.fm/v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true" \
+  -H "Authorization: Bearer ${BEARER}" \
+  -H "Content-Type: application/json" \
+  -H "anchor-client-type: web" \
+  -H "anchor-api-version: 3.8.3" \
+  -d '{}'
+```
+
+---
+
 ## Known Quirks
 
 ### description field — server-side transformations
