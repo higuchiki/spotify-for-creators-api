@@ -268,6 +268,14 @@ query {
     (`SHOW_STREAMS_AND_DOWNLOADS`) was roughly **1.6×** the Spotify-only
     total.
 
+!!! info "Plays redefined on 2026-06-11 (30s / AMP standard)"
+    The tests above predate Spotify's 2026-06-11 platform change, which
+    redefined a play as **30+ seconds listened** (AMP industry standard) and
+    switched the dashboard headline metric to **Plays + Downloads**
+    (Streams + Downloads is now "reference only"). Numerical relationships
+    described above (e.g. `SHOW_PLAYS` ≒ starts total) may no longer hold
+    under the new definition — see the [Changelog](changelog.md).
+
 !!! tip "One call replaces a per-episode loop"
     The sum of `EPISODE_STREAMS_AND_DOWNLOADS` across all episodes equals
     `SHOW_STREAMS_AND_DOWNLOADS` (matched within <0.01% in our tests). If

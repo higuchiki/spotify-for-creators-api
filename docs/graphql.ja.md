@@ -31,7 +31,9 @@ anchor.fm と同じ Bearer トークンを使用する（同じ `spotifyconnecto
 
 ## 既知のオペレーション一覧
 
-調査日：2026-05-26（Claude in Chrome MCP による JS インターセプター計測）
+初回調査：2026-05-26（Claude in Chrome MCP による JS インターセプター計測）／
+追加調査：2026-06-11〜12（スキーマイントロスペクション・JS バンドル AST 解析。
+「added Jun 2026」「2026年6月追加」と記載のあるオペレーションが対象）
 
 ### ショーレベル（show analytics ページ）
 
@@ -205,6 +207,13 @@ query {
     全プラットフォーム値ではない。真の全プラットフォーム値は `*_AND_DOWNLOADS` 系。
     テストショーでは全プラットフォーム合計（`SHOW_STREAMS_AND_DOWNLOADS`）が
     Spotify 単体の約 **1.6倍** だった。
+
+!!! info "2026-06-11 に Plays の定義が変更（30秒 / AMP標準）"
+    上記の実測は、2026-06-11 のプラットフォーム変更（再生数 =
+    **30秒以上の視聴で1再生**、AMP業界標準準拠。看板指標は
+    **Plays + Downloads** に交代、Streams + Downloads は「参照用」に降格）
+    より前のもの。`SHOW_PLAYS` ≒ starts 合計などの数値的関係は新定義のもとでは
+    成立しなくなっている可能性がある。詳細は[更新履歴](changelog.md)を参照。
 
 !!! tip "1コールでエピソードループを置き換えられる"
     全エピソードの `EPISODE_STREAMS_AND_DOWNLOADS` 合算と `SHOW_STREAMS_AND_DOWNLOADS`

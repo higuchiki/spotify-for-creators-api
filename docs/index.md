@@ -8,8 +8,20 @@
 
 This site documents the internal HTTP and GraphQL APIs powering
 [Spotify for Creators](https://creators.spotify.com) (formerly Anchor.fm),
-discovered through browser traffic analysis using JavaScript fetch/XHR
-interceptors.
+discovered through browser traffic analysis, GraphQL schema introspection,
+and JavaScript bundle AST analysis.
+
+**Last research: 2026-06-12**
+
+!!! info "Platform change (2026-06-11): Plays redefined"
+    On 2026-06-11 Spotify redefined **Plays** as *30+ seconds listened = 1 play*,
+    aligning with the AMP industry standard. The S4C dashboard headline metric
+    switched from **Streams + Downloads** to **Plays + Downloads** (all platforms);
+    the old metric was demoted to "reference" status. New features shipped
+    alongside: an **Engagement tab** (consumption time, retention, completion
+    rates), **benchmarks** (percentile comparison), and **audience segments**
+    (core fans / new / returning). Metric semantics documented before this date
+    may reflect the old definitions — see the [Changelog](changelog.md).
 
 ---
 
@@ -82,22 +94,28 @@ See [Authentication](auth.md) for how to obtain `sp_dc` / `sp_key` and a Bearer 
 | Page | Contents |
 |------|---------|
 | [Authentication](auth.md) | Obtaining `sp_dc` / `sp_key` cookies and Bearer tokens |
-| [REST API](rest-api.md) | All anchor.fm REST endpoints (1-A through 1-Y) |
-| [GraphQL API](graphql.md) | All GraphQL queries and mutations |
+| [REST API](rest-api.md) | All anchor.fm REST endpoints (1-A through 1-Z, including episode delete) |
+| [GraphQL API](graphql.md) | All GraphQL queries and mutations — analytics (overview / engagement / retention / audience growth / benchmarks / discovery funnel / AI insights), comments, transcripts, chapters |
 | [Recipes](recipes.md) | End-to-end Python implementation examples |
+| [Browser Automation](browser-automation.md) | Playwright recipes for UI-only operations |
 | [Changelog](changelog.md) | Research dates and update history |
 
 ---
 
 ## Research Methodology
 
-All endpoints were discovered by:
+Endpoints were discovered through three complementary methods:
 
-- Injecting JavaScript `fetch` and `XHR` interceptors via browser DevTools
-- Capturing live traffic while navigating the Spotify for Creators web app
-- Performing real operations (episode create, update, comment approve/delete/reply, pin, block) on a test show to capture mutation payloads
+- **Browser traffic capture** — injecting JavaScript `fetch` and `XHR` interceptors
+  via DevTools, capturing live traffic, and performing real operations
+  (episode create, update, delete, comment approve/delete/reply, pin, block)
+  on a test show to capture mutation payloads
+- **GraphQL schema introspection + live queries** against a production show
+- **JavaScript bundle AST analysis** — extracting GraphQL operation ASTs from the
+  S4C analytics microfrontend bundle
 
-Research dates: **2026-05-25 to 2026-05-26**
+Initial research: **2026-05-25 to 2026-05-26** /
+Last research: **2026-06-12** (see [Changelog](changelog.md))
 
 ---
 

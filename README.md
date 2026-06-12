@@ -14,9 +14,12 @@ Unofficial API reference for **Spotify for Creators** (formerly Anchor.fm), disc
 
 | API | Purpose |
 |-----|---------|
-| `api-v5.anchor.fm` REST | Episode CRUD, show metadata, audio upload, scheduling |
-| `creators-graph.spotify.com` GraphQL | Analytics, comments, transcripts, chapters |
+| `api-v5.anchor.fm` REST | Episode CRUD (incl. delete), show metadata, audio/video upload, scheduling, distribution, monetisation |
+| `creators-graph.spotify.com` GraphQL | Analytics (~50 queries: overview, engagement, retention, audience growth / core fans, benchmarks, discovery funnel, segmented audience, AI insights), comments, transcripts, chapters |
 | `spotifyconnector` | Bearer token retrieval from `sp_dc` / `sp_key` cookies |
+| Browser automation | Playwright recipes for UI-only operations |
+
+> **📢 Platform change (2026-06-11):** Spotify redefined **Plays** as *30+ seconds listened = 1 play* (aligning with the AMP industry standard). The S4C dashboard headline metric switched from **Streams + Downloads** to **Plays + Downloads** across all platforms; the old metric remains available for reference only. New Engagement tab, benchmarks, and audience segments shipped alongside. Metric semantics documented before this date may reflect the old definitions — see the [Changelog](https://higuchiki.github.io/spotify-for-creators-api/changelog/).
 
 ## Quick start
 
@@ -49,9 +52,14 @@ See [Authentication](https://higuchiki.github.io/spotify-for-creators-api/auth/)
 
 ## Research methodology
 
-All endpoints were discovered by injecting JavaScript `fetch` / `XHR` interceptors via browser DevTools and capturing live traffic while navigating the Spotify for Creators web app.
+Endpoints were discovered through three complementary methods:
 
-Research dates: **2026-05-25 to 2026-05-26**
+1. **Browser traffic capture** — JavaScript `fetch` / `XHR` interceptors injected via DevTools while navigating and performing live operations on the S4C web app (initial research, 2026-05-25 to 2026-05-26)
+2. **GraphQL schema introspection + live queries** against a production show (2026-06-11 to 2026-06-12)
+3. **JavaScript bundle AST analysis** — GraphQL operation ASTs extracted from the S4C analytics microfrontend bundle (2026-06-12)
+
+Initial research: **2026-05-25 to 2026-05-26**
+Last research: **2026-06-12**
 
 ## Local docs development
 

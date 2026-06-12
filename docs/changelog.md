@@ -137,6 +137,26 @@ dashboard refresh (tied to Spotify Investor Day announcement).
 
 See [GraphQL API → Analytics Queries](graphql.md#analytics-queries-verified).
 
+## 2026-06-11 — Platform Change: "Plays" Redefined (30s / AMP Standard)
+
+**Not an API research entry — a Spotify platform change that affects metric
+semantics throughout this documentation.**
+
+- Spotify redefined **Plays** as **30+ seconds listened = 1 play**, aligning
+  with the AMP (Audience Measurement Principles) industry standard. Previously
+  a play was counted on start.
+- The S4C dashboard headline metric for all platforms switched from
+  **Streams + Downloads** to **Plays + Downloads**. The old Streams + Downloads
+  figure remains available but is demoted to "reference" status.
+- New features shipped alongside: the **Engagement tab** (consumption time,
+  retention, completion rates), **benchmarks** (percentile comparison against
+  similar shows), and **audience segments** (core fans / new / returning).
+  The corresponding GraphQL operations are documented in the
+  2026-06-12 entry above.
+- **Caution:** play-count semantics captured before this date (e.g. notes that
+  `SHOW_PLAYS` matched the podcasters-API *starts* total) reflect the old
+  definition and may no longer hold numerically.
+
 ## 2026-06-11 — Analytics Queries Verified
 
 **Research method:** schema introspection + live GraphQL queries against a
@@ -251,10 +271,10 @@ Confirmed absence:
 
 ---
 
-## Endpoint Count Summary
+## Endpoint Count Summary (as of 2026-06-12)
 
 | Category | Count |
 |----------|-------|
-| anchor.fm REST endpoints (1-A to 1-Y) | 25 (including sub-endpoints in 1-V, 1-W, 6-A to 6-D) |
-| GraphQL queries | ~35 |
-| GraphQL mutations | ~12 |
+| anchor.fm REST endpoints (1-A to 1-Z) | 26 (including sub-endpoints in 1-V, 1-W, 6-A to 6-D) |
+| GraphQL queries | ~50 |
+| GraphQL mutations | ~15 |
