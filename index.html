@@ -870,8 +870,20 @@ with Spotify.</p>
 </div>
 <p>This site documents the internal HTTP and GraphQL APIs powering
 <a href="https://creators.spotify.com">Spotify for Creators</a> (formerly Anchor.fm),
-discovered through browser traffic analysis using JavaScript fetch/XHR
-interceptors.</p>
+discovered through browser traffic analysis, GraphQL schema introspection,
+and JavaScript bundle AST analysis.</p>
+<p><strong>Last research: 2026-06-12</strong></p>
+<div class="admonition info">
+<p class="admonition-title">Platform change (2026-06-11): Plays redefined</p>
+<p>On 2026-06-11 Spotify redefined <strong>Plays</strong> as <em>30+ seconds listened = 1 play</em>,
+aligning with the AMP industry standard. The S4C dashboard headline metric
+switched from <strong>Streams + Downloads</strong> to <strong>Plays + Downloads</strong> (all platforms);
+the old metric was demoted to "reference" status. New features shipped
+alongside: an <strong>Engagement tab</strong> (consumption time, retention, completion
+rates), <strong>benchmarks</strong> (percentile comparison), and <strong>audience segments</strong>
+(core fans / new / returning). Metric semantics documented before this date
+may reflect the old definitions — see the <a href="changelog/">Changelog</a>.</p>
+</div>
 <hr />
 <h2 id="architecture-overview">Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permanent link">&para;</a></h2>
 <p>Spotify for Creators runs on <strong>two distinct backend systems</strong> that are used
@@ -957,15 +969,19 @@ together:</p>
 </tr>
 <tr>
 <td><a href="rest-api/">REST API</a></td>
-<td>All anchor.fm REST endpoints (1-A through 1-Y)</td>
+<td>All anchor.fm REST endpoints (1-A through 1-Z, including episode delete)</td>
 </tr>
 <tr>
 <td><a href="graphql/">GraphQL API</a></td>
-<td>All GraphQL queries and mutations</td>
+<td>All GraphQL queries and mutations — analytics (overview / engagement / retention / audience growth / benchmarks / discovery funnel / AI insights), comments, transcripts, chapters</td>
 </tr>
 <tr>
 <td><a href="recipes/">Recipes</a></td>
 <td>End-to-end Python implementation examples</td>
+</tr>
+<tr>
+<td><a href="browser-automation/">Browser Automation</a></td>
+<td>Playwright recipes for UI-only operations</td>
 </tr>
 <tr>
 <td><a href="changelog/">Changelog</a></td>
@@ -975,13 +991,18 @@ together:</p>
 </table>
 <hr />
 <h2 id="research-methodology">Research Methodology<a class="headerlink" href="#research-methodology" title="Permanent link">&para;</a></h2>
-<p>All endpoints were discovered by:</p>
+<p>Endpoints were discovered through three complementary methods:</p>
 <ul>
-<li>Injecting JavaScript <code>fetch</code> and <code>XHR</code> interceptors via browser DevTools</li>
-<li>Capturing live traffic while navigating the Spotify for Creators web app</li>
-<li>Performing real operations (episode create, update, comment approve/delete/reply, pin, block) on a test show to capture mutation payloads</li>
+<li><strong>Browser traffic capture</strong> — injecting JavaScript <code>fetch</code> and <code>XHR</code> interceptors
+  via DevTools, capturing live traffic, and performing real operations
+  (episode create, update, delete, comment approve/delete/reply, pin, block)
+  on a test show to capture mutation payloads</li>
+<li><strong>GraphQL schema introspection + live queries</strong> against a production show</li>
+<li><strong>JavaScript bundle AST analysis</strong> — extracting GraphQL operation ASTs from the
+  S4C analytics microfrontend bundle</li>
 </ul>
-<p>Research dates: <strong>2026-05-25 to 2026-05-26</strong></p>
+<p>Initial research: <strong>2026-05-25 to 2026-05-26</strong> /
+Last research: <strong>2026-06-12</strong> (see <a href="changelog/">Changelog</a>)</p>
 <hr />
 <h2 id="contact">Contact<a class="headerlink" href="#contact" title="Permanent link">&para;</a></h2>
 <p>Found an error or noticed an API change? Feel free to reach out on X (Twitter): <a href="https://x.com/HiguchiKi">@HiguchiKi</a></p>

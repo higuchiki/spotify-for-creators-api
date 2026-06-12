@@ -738,6 +738,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#2026-06-11-platform-change-plays-redefined-30s-amp-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-11 — Platform Change: "Plays" Redefined (30s / AMP Standard)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-11-analytics-queries-verified" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -788,10 +799,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#endpoint-count-summary" class="md-nav__link">
+  <a href="#endpoint-count-summary-as-of-2026-06-12" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Endpoint Count Summary
+        Endpoint Count Summary (as of 2026-06-12)
       
     </span>
   </a>
@@ -905,6 +916,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#2026-06-11-platform-change-plays-redefined-30s-amp-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-11 — Platform Change: "Plays" Redefined (30s / AMP Standard)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-11-analytics-queries-verified" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -955,10 +977,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#endpoint-count-summary" class="md-nav__link">
+  <a href="#endpoint-count-summary-as-of-2026-06-12" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Endpoint Count Summary
+        Endpoint Count Summary (as of 2026-06-12)
       
     </span>
   </a>
@@ -1123,6 +1145,25 @@ dashboard refresh (tied to Spotify Investor Day announcement).</p>
   <code>listSponsorships</code>; <code>analyticsInsight</code>, <code>getEpisodeInsights</code>.</li>
 </ul>
 <p>See <a href="../graphql/#analytics-queries-verified">GraphQL API → Analytics Queries</a>.</p>
+<h2 id="2026-06-11-platform-change-plays-redefined-30s-amp-standard">2026-06-11 — Platform Change: "Plays" Redefined (30s / AMP Standard)<a class="headerlink" href="#2026-06-11-platform-change-plays-redefined-30s-amp-standard" title="Permanent link">&para;</a></h2>
+<p><strong>Not an API research entry — a Spotify platform change that affects metric
+semantics throughout this documentation.</strong></p>
+<ul>
+<li>Spotify redefined <strong>Plays</strong> as <strong>30+ seconds listened = 1 play</strong>, aligning
+  with the AMP (Audience Measurement Principles) industry standard. Previously
+  a play was counted on start.</li>
+<li>The S4C dashboard headline metric for all platforms switched from
+  <strong>Streams + Downloads</strong> to <strong>Plays + Downloads</strong>. The old Streams + Downloads
+  figure remains available but is demoted to "reference" status.</li>
+<li>New features shipped alongside: the <strong>Engagement tab</strong> (consumption time,
+  retention, completion rates), <strong>benchmarks</strong> (percentile comparison against
+  similar shows), and <strong>audience segments</strong> (core fans / new / returning).
+  The corresponding GraphQL operations are documented in the
+  2026-06-12 entry above.</li>
+<li><strong>Caution:</strong> play-count semantics captured before this date (e.g. notes that
+  <code>SHOW_PLAYS</code> matched the podcasters-API <em>starts</em> total) reflect the old
+  definition and may no longer hold numerically.</li>
+</ul>
 <h2 id="2026-06-11-analytics-queries-verified">2026-06-11 — Analytics Queries Verified<a class="headerlink" href="#2026-06-11-analytics-queries-verified" title="Permanent link">&para;</a></h2>
 <p><strong>Research method:</strong> schema introspection + live GraphQL queries against a
 production show.</p>
@@ -1227,7 +1268,7 @@ block — all captured via the interceptor.</p>
 <li>Chapter create/update/delete mutations: could not be reached (test show ineligible)</li>
 </ul>
 <hr />
-<h2 id="endpoint-count-summary">Endpoint Count Summary<a class="headerlink" href="#endpoint-count-summary" title="Permanent link">&para;</a></h2>
+<h2 id="endpoint-count-summary-as-of-2026-06-12">Endpoint Count Summary (as of 2026-06-12)<a class="headerlink" href="#endpoint-count-summary-as-of-2026-06-12" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1237,16 +1278,16 @@ block — all captured via the interceptor.</p>
 </thead>
 <tbody>
 <tr>
-<td>anchor.fm REST endpoints (1-A to 1-Y)</td>
-<td>25 (including sub-endpoints in 1-V, 1-W, 6-A to 6-D)</td>
+<td>anchor.fm REST endpoints (1-A to 1-Z)</td>
+<td>26 (including sub-endpoints in 1-V, 1-W, 6-A to 6-D)</td>
 </tr>
 <tr>
 <td>GraphQL queries</td>
-<td>~35</td>
+<td>~50</td>
 </tr>
 <tr>
 <td>GraphQL mutations</td>
-<td>~12</td>
+<td>~15</td>
 </tr>
 </tbody>
 </table>

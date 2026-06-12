@@ -2239,7 +2239,9 @@
 </div>
 <hr />
 <h2 id="_3">既知のオペレーション一覧<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>調査日：2026-05-26（Claude in Chrome MCP による JS インターセプター計測）</p>
+<p>初回調査：2026-05-26（Claude in Chrome MCP による JS インターセプター計測）／
+追加調査：2026-06-11〜12（スキーマイントロスペクション・JS バンドル AST 解析。
+「added Jun 2026」「2026年6月追加」と記載のあるオペレーションが対象）</p>
 <h3 id="show-analytics">ショーレベル（show analytics ページ）<a class="headerlink" href="#show-analytics" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -2724,6 +2726,14 @@
 全プラットフォーム値ではない。真の全プラットフォーム値は <code>*_AND_DOWNLOADS</code> 系。
 テストショーでは全プラットフォーム合計（<code>SHOW_STREAMS_AND_DOWNLOADS</code>）が
 Spotify 単体の約 <strong>1.6倍</strong> だった。</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">2026-06-11 に Plays の定義が変更（30秒 / AMP標準）</p>
+<p>上記の実測は、2026-06-11 のプラットフォーム変更（再生数 =
+<strong>30秒以上の視聴で1再生</strong>、AMP業界標準準拠。看板指標は
+<strong>Plays + Downloads</strong> に交代、Streams + Downloads は「参照用」に降格）
+より前のもの。<code>SHOW_PLAYS</code> ≒ starts 合計などの数値的関係は新定義のもとでは
+成立しなくなっている可能性がある。詳細は<a href="../changelog/">更新履歴</a>を参照。</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">1コールでエピソードループを置き換えられる</p>

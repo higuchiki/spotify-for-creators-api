@@ -3414,6 +3414,15 @@ all-platforms number. The true all-platforms figures are the
 (<code>SHOW_STREAMS_AND_DOWNLOADS</code>) was roughly <strong>1.6×</strong> the Spotify-only
 total.</p>
 </div>
+<div class="admonition info">
+<p class="admonition-title">Plays redefined on 2026-06-11 (30s / AMP standard)</p>
+<p>The tests above predate Spotify's 2026-06-11 platform change, which
+redefined a play as <strong>30+ seconds listened</strong> (AMP industry standard) and
+switched the dashboard headline metric to <strong>Plays + Downloads</strong>
+(Streams + Downloads is now "reference only"). Numerical relationships
+described above (e.g. <code>SHOW_PLAYS</code> ≒ starts total) may no longer hold
+under the new definition — see the <a href="../changelog/">Changelog</a>.</p>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">One call replaces a per-episode loop</p>
 <p>The sum of <code>EPISODE_STREAMS_AND_DOWNLOADS</code> across all episodes equals

@@ -869,8 +869,21 @@
 本サイトの著者は Spotify とは無関係です。</p>
 </div>
 <p>このサイトでは、<a href="https://creators.spotify.com">Spotify for Creators</a>（旧 Anchor.fm）の
-内部 HTTP / GraphQL API を解説しています。JavaScript の fetch/XHR インターセプターを
-使ったブラウザトラフィック解析により発見されたエンドポイントを体系的にまとめています。</p>
+内部 HTTP / GraphQL API を解説しています。ブラウザトラフィック解析・GraphQL スキーマ
+イントロスペクション・JavaScript バンドル AST 解析により発見されたエンドポイントを
+体系的にまとめています。</p>
+<p><strong>最終調査日：2026-06-12</strong></p>
+<div class="admonition info">
+<p class="admonition-title">プラットフォーム変更（2026-06-11）：再生数（Plays）の定義変更</p>
+<p>2026-06-11、Spotify は <strong>Plays（再生数）</strong> の定義を「<strong>30秒以上の視聴 = 1再生</strong>」に
+変更しました（AMP 業界標準準拠）。これに伴い S4C ダッシュボードの全プラットフォーム
+看板指標が <strong>Streams + Downloads</strong> から <strong>Plays + Downloads</strong> に交代し、
+旧指標は「参照用」に降格しました。同時に <strong>エンゲージメントタブ</strong>（視聴時間・
+リテンション・完全再生率）、<strong>ベンチマーク</strong>（パーセンタイル比較）、
+<strong>オーディエンスセグメント</strong>（コアファン / 新規 / リピーター）などの新機能が
+追加されています。この日付より前に記録した指標のセマンティクスは旧定義に
+基づいている可能性があります。詳細は<a href="changelog/">更新履歴</a>を参照してください。</p>
+</div>
 <hr />
 <h2 id="_1">全体アーキテクチャ<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>S4C のバックエンドは <strong>2系統</strong> に分かれており、用途によって使い分ける。</p>
@@ -955,15 +968,19 @@
 </tr>
 <tr>
 <td><a href="rest-api/">REST API リファレンス</a></td>
-<td>anchor.fm REST エンドポイント全一覧（1-A 〜 1-Y）</td>
+<td>anchor.fm REST エンドポイント全一覧（1-A 〜 1-Z、エピソード削除含む）</td>
 </tr>
 <tr>
 <td><a href="graphql/">GraphQL API</a></td>
-<td>GraphQL クエリ・ミューテーション全一覧</td>
+<td>GraphQL クエリ・ミューテーション全一覧 — アナリティクス（概要 / エンゲージメント / リテンション / オーディエンス成長 / ベンチマーク / ディスカバリーファネル / AIインサイト）・コメント・トランスクリプト・チャプター</td>
 </tr>
 <tr>
 <td><a href="recipes/">レシピ・実装例</a></td>
 <td>Python によるエンドツーエンドの実装フロー</td>
+</tr>
+<tr>
+<td><a href="browser-automation/">ブラウザ自動化</a></td>
+<td>UI操作のみで可能な処理の Playwright レシピ</td>
 </tr>
 <tr>
 <td><a href="changelog/">更新履歴</a></td>
@@ -973,14 +990,17 @@
 </table>
 <hr />
 <h2 id="_5">調査方法<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p>すべてのエンドポイントは以下の手順で発見した。</p>
+<p>エンドポイントは以下の3つの手法を組み合わせて発見した。</p>
 <ul>
-<li>JavaScript の <code>fetch</code> / <code>XHR</code> インターセプターをブラウザの DevTools から注入</li>
-<li>Spotify for Creators の Web アプリを操作しながらライブトラフィックをキャプチャ</li>
-<li>テスト用ショーでエピソード作成・更新・コメント承認/削除/返信/ピン留め/ブロックなどの
-  実操作を行い、mutation のペイロードを確認</li>
+<li><strong>ブラウザトラフィックキャプチャ</strong> — JavaScript の <code>fetch</code> / <code>XHR</code> インターセプターを
+  DevTools から注入し、テスト用ショーでエピソード作成・更新・削除・コメント承認/削除/
+  返信/ピン留め/ブロックなどの実操作を行い、ペイロードを確認</li>
+<li><strong>GraphQL スキーマイントロスペクション + 実クエリ</strong> — 本番ショーに対する実測検証</li>
+<li><strong>JavaScript バンドル AST 解析</strong> — S4C アナリティクス マイクロフロントエンドの
+  バンドルから GraphQL オペレーション AST を抽出・再構成</li>
 </ul>
-<p>調査期間：<strong>2026年5月25日〜26日</strong></p>
+<p>初回調査：<strong>2026年5月25日〜26日</strong> ／
+最終調査：<strong>2026年6月12日</strong>（詳細は<a href="changelog/">更新履歴</a>）</p>
 <hr />
 <h2 id="_6">お問い合わせ<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <p>誤りやAPI仕様の変更を発見した場合は、X（Twitter）までご連絡ください：<a href="https://x.com/HiguchiKi">@HiguchiKi</a></p>

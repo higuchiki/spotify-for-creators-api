@@ -738,6 +738,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#2026611-plays30-amp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月11日 — プラットフォーム変更：再生数（Plays）の定義変更（30秒 / AMP標準）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026611-query" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -788,10 +799,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#2026-06-12" class="md-nav__link">
     <span class="md-ellipsis">
       
-        エンドポイント数サマリー
+        エンドポイント数サマリー（2026-06-12 時点）
       
     </span>
   </a>
@@ -905,6 +916,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#2026611-plays30-amp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月11日 — プラットフォーム変更：再生数（Plays）の定義変更（30秒 / AMP標準）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026611-query" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -955,10 +977,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#2026-06-12" class="md-nav__link">
     <span class="md-ellipsis">
       
-        エンドポイント数サマリー
+        エンドポイント数サマリー（2026-06-12 時点）
       
     </span>
   </a>
@@ -1101,6 +1123,24 @@
   <code>analyticsInsight</code>、<code>getEpisodeInsights</code>（AI インサイト）。</li>
 </ul>
 <p>詳細は <a href="../graphql/">GraphQL API → 新メトリクス（2026年5月ダッシュボード刷新で追加）</a> を参照。</p>
+<h2 id="2026611-plays30-amp">2026年6月11日 — プラットフォーム変更：再生数（Plays）の定義変更（30秒 / AMP標準）<a class="headerlink" href="#2026611-plays30-amp" title="Permanent link">&para;</a></h2>
+<p><strong>API調査エントリではなく、本ドキュメント全体の指標セマンティクスに影響する
+Spotify 側のプラットフォーム変更。</strong></p>
+<ul>
+<li>Spotify が <strong>Plays（再生数）</strong> の定義を「<strong>30秒以上の視聴 = 1再生</strong>」に変更
+  （AMP（Audience Measurement Principles）業界標準準拠）。従来は再生開始時点で
+  1再生とカウントされていた。</li>
+<li>S4C ダッシュボードの全プラットフォーム看板指標が <strong>Streams + Downloads</strong> から
+  <strong>Plays + Downloads</strong> に交代。旧 Streams + Downloads は引き続き取得可能だが
+  「参照用」に降格。</li>
+<li>同時に新機能が追加：<strong>エンゲージメントタブ</strong>（視聴時間・リテンション・完全再生率）、
+  <strong>ベンチマーク</strong>（類似番組とのパーセンタイル比較）、<strong>オーディエンスセグメント</strong>
+  （コアファン / 新規 / リピーター）。対応する GraphQL オペレーションは上記
+  2026年6月12日のエントリで文書化済み。</li>
+<li><strong>注意：</strong> この日付より前に記録した再生数のセマンティクス（例：<code>SHOW_PLAYS</code> が
+  podcasters API の <em>starts</em> 合計と一致するという記述）は旧定義に基づくもので、
+  数値的に成立しなくなっている可能性がある。</li>
+</ul>
 <h2 id="2026611-query">2026年6月11日 — アナリティクス Query 実測確定<a class="headerlink" href="#2026611-query" title="Permanent link">&para;</a></h2>
 <p><strong>調査方法</strong>: スキーマイントロスペクション + 本番ショーへの実 GraphQL クエリ</p>
 <ul>
@@ -1192,7 +1232,7 @@
 <li>チャプター作成・更新・削除 mutation：テストショーの資格なしで UI にアクセス不可</li>
 </ul>
 <hr />
-<h2 id="_4">エンドポイント数サマリー<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="2026-06-12">エンドポイント数サマリー（2026-06-12 時点）<a class="headerlink" href="#2026-06-12" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1202,16 +1242,16 @@
 </thead>
 <tbody>
 <tr>
-<td>anchor.fm REST エンドポイント（1-A 〜 1-Y）</td>
-<td>25（1-V・1-W・6-A〜6-D のサブエンドポイント含む）</td>
+<td>anchor.fm REST エンドポイント（1-A 〜 1-Z）</td>
+<td>26（1-V・1-W・6-A〜6-D のサブエンドポイント含む）</td>
 </tr>
 <tr>
 <td>GraphQL query</td>
-<td>約35</td>
+<td>約50</td>
 </tr>
 <tr>
 <td>GraphQL mutation</td>
-<td>約12</td>
+<td>約15</td>
 </tr>
 </tbody>
 </table>
