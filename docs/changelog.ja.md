@@ -1,5 +1,85 @@
 # 更新履歴
 
+## 2026年6月12日 — エンゲージメントタブと新メトリクスの文書化（2026年6月調査）
+
+**調査方法：** JavaScript バンドル解析 — S4C アナリティクス マイクロフロントエンドの
+バンドル（`microfrontend-analytics-cdn.spotifycdn.com`）から GraphQL AST を
+抽出・再構成。すべてのオペレーション名とクエリ構造は本番バンドルから直接取得した。
+
+### 新規文書化されたオペレーション
+
+**エンゲージメントタブ（確定）：**
+- **`getEngagementStats`** — 視聴時間（`SHOW_CONSUMPTION` → `ConsumptionValue.totalConsumptionHours`）
+  と平均視聴時間（`SHOW_AVERAGE_CONSUMPTION_TIME` → `AverageConsumptionTimeValue.averageConsumptionSeconds`）
+  の日次時系列
+- **`getEngagementStatsNRT`** — 期間合計に `periodOverPeriodPercentageDiff` 付き
+  （ダッシュボードの `+36.6%` / `+7.4%` バッジの値）
+- **`getShowRetention`** — `SHOW_RETENTION` / `AGGREGATION_TYPE_WEEKLY` による
+  週次リテンション率時系列（`RatioValueFloat` —例：`0.537` = 53.7%）
+- **`getEpisodeCompletionRates`** — 最新10エピソードの完全再生率（`EPISODE_AVERAGE_COMPLETION_RATE` /
+  `WINDOW_FIRST_SEVEN_DAYS` → `PercentageValueFloat`）
+- **`getEpisodeTimeSeriesByMetric`** — 単一エピソードの任意メトリクス時系列（
+  `ConsumptionValue.foregroundConsumptionPercent` も取得可能）
+
+**オーディエンス成長（コアファン3層モデル確定）：**
+- **`getAudienceGrowthTimeSeries`** — コアファン / 発展途上 / 新規オーディエンスの
+  日次時系列（`coreFanTimeSeries` フィールド使用。文字列日付、AnalyticsWindow enum ではない）
+- **`getAudienceGrowthMetricSummary`** — `gainedCoreFans`（獲得コアファン数）と
+  前期比付きサマリー
+- **`getAudienceGrowthInsights`** — コアファンと全体オーディエンスの
+  リテンション率・視聴時間比較
+
+**ベンチマーク：**
+- **`getBenchmarkTotal`** / **`getBenchmarkTimeSeries`** — 類似ショーとの
+  パーセンタイル比較（20/40/50/60/80）
+- `BenchmarkMetricType` enum（13値）と `BenchmarkEpisodePool` enum
+  （`ALL_EPISODES`、`LAST_10_EPISODES`）を文書化
+
+**概要タブ：**
+- **`getShowStreamsAndDownloadsDaily`** — 全プラットフォーム時系列（`$aggregationType` 変数で日次/週次/月次切り替え可能）
+- **`getShowTopEpisodesByMetric`** — 任意 `EpisodeAnalyticsMetricType` でエピソードランキング
+- **`getShowTopEpisodesByImpressions`** — ソース別内訳付きインプレッションランキング（新 enum `TOP_EPISODES_BY_IMPRESSIONS_FACETED`）
+- **`getShowStreams`** / **`getShowStreamsNRT`** — Spotify 専用ストリーム日次/合計
+- **`getShowAllPlatformsStats`** / **`getShowAllPlatformsStatsNRT`** — 全期間全プラットフォーム合計
+- **`getPerformanceStats`** / **`getPerformanceStatsNRT`** — 再生数・オーディエンス・フォロワー増減
+- **`getShowMetadata`** — ショーメタデータと全期間再生数合計
+- **`getShowEpisodesByMetric`** — メトリクス付きページネーションエピソード一覧
+
+**ディスカバリーファネル（修正）：**
+- 名前付きオペレーション **`getShowDiscoveryFunnelStats`** を確定
+- `DiscoveryFunnelStep.stepValue` のフィールド構造を修正
+  （union 型：`CountValueLong`（インプレッション/再生）/ `RatioValueFloat`（完了率））
+
+**オーディエンスセグメント（名前付きオペレーション確定）：**
+- 名前付きオペレーション **`getShowSegmentedAudienceTotal`** / **`getShowSegmentedAudienceTimeSeries`** を確定
+  （以前は無名クエリとして文書化していた）
+
+**AI インサイト：**
+- **`generateAnalyticsInsight`**（mutation）、**`getAnalyticsInsight`**（query）、
+  **`submitAnalyticsInsightFeedback`**（mutation）を文書化
+
+### 新規文書化された enum 値
+- `ShowAnalyticsMetricType`：`SHOW_CONSUMPTION`、`SHOW_AVERAGE_CONSUMPTION_TIME`、
+  `SHOW_RETENTION`、`SHOW_BENCHMARK_EPISODE`、`SHOW_STREAMS_AND_DOWNLOADS_AVERAGE`、
+  `SHOW_STREAMS_AND_DOWNLOADS_BY_APP`、`SHOW_STREAMS_AND_DOWNLOADS_BY_DEVICE`、
+  `SHOW_STREAMS_AND_DOWNLOADS_BY_GEO_ALL_PLATFORMS`、`TOP_EPISODES_BY_IMPRESSIONS_FACETED`、
+  `SHOW_IMPRESSIONS_FACETED`、`SHOW_STREAMS_FACETED`、`SHOW_FOLLOWER_GROWTH`
+- `EpisodeAnalyticsMetricType`：`EPISODE_AVERAGE_COMPLETION_RATE`、
+  `EPISODE_AVERAGE_CONSUMPTION_TIME`、`EPISODE_CONSUMPTION`、
+  `EPISODE_AUDIENCE_SIZE`、`EPISODE_IMPRESSIONS`（＋8値）
+- `AnalyticsWindow`：`WINDOW_FIRST_SEVEN_DAYS`、`WINDOW_FIRST_THIRTY_DAYS`、
+  `WINDOW_FIRST_SIXTY_DAYS`、`WINDOW_LAST_SIXTY_DAYS`、`WINDOW_SINCE_PUBLISHED`、
+  `WINDOW_UNSPECIFIED`
+
+### エンドポイント数の更新
+| カテゴリ | 件数 |
+|---------|------|
+| anchor.fm REST エンドポイント | 25 |
+| GraphQL クエリ | 約50（+15件追加） |
+| GraphQL ミューテーション | 約15（+3件：AI インサイト系） |
+
+---
+
 ## 2026年6月12日 — エピソード削除エンドポイントの文書化
 
 **調査方法：** 本番ショーでのウィザードによるアップロード＋削除サイクルの

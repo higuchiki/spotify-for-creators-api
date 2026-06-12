@@ -1,5 +1,106 @@
 # Changelog
 
+## 2026-06-12 — Engagement Tab and New Metrics Documented (Jun 2026 Research)
+
+**Research method:** JavaScript bundle analysis — extracted and reconstructed
+GraphQL ASTs from the S4C analytics microfrontend bundle
+(`microfrontend-analytics-cdn.spotifycdn.com`). All operation names and
+query structures are taken directly from the production bundle.
+
+### New operations documented
+
+**Engagement Tab (newly confirmed):**
+- **`getEngagementStats`** — daily time series for consumption time
+  (`SHOW_CONSUMPTION` → `ConsumptionValue.totalConsumptionHours`) and
+  average consumption time
+  (`SHOW_AVERAGE_CONSUMPTION_TIME` → `AverageConsumptionTimeValue.averageConsumptionSeconds`)
+- **`getEngagementStatsNRT`** — period totals with
+  `periodOverPeriodPercentageDiff` (source of the `+36.6%` / `+7.4%`
+  dashboard badges)
+- **`getShowRetention`** — weekly retention rate using
+  `SHOW_RETENTION` / `AGGREGATION_TYPE_WEEKLY` →
+  `TimeSeriesValue<RatioValueFloat>` (e.g. `0.537` = 53.7%)
+- **`getEpisodeCompletionRates`** — per-episode completion rate for latest
+  10 episodes using `EPISODE_AVERAGE_COMPLETION_RATE` /
+  `WINDOW_FIRST_SEVEN_DAYS` → `PercentageValueFloat`
+- **`getEpisodeTimeSeriesByMetric`** — single-episode time series for any
+  `EpisodeAnalyticsMetricType`; also exposes
+  `ConsumptionValue.foregroundConsumptionPercent`
+
+**Audience Growth (three-tier core fan model):**
+- **`getAudienceGrowthTimeSeries`** — daily breakdown into core fans /
+  developing audience / new audience via `coreFanTimeSeries` field
+  (uses string dates, not `AnalyticsWindow` enum)
+- **`getAudienceGrowthMetricSummary`** — summary with `gainedCoreFans` and
+  lookback period comparison via `coreFanMetricSummary`
+- **`getAudienceGrowthInsights`** — behavioral comparison between core fans
+  and total audience (retention %, consumption hours) via `coreFanInsight`
+
+**Benchmark:**
+- **`getBenchmarkTotal`** and **`getBenchmarkTimeSeries`** — compare show
+  metrics against percentile bands (20/40/50/60/80th) using
+  `SHOW_BENCHMARK_EPISODE` with `benchmarkParams`
+- Documented `BenchmarkMetricType` enum (13 values) and
+  `BenchmarkEpisodePool` enum (`ALL_EPISODES`, `LAST_10_EPISODES`)
+
+**Overview Tab:**
+- **`getShowStreamsAndDownloadsDaily`** — all-platforms time series with
+  variable `$aggregationType` (daily / weekly / monthly)
+- **`getShowTopEpisodesByMetric`** — top episodes for any
+  `EpisodeAnalyticsMetricType` via `analyticsBatch` on episodes
+- **`getShowTopEpisodesByImpressions`** — top episodes by impressions with
+  per-source breakdown; uses new `TOP_EPISODES_BY_IMPRESSIONS_FACETED` metric
+- **`getShowStreams`**, **`getShowStreamsNRT`** — Spotify-only streams daily /
+  total
+- **`getShowAllPlatformsStats`**, **`getShowAllPlatformsStatsNRT`** — all-time
+  all-platforms totals using `SHOW_STREAMS_AND_DOWNLOADS_AVERAGE` /
+  `SHOW_STREAMS_AND_DOWNLOADS`
+- **`getPerformanceStats`**, **`getPerformanceStatsNRT`** — daily/total plays,
+  audience, follower growth
+- **`getShowMetadata`** — show metadata including all-time plays total
+- **`getShowEpisodesByMetric`** — paginated episode list with per-episode metric
+
+**Discovery Funnel (corrected):**
+- Named operation **`getShowDiscoveryFunnelStats`** confirmed; corrected
+  `DiscoveryFunnelStep.stepValue` field structure (union:
+  `CountValueLong` for impressions/plays, `RatioValueFloat` for completion rate)
+
+**Segmented Audience (named operations confirmed):**
+- Named operations **`getShowSegmentedAudienceTotal`** and
+  **`getShowSegmentedAudienceTimeSeries`** confirmed (previously documented
+  as anonymous queries)
+
+**AI Insights:**
+- **`generateAnalyticsInsight`** (mutation), **`getAnalyticsInsight`** (query),
+  **`submitAnalyticsInsightFeedback`** (mutation) — AI-powered analytics
+  insight generation and feedback loop
+
+### New enum values documented
+- `ShowAnalyticsMetricType`: `SHOW_CONSUMPTION`, `SHOW_AVERAGE_CONSUMPTION_TIME`,
+  `SHOW_RETENTION`, `SHOW_BENCHMARK_EPISODE`, `SHOW_STREAMS_AND_DOWNLOADS_AVERAGE`,
+  `SHOW_STREAMS_AND_DOWNLOADS_BY_APP`, `SHOW_STREAMS_AND_DOWNLOADS_BY_DEVICE`,
+  `SHOW_STREAMS_AND_DOWNLOADS_BY_GEO_ALL_PLATFORMS`,
+  `TOP_EPISODES_BY_IMPRESSIONS_FACETED`, `SHOW_IMPRESSIONS_FACETED`,
+  `SHOW_STREAMS_FACETED`, `SHOW_FOLLOWER_GROWTH`
+- `EpisodeAnalyticsMetricType`: `EPISODE_AVERAGE_COMPLETION_RATE`,
+  `EPISODE_AVERAGE_CONSUMPTION_TIME`, `EPISODE_CONSUMPTION`,
+  `EPISODE_AUDIENCE_SIZE`, `EPISODE_IMPRESSIONS`, `EPISODE_IMPRESSIONS_FACETED`,
+  `EPISODE_IMPRESSIONS_FUNNEL`, `EPISODE_IMPRESSIONS_TO_PLAYS_RATE`,
+  `EPISODE_DISCOVERY_FUNNEL`, `EPISODE_PLAYS_FACETED`, `EPISODE_STREAMS_FACETED`,
+  `EPISODE_RETENTION`, `EPISODE_SPOTIFY_PLAYS_BY_COUNTRY`
+- `AnalyticsWindow`: `WINDOW_FIRST_SEVEN_DAYS`, `WINDOW_FIRST_THIRTY_DAYS`,
+  `WINDOW_FIRST_SIXTY_DAYS`, `WINDOW_LAST_SIXTY_DAYS`, `WINDOW_SINCE_PUBLISHED`,
+  `WINDOW_UNSPECIFIED`
+
+### Endpoint count update
+| Category | Count |
+|----------|-------|
+| anchor.fm REST endpoints | 25 |
+| GraphQL queries | ~50 (+15 new) |
+| GraphQL mutations | ~15 (+3 new AI insight mutations) |
+
+---
+
 ## 2026-06-12 — Episode Delete Endpoint Documented
 
 **Research method:** browser traffic capture during a live wizard

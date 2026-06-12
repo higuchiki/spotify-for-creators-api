@@ -73,6 +73,29 @@ Called when the show analytics page loads.
 | `getShowOnSpotifyStatsNRT` | query | Near real-time Spotify stats |
 | `getShowOverviewStatsNRT` | query | Near real-time overall show stats |
 | `getPublishedEpisodeCount` | query | Count of published episodes |
+| `getShowMetadata` | query | Show metadata + all-time plays total (added Jun 2026) |
+| `getShowAllPlatformsStats` | query | All-platforms streams+downloads average (added Jun 2026) |
+| `getShowAllPlatformsStatsNRT` | query | All-time streams+downloads total (added Jun 2026) |
+| `getShowStreams` | query | Daily Spotify streams time series (added Jun 2026) |
+| `getShowStreamsNRT` | query | Spotify streams total for period (added Jun 2026) |
+| `getShowStreamsAndDownloadsDaily` | query | All-platforms streams+downloads daily/weekly/monthly (added Jun 2026) |
+| `getPerformanceStats` | query | Daily plays + audience + follower time series (added Jun 2026) |
+| `getPerformanceStatsNRT` | query | Total plays + audience + follower counts with period comparison (added Jun 2026) |
+| `getShowTopEpisodesByImpressions` | query | Top episodes ranked by impressions with source breakdown (added Jun 2026) |
+| `getShowTopEpisodesByMetric` | query | Top episodes for any EpisodeAnalyticsMetricType (added Jun 2026) |
+| `getShowEpisodesByMetric` | query | Paginated episode list with per-episode metric (added Jun 2026) |
+| `hasVideoEpisodes` | query | Whether the show has video episodes (added Jun 2026) |
+| `getPermissionsForShow` | query | Creator permissions for the show (added Jun 2026) |
+
+### Analytics — Engagement Tab (New: Jun 2026)
+
+| Operation | Type | Description |
+|-----------|------|-------------|
+| `getEngagementStats` | query | Consumption time, avg consumption time, comments, follower growth (daily time series) |
+| `getEngagementStatsNRT` | query | Consumption time + avg consumption time totals with period comparison |
+| `getEpisodeCompletionRates` | query | Per-episode completion rate for the 10 latest episodes (7-day window) |
+| `getShowRetention` | query | Week-over-week retention rate as a weekly time series |
+| `getEpisodeTimeSeriesByMetric` | query | Single-episode time series for any EpisodeAnalyticsMetricType |
 
 ### Analytics — Audience Tab
 
@@ -81,6 +104,32 @@ Called when the show analytics page loads.
 | `getShowAudienceDemographicsStats` | query | Age / gender breakdown |
 | `getShowAudienceAllPlatformsGeoStats` | query | Geographic breakdown across platforms |
 | `getShowAudienceAllPlatformsStats` | query | Cross-platform stats |
+| `getShowSegmentedAudienceTotal` | query | New vs returning listener totals (May 2026) |
+| `getShowSegmentedAudienceTimeSeries` | query | New vs returning listener daily time series (May 2026) |
+| `getAudienceGrowthTimeSeries` | query | Core fan / developing / new audience daily time series (Jun 2026) |
+| `getAudienceGrowthMetricSummary` | query | Core fan metric summary with period comparison (Jun 2026) |
+| `getAudienceGrowthInsights` | query | Core fan insights: retention and consumption vs total audience (Jun 2026) |
+
+### Analytics — Discovery Tab (New: Jun 2026)
+
+| Operation | Type | Description |
+|-----------|------|-------------|
+| `getShowDiscoveryFunnelStats` | query | Impressions → Plays → Avg Completion funnel with conversion rates (May 2026) |
+
+### Analytics — Benchmark (New: Jun 2026)
+
+| Operation | Type | Description |
+|-----------|------|-------------|
+| `getBenchmarkTotal` | query | Show vs benchmark percentiles (total, any BenchmarkMetricType) |
+| `getBenchmarkTimeSeries` | query | Show vs benchmark percentiles over time |
+
+### Analytics — AI Insights (New: Jun 2026)
+
+| Operation | Type | Description |
+|-----------|------|-------------|
+| `generateAnalyticsInsight` | mutation | Trigger AI insight generation |
+| `getAnalyticsInsight` | query | Fetch a generated AI insight by ID |
+| `submitAnalyticsInsightFeedback` | mutation | Submit thumbs-up/down feedback on an insight |
 
 ### Episode-Level Queries
 
@@ -881,14 +930,6 @@ The following fields were added to the `Show` type in the May 2026 update.
 They appear in the schema via introspection but have **not been tested with
 live queries**. Use with caution.
 
-**Core fan metrics:**
-
-| Field | Return type | Notes |
-|-------|-------------|-------|
-| `coreFanTimeSeries` | `GetCoreFanTimeSeriesResponse` | Core fan (highly engaged listener) time series |
-| `coreFanMetricSummary` | `GetCoreFanMetricSummaryResponse` | Core fan metric summary |
-| `coreFanInsight` | `GetCoreFanInsightResponse` | Insights about core fans |
-
 **Sponsorship:**
 
 | Field | Return type | Notes |
@@ -896,12 +937,905 @@ live queries**. Use with caution.
 | `sponsorshipAnalytics` | `ShowSponsorshipAnalytics` | Sponsorship analytics |
 | `listSponsorships` | `ListSponsorshipsResponse` | List of sponsorships |
 
-**AI Insights:**
+---
 
-| Field | Return type | Notes |
-|-------|-------------|-------|
-| `analyticsInsight` | `InsightResponse` | Analytics insights (possibly AI-generated) |
-| `getEpisodeInsights` | `GetEpisodeInsightsByShowResponse` | Per-episode insights |
+## Engagement Tab Queries (New: Jun 2026)
+
+> Captured 2026-06-12 by extracting and reconstructing GraphQL ASTs from
+> the S4C analytics JavaScript bundle
+> (`microfrontend-analytics-cdn.spotifycdn.com`). All queries are confirmed
+> to exist in the production bundle; live execution has not been independently
+> verified for every query.
+
+### `getEngagementStats` — Daily Engagement Time Series
+
+Fires when the Engagement tab loads. Returns daily time-series data for
+consumption time, average consumption time, comments, and follower growth.
+
+```graphql
+query getEngagementStats(
+  $showUri: ShowUri!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $customDateRange: CustomDateRangeInput,
+  $publishedAfter: TimestampInput,
+  $publishedBefore: TimestampInput,
+  $hasComments: Boolean!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    consumptionTimeDaily: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_CONSUMPTION,
+      aggregationType: AGGREGATION_TYPE_DAILY,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              endDate
+              value {
+                __typename
+                ... on ConsumptionValue {
+                  totalConsumptionHours
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    avgConsumptionTimeDaily: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_AVERAGE_CONSUMPTION_TIME,
+      aggregationType: AGGREGATION_TYPE_DAILY,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              endDate
+              value {
+                __typename
+                ... on AverageConsumptionTimeValue {
+                  averageConsumptionSeconds
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**New response types:**
+
+| Type | Fields | Description |
+|------|--------|-------------|
+| `ConsumptionValue` | `totalConsumptionHours` | Total listening time in hours for the period/day |
+| `AverageConsumptionTimeValue` | `averageConsumptionSeconds` | Per-listener average consumption in seconds |
+
+**Corresponding dashboard metrics:**
+
+| Dashboard label | MetricType | Response field |
+|-----------------|-----------|----------------|
+| 視聴時間 (Total consumption time) | `SHOW_CONSUMPTION` | `ConsumptionValue.totalConsumptionHours` |
+| 平均視聴時間 (Avg consumption time / listener) | `SHOW_AVERAGE_CONSUMPTION_TIME` | `AverageConsumptionTimeValue.averageConsumptionSeconds` |
+
+### `getEngagementStatsNRT` — Engagement Totals with Period Comparison
+
+Returns aggregate totals for the period (not time-series), with
+`periodOverPeriodPercentageDiff` for each metric. This is the near-real-time
+(NRT) counterpart to `getEngagementStats`.
+
+```graphql
+query getEngagementStatsNRT(
+  $showUri: ShowUri!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $customDateRange: CustomDateRangeInput,
+  $includePeriodComparison: Boolean!,
+  $hasComments: Boolean!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    consumptionTimeTotal: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_CONSUMPTION,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange,
+      includePeriodComparison: $includePeriodComparison
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on ConsumptionValue {
+            totalConsumptionHours
+          }
+        }
+        periodOverPeriodPercentageDiff
+      }
+    }
+    avgConsumptionTimeTotal: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_AVERAGE_CONSUMPTION_TIME,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange,
+      includePeriodComparison: $includePeriodComparison
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on AverageConsumptionTimeValue {
+            averageConsumptionSeconds
+          }
+        }
+        periodOverPeriodPercentageDiff
+      }
+    }
+  }
+}
+```
+
+**Key field:** `analyticsValue.periodOverPeriodPercentageDiff` — the
+`+36.6%` / `+7.4%` figures shown in the dashboard are sourced from this
+field (e.g. `0.366` = +36.6%).
+
+### `getShowRetention` — Week-over-Week Retention Rate
+
+Returns the weekly retention rate: the fraction of this week's listeners
+who also listened the previous week.
+
+```graphql
+query getShowRetention(
+  $showUri: ShowUri!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $publishedAfter: TimestampInput,
+  $publishedBefore: TimestampInput
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    retentionWeekly: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_RETENTION,
+      aggregationType: AGGREGATION_TYPE_WEEKLY,
+      window: $dateRangeWindow
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              endDate
+              value {
+                __typename
+                ... on RatioValueFloat {
+                  value
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Response:** `RatioValueFloat.value` — a float between 0 and 1
+(e.g. `0.537` = 53.7% retention rate shown in the dashboard).
+Use `WINDOW_LAST_NINETY_DAYS` with `AGGREGATION_TYPE_WEEKLY` to reproduce
+the 90-day retention chart.
+
+### `getEpisodeCompletionRates` — Per-Episode Completion Rate (Latest 10)
+
+Returns the average completion rate for each of the 10 most recently
+published episodes, measured over the first 7 days after publication.
+
+```graphql
+query getEpisodeCompletionRates($showUri: ShowUri!) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    latestEpisodes: episodesV2(listEpisodesV2Request: {
+      sort: {sortBy: PUBLISHED_ON, sortOrder: DESC},
+      filter: PUBLISHED_EPISODES,
+      pagination: {pageSize: 10},
+      episodeMetadataFieldMask: {
+        paths: [
+          "hosted_episode.title",
+          "hosted_episode.published_on",
+          "hosted_episode.uri",
+          "non_hosted_episode.title",
+          "non_hosted_episode.published_on",
+          "non_hosted_episode.uri"
+        ]
+      }
+    }) {
+      items {
+        uri
+        title
+        publishedOn { seconds }
+        completionRate: analyticsBatch(batchGetEpisodeAnalyticsItem: {
+          episodeAnalyticsMetricType: EPISODE_AVERAGE_COMPLETION_RATE,
+          aggregationType: AGGREGATION_TYPE_TOTAL,
+          window: WINDOW_FIRST_SEVEN_DAYS
+        }) {
+          analyticsValue {
+            analyticsValue {
+              __typename
+              ... on PercentageValueFloat {
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Response:** `PercentageValueFloat.value` — a float between 0 and 1
+(e.g. `0.56` = 56% completion rate).
+
+**New window value:** `WINDOW_FIRST_SEVEN_DAYS` — the 7-day post-publication
+window used for the "エピソードの完全再生率" chart.
+
+### `getEpisodeTimeSeriesByMetric` — Episode Metric Time Series
+
+Returns a time series for a single episode and any `EpisodeAnalyticsMetricType`.
+
+```graphql
+query getEpisodeTimeSeriesByMetric(
+  $episodeUri: EpisodeUri!,
+  $metricType: EpisodeAnalyticsMetricType!,
+  $window: AnalyticsWindow!,
+  $aggregationType: AggregationType!
+) {
+  episodeByUri(getEpisodeRequest: {episodeUri: $episodeUri}) {
+    analyticsBatch(batchGetEpisodeAnalyticsItem: {
+      episodeAnalyticsMetricType: $metricType,
+      aggregationType: $aggregationType,
+      window: $window
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              value {
+                __typename
+                ... on CountValueLong { longValue: value }
+                ... on ConsumptionValue {
+                  totalConsumptionHours
+                  foregroundConsumptionPercent
+                }
+                ... on RatioValueFloat { floatValue: value }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Notable:** `ConsumptionValue` also exposes `foregroundConsumptionPercent`
+at the episode level.
+
+---
+
+## Audience Growth Queries (New: Jun 2026)
+
+These queries use the `coreFanTimeSeries` / `coreFanMetricSummary` /
+`coreFanInsight` fields on the `Show` type. Audience is segmented into three
+tiers: **core fans** (highly engaged), **developing audience**, and
+**new audience**.
+
+### `getAudienceGrowthTimeSeries` — Core Fan Tier Daily Time Series
+
+```graphql
+query getAudienceGrowthTimeSeries(
+  $showUri: ShowUri!,
+  $startDate: String!,
+  $endDate: String!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    coreFanTimeSeries(getCoreFanTimeSeriesRequest: {
+      startDate: $startDate,
+      endDate: $endDate
+    }) {
+      timeSeries {
+        date
+        coreFans
+        coreFansPercent
+        developingAudience
+        developingAudiencePercent
+        newAudience
+        newAudiencePercent
+        totalAudience
+        totalAudiencePercent
+      }
+    }
+  }
+}
+```
+
+**Variables:** `startDate` / `endDate` are `"YYYY-MM-DD"` strings (not
+`AnalyticsWindow` enum values — unlike most analytics queries).
+
+**Audience tiers:**
+
+| Field | Description |
+|-------|-------------|
+| `coreFans` | Highly engaged listeners (full definition not published) |
+| `developingAudience` | Listeners who are becoming more engaged |
+| `newAudience` | First-time listeners in the period |
+| `totalAudience` | All unique listeners |
+| `*Percent` fields | Each tier as a percentage of `totalAudience` |
+
+### `getAudienceGrowthMetricSummary` — Core Fan Summary with Period Comparison
+
+```graphql
+query getAudienceGrowthMetricSummary(
+  $showUri: ShowUri!,
+  $startDate: String!,
+  $endDate: String!,
+  $isAllTime: Boolean!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    coreFanMetricSummary(getCoreFanMetricSummaryRequest: {
+      startDate: $startDate,
+      endDate: $endDate,
+      isAllTime: $isAllTime
+    }) {
+      summary {
+        newAudience
+        newAudiencePercent
+        developingAudience
+        developingAudiencePercent
+        coreFans
+        coreFansPercent
+        totalAudience
+        totalAudiencePercent
+        gainedCoreFans
+        startDate
+        endDate
+        lookbackStartDate
+        lookbackEndDate
+      }
+    }
+  }
+}
+```
+
+**`gainedCoreFans`** — net new core fans gained in the period.
+`lookbackStartDate` / `lookbackEndDate` describe the prior period used for
+comparison.
+
+### `getAudienceGrowthInsights` — Core Fan Behavioral Insights
+
+```graphql
+query getAudienceGrowthInsights(
+  $showUri: ShowUri!,
+  $startDate: String!,
+  $endDate: String!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    coreFanInsight(getCoreFanInsightRequest: {
+      startDate: $startDate,
+      endDate: $endDate
+    }) {
+      insight {
+        averageEpisodeRetentionCoreFansPercent
+        averageEpisodeRetentionTotalAudiencePercent
+        averageEpisodeRetentionDiffPercent
+        averageConsumptionHoursCoreFans
+        averageConsumptionHoursTotalAudience
+        averageConsumptionHoursDiffPercent
+      }
+    }
+  }
+}
+```
+
+**Purpose:** Shows how core fans behave vs. total audience —
+`averageEpisodeRetentionCoreFansPercent` and
+`averageConsumptionHoursCoreFans` quantify the difference.
+
+---
+
+## Benchmark Queries (New: Jun 2026)
+
+Benchmark queries compare your show's metrics against percentile bands
+from comparable shows.
+
+### `getBenchmarkTotal` — Benchmark Totals
+
+```graphql
+query getBenchmarkTotal(
+  $showUri: ShowUri!,
+  $window: AnalyticsWindow!,
+  $benchmarkMetricType: BenchmarkMetricType!,
+  $benchmarkEpisodePool: BenchmarkEpisodePool!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    benchmarkTotal: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_BENCHMARK_EPISODE,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: $window,
+      benchmarkParams: {
+        metricType: $benchmarkMetricType,
+        episodePool: $benchmarkEpisodePool,
+        percentiles: [20, 40, 50, 60, 80]
+      }
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on BenchmarkTimeSeriesValue {
+            points {
+              label
+              percentiles {
+                percentile
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### `getBenchmarkTimeSeries` — Benchmark Over Time
+
+Same structure as `getBenchmarkTotal` but with
+`aggregationType: AGGREGATION_TYPE_DAILY`.
+
+#### `BenchmarkMetricType` enum values
+
+| Value | Description |
+|-------|-------------|
+| `BENCHMARK_ALL_PLATFORM_AUDIENCE` | All-platform unique audience |
+| `BENCHMARK_AVG_CONSUMPTION_TIME` | Average consumption time |
+| `BENCHMARK_COMMENTS` | Comment count |
+| `BENCHMARK_CONSUMPTION_TIME` | Total consumption time |
+| `BENCHMARK_EPISODE_COMPLETION_PERCENT` | Episode completion rate |
+| `BENCHMARK_IMPRESSIONS` | Impressions |
+| `BENCHMARK_OFF_PLATFORM_AUDIENCE` | Off-platform audience |
+| `BENCHMARK_OFF_PLATFORM_DOWNLOADS` | Off-platform downloads |
+| `BENCHMARK_PLAYS` | Plays |
+| `BENCHMARK_PLAYS_AND_DOWNLOADS` | Plays + downloads |
+| `BENCHMARK_RETENTION` | Week-over-week retention |
+| `BENCHMARK_SPOTIFY_AUDIENCE` | Spotify-only audience |
+| `BENCHMARK_WATCH_TIME_PERCENT` | Watch time percentage (video) |
+
+#### `BenchmarkEpisodePool` enum values
+
+| Value | Description |
+|-------|-------------|
+| `ALL_EPISODES` | All episodes in the benchmark comparison pool |
+| `LAST_10_EPISODES` | Most recent 10 episodes only |
+
+---
+
+## Discovery Funnel Query (Updated: Jun 2026)
+
+### `getShowDiscoveryFunnelStats` (Named Operation)
+
+The browser uses a named operation `getShowDiscoveryFunnelStats` to load the
+discovery funnel. The underlying metric is `SHOW_DISCOVERY_FUNNEL` (already
+documented). This query reveals the exact field structure used by the
+production app.
+
+```graphql
+query getShowDiscoveryFunnelStats(
+  $showUri: ShowUri!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $customDateRange: CustomDateRangeInput
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    discoveryFunnel: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_DISCOVERY_FUNNEL,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on DiscoveryFunnelValue {
+            steps {
+              stepName
+              displayName
+              startDate
+              endDate
+              conversionRateToNext
+              periodOverPeriodPercentageDiff
+              stepValue {
+                __typename
+                ... on CountValueLong { countValue: value }
+                ... on RatioValueFloat { ratioValue: value }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Updated `DiscoveryFunnelStep` structure (corrected from earlier docs):**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `stepName` | `String` | `"impressions"`, `"plays"`, `"average_completion_rate"` |
+| `displayName` | `String` | Human-readable label |
+| `startDate` / `endDate` | `String` | Date range for this step |
+| `conversionRateToNext` | `Float` | Step-to-step conversion rate |
+| `periodOverPeriodPercentageDiff` | `Float` | Change vs. previous period |
+| `stepValue` | union | `CountValueLong` (impressions, plays) or `RatioValueFloat` (completion rate) |
+
+**Note:** `stepValue` uses a union type with field aliasing (`countValue`,
+`ratioValue`). The earlier documentation listed a `value` field directly on
+`DiscoveryFunnelStep` — that was incorrect.
+
+---
+
+## Segmented Audience Queries (Updated: Jun 2026)
+
+The browser uses named operations `getShowSegmentedAudienceTotal` and
+`getShowSegmentedAudienceTimeSeries` (rather than anonymous queries).
+
+### `getShowSegmentedAudienceTotal`
+
+```graphql
+query getShowSegmentedAudienceTotal(
+  $showUri: ShowUri!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $customDateRange: CustomDateRangeInput
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    segmentedAudienceTotal: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_SEGMENTED_AUDIENCE,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on SegmentedAudienceValue {
+            returningAudience
+            newAudience
+            totalAudience
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### `getShowSegmentedAudienceTimeSeries`
+
+```graphql
+query getShowSegmentedAudienceTimeSeries(
+  $showUri: ShowUri!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $customDateRange: CustomDateRangeInput,
+  $publishedAfter: TimestampInput,
+  $publishedBefore: TimestampInput
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    segmentedAudienceTimeSeries: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_SEGMENTED_AUDIENCE,
+      aggregationType: AGGREGATION_TYPE_DAILY,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              value {
+                __typename
+                ... on SegmentedAudienceValue {
+                  returningAudience
+                  newAudience
+                  totalAudience
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+## Overview Tab Queries (New: Jun 2026)
+
+### `getShowStreamsAndDownloadsDaily` — All-Platforms Streams+Downloads
+
+```graphql
+query getShowStreamsAndDownloadsDaily(
+  $showUri: ShowUri!,
+  $aggregationType: AggregationType!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $customDateRange: CustomDateRangeInput,
+  $publishedAfter: TimestampInput,
+  $publishedBefore: TimestampInput
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    streamsAndDownloadsDaily: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_STREAMS_AND_DOWNLOADS,
+      aggregationType: $aggregationType,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              endDate
+              value {
+                __typename
+                ... on CountValueLong { value }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Note:** `$aggregationType` is a variable here (unlike most queries where it is
+hardcoded). Pass `AGGREGATION_TYPE_DAILY`, `AGGREGATION_TYPE_WEEKLY`, or
+`AGGREGATION_TYPE_MONTHLY`.
+
+### `getShowTopEpisodesByMetric` — Top Episodes for Any Metric
+
+```graphql
+query getShowTopEpisodesByMetric(
+  $showUri: ShowUri!,
+  $metricType: EpisodeAnalyticsMetricType!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $customDateRange: CustomDateRangeInput
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    episodesV2(listEpisodesV2Request: {
+      sort: {sortBy: PUBLISHED_ON, sortOrder: DESC},
+      filter: PUBLISHED_EPISODES,
+      pagination: {pageSize: 250},
+      episodeMetadataFieldMask: {
+        paths: [
+          "hosted_episode.title", "hosted_episode.published_on", "hosted_episode.uri",
+          "non_hosted_episode.title", "non_hosted_episode.published_on", "non_hosted_episode.uri"
+        ]
+      }
+    }) {
+      items {
+        uri
+        title
+        publishedOn { seconds }
+        metric: analyticsBatch(batchGetEpisodeAnalyticsItem: {
+          episodeAnalyticsMetricType: $metricType,
+          aggregationType: AGGREGATION_TYPE_TOTAL,
+          window: $dateRangeWindow,
+          customDateRange: $customDateRange
+        }) {
+          analyticsValue {
+            analyticsValue {
+              __typename
+              ... on SingleValueLong { value }
+              ... on PercentageValueFloat { value }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+### `getShowTopEpisodesByImpressions` — Top Episodes by Impression Source
+
+Returns top episodes ranked by impressions, with a breakdown by impression source.
+
+```graphql
+query getShowTopEpisodesByImpressions(
+  $showUri: ShowUri!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $customDateRange: CustomDateRangeInput
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    topEpisodesByImpressions: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: TOP_EPISODES_BY_IMPRESSIONS_FACETED,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TopEpisodesFacetedValue {
+            episodes {
+              episodeUri
+              episode {
+                title
+                publishedOn { seconds }
+              }
+              facetedValue {
+                totalValue
+                impressionSourceBreakdown {
+                  total
+                  counts {
+                    displayName
+                    source
+                    count
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**New `ShowAnalyticsMetricType` value:** `TOP_EPISODES_BY_IMPRESSIONS_FACETED`
+
+---
+
+## AI Analytics Insights (New: Jun 2026)
+
+S4C now generates AI-powered insights about analytics trends.
+
+### `generateAnalyticsInsight` — Trigger AI Insight Generation
+
+```graphql
+mutation generateAnalyticsInsight($generateInsightRequest: GenerateInsightRequestInput!) {
+  generateAnalyticsInsight(generateInsightRequest: $generateInsightRequest) {
+    insightId
+    state
+    payload
+    generatedAt
+  }
+}
+```
+
+**Response fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `insightId` | `String` | Unique ID — use with `getAnalyticsInsight` to poll |
+| `state` | `String` | Generation state (e.g. `"PENDING"`, `"COMPLETE"`) |
+| `payload` | `String` | Generated insight text (populated when complete) |
+| `generatedAt` | `String` | ISO timestamp |
+
+### `getAnalyticsInsight` — Fetch a Generated Insight
+
+```graphql
+query getAnalyticsInsight($showUri: ShowUri!, $insightId: String!) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    analyticsInsight(getInsightRequest: {insightId: $insightId}) {
+      insightId
+      state
+      payload
+      generatedAt
+    }
+  }
+}
+```
+
+### `submitAnalyticsInsightFeedback` — Thumbs Up/Down Feedback
+
+```graphql
+mutation submitAnalyticsInsightFeedback(
+  $submitAnalyticsInsightFeedbackRequest: SubmitAnalyticsInsightFeedbackRequestInput!
+) {
+  submitAnalyticsInsightFeedback(
+    submitAnalyticsInsightFeedbackRequest: $submitAnalyticsInsightFeedbackRequest
+  ) {
+    feedbackId
+  }
+}
+```
+
+---
+
+## Updated Enum Reference (Jun 2026)
+
+### `ShowAnalyticsMetricType` — New Values
+
+| Enum value | Description |
+|-----------|-------------|
+| `SHOW_CONSUMPTION` | Total listening time — returns `ConsumptionValue` |
+| `SHOW_AVERAGE_CONSUMPTION_TIME` | Per-listener average consumption — returns `AverageConsumptionTimeValue` |
+| `SHOW_RETENTION` | Week-over-week retention rate — returns `TimeSeriesValue<RatioValueFloat>` |
+| `SHOW_BENCHMARK_EPISODE` | Benchmark comparison — requires `benchmarkParams` argument |
+| `SHOW_STREAMS_AND_DOWNLOADS_AVERAGE` | Rolling average of streams+downloads |
+| `SHOW_STREAMS_AND_DOWNLOADS_BY_APP` | Platform distribution (Apple, Spotify, Amazon, etc.) |
+| `SHOW_STREAMS_AND_DOWNLOADS_BY_DEVICE` | Device type distribution |
+| `SHOW_STREAMS_AND_DOWNLOADS_BY_GEO_ALL_PLATFORMS` | Geographic distribution across all platforms |
+| `TOP_EPISODES_BY_IMPRESSIONS_FACETED` | Top episodes by impressions with source breakdown |
+| `SHOW_IMPRESSIONS_FACETED` | Impressions with source facets |
+| `SHOW_STREAMS_FACETED` | Streams with facets |
+| `SHOW_FOLLOWER_GROWTH` | Follower growth time series |
+
+### `EpisodeAnalyticsMetricType` — New Values
+
+| Enum value | Description |
+|-----------|-------------|
+| `EPISODE_AVERAGE_COMPLETION_RATE` | Average completion rate (0–1 float) — use `WINDOW_FIRST_SEVEN_DAYS` |
+| `EPISODE_AVERAGE_CONSUMPTION_TIME` | Per-listener average consumption time |
+| `EPISODE_CONSUMPTION` | Total listening time |
+| `EPISODE_AUDIENCE_SIZE` | Audience size |
+| `EPISODE_IMPRESSIONS` | Impressions |
+| `EPISODE_IMPRESSIONS_FACETED` | Impressions with facets |
+| `EPISODE_IMPRESSIONS_FUNNEL` | Impressions funnel |
+| `EPISODE_IMPRESSIONS_TO_PLAYS_RATE` | Impression-to-play conversion rate |
+| `EPISODE_DISCOVERY_FUNNEL` | Episode-level discovery funnel |
+| `EPISODE_PLAYS_FACETED` | Plays with facets |
+| `EPISODE_STREAMS_FACETED` | Streams with facets |
+| `EPISODE_RETENTION` | Episode-level retention |
+| `EPISODE_SPOTIFY_PLAYS_BY_COUNTRY` | Spotify plays by country |
+
+### `AnalyticsWindow` — New Values
+
+| Value | Description |
+|-------|-------------|
+| `WINDOW_FIRST_SEVEN_DAYS` | First 7 days after episode publication |
+| `WINDOW_FIRST_THIRTY_DAYS` | First 30 days after episode publication |
+| `WINDOW_FIRST_SIXTY_DAYS` | First 60 days after episode publication |
+| `WINDOW_LAST_SIXTY_DAYS` | Last 60 days |
+| `WINDOW_SINCE_PUBLISHED` | Since episode publication date |
+| `WINDOW_UNSPECIFIED` | Unspecified window (used for all-time averages) |
 
 ---
 

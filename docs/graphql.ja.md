@@ -692,17 +692,6 @@ streams/starts から導出する完了率とも異なり、期間全体の集�
 
 ### `Show` 型の新フィールド — スキーマ確認済み・未テスト（2026年5月追加）
 
-以下のフィールドが 2026年5月アップデートで `Show` 型に追加された。
-イントロスペクションでスキーマ上の存在は確認済みだが、**実クエリによる動作検証は未実施**。
-
-**コアファン指標：**
-
-| フィールド | 返り型 | 備考 |
-|-----------|--------|------|
-| `coreFanTimeSeries` | `GetCoreFanTimeSeriesResponse` | 熱心なリスナーの時系列 |
-| `coreFanMetricSummary` | `GetCoreFanMetricSummaryResponse` | コアファン指標サマリー |
-| `coreFanInsight` | `GetCoreFanInsightResponse` | コアファンに関するインサイト |
-
 **スポンサーシップ：**
 
 | フィールド | 返り型 | 備考 |
@@ -710,12 +699,351 @@ streams/starts から導出する完了率とも異なり、期間全体の集�
 | `sponsorshipAnalytics` | `ShowSponsorshipAnalytics` | スポンサーシップ分析 |
 | `listSponsorships` | `ListSponsorshipsResponse` | スポンサーシップ一覧 |
 
-**AI インサイト：**
+---
 
-| フィールド | 返り型 | 備考 |
-|-----------|--------|------|
-| `analyticsInsight` | `InsightResponse` | アナリティクスインサイト（AI生成の可能性） |
-| `getEpisodeInsights` | `GetEpisodeInsightsByShowResponse` | エピソードごとのインサイト |
+## エンゲージメントタブ クエリ（2026年6月追加）
+
+> 2026-06-12 取得。S4C アナリティクス JavaScript バンドル
+> (`microfrontend-analytics-cdn.spotifycdn.com`) から GraphQL AST を
+> 解析・再構成。本番バンドルに実在することを確認済み。
+
+### オペレーション一覧
+
+| オペレーション名 | 種別 | 用途 |
+|----------------|------|------|
+| `getEngagementStats` | query | 視聴時間・平均視聴時間・コメント・フォロワー増減の日次時系列 |
+| `getEngagementStatsNRT` | query | 視聴時間・平均視聴時間の期間合計（前期比付き） |
+| `getShowRetention` | query | 前週比リテンション率の週次時系列 |
+| `getEpisodeCompletionRates` | query | 最新10エピソードの完全再生率（初回7日間） |
+| `getEpisodeTimeSeriesByMetric` | query | 単一エピソードの任意メトリクス時系列 |
+
+### `getEngagementStats` — エンゲージメント日次時系列
+
+エンゲージメントタブのロード時に発火。視聴時間（`SHOW_CONSUMPTION`）と
+平均視聴時間（`SHOW_AVERAGE_CONSUMPTION_TIME`）の日次時系列を返す。
+
+**新レスポンス型：**
+
+| 型名 | フィールド | 説明 |
+|------|-----------|------|
+| `ConsumptionValue` | `totalConsumptionHours` | 期間内の総視聴時間（時間単位） |
+| `AverageConsumptionTimeValue` | `averageConsumptionSeconds` | リスナー1人あたりの平均視聴秒数 |
+
+**ダッシュボード指標との対応：**
+
+| ダッシュボード表示 | MetricType | レスポンスフィールド |
+|-----------------|-----------|-------------------|
+| 視聴時間 | `SHOW_CONSUMPTION` | `ConsumptionValue.totalConsumptionHours` |
+| 平均視聴時間 | `SHOW_AVERAGE_CONSUMPTION_TIME` | `AverageConsumptionTimeValue.averageConsumptionSeconds` |
+
+### `getEngagementStatsNRT` — 期間合計（前期比付き）
+
+`periodOverPeriodPercentageDiff` フィールドにより、ダッシュボードの
+`+36.6%` / `+7.4%` バッジの値が取得できる（例：`0.366` = +36.6%）。
+
+### `getShowRetention` — 前週比リテンション率
+
+`SHOW_RETENTION` / `AGGREGATION_TYPE_WEEKLY` の組み合わせで週次時系列を返す。
+`RatioValueFloat.value` は 0〜1 の float（例：`0.537` = 53.7%）。
+`WINDOW_LAST_NINETY_DAYS` + `AGGREGATION_TYPE_WEEKLY` でダッシュボードの
+90日リテンショングラフを再現できる。
+
+### `getEpisodeCompletionRates` — エピソード完全再生率
+
+最新10エピソードについて、公開後7日間（`WINDOW_FIRST_SEVEN_DAYS`）の
+平均完全再生率（`EPISODE_AVERAGE_COMPLETION_RATE`）を取得する。
+
+**新 `AnalyticsWindow` 値：** `WINDOW_FIRST_SEVEN_DAYS` — エピソード公開後7日間
+
+レスポンス：`PercentageValueFloat.value`（例：`0.56` = 56%）
+
+```graphql
+query getEpisodeCompletionRates($showUri: ShowUri!) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    latestEpisodes: episodesV2(listEpisodesV2Request: {
+      sort: {sortBy: PUBLISHED_ON, sortOrder: DESC},
+      filter: PUBLISHED_EPISODES,
+      pagination: {pageSize: 10},
+      episodeMetadataFieldMask: {
+        paths: [
+          "hosted_episode.title", "hosted_episode.published_on", "hosted_episode.uri",
+          "non_hosted_episode.title", "non_hosted_episode.published_on", "non_hosted_episode.uri"
+        ]
+      }
+    }) {
+      items {
+        uri
+        title
+        publishedOn { seconds }
+        completionRate: analyticsBatch(batchGetEpisodeAnalyticsItem: {
+          episodeAnalyticsMetricType: EPISODE_AVERAGE_COMPLETION_RATE,
+          aggregationType: AGGREGATION_TYPE_TOTAL,
+          window: WINDOW_FIRST_SEVEN_DAYS
+        }) {
+          analyticsValue {
+            analyticsValue {
+              __typename
+              ... on PercentageValueFloat { value }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+---
+
+## オーディエンス成長クエリ（コアファンモデル、2026年6月確定）
+
+これまで「スキーマ確認済み・未テスト」として記載していた
+`coreFanTimeSeries` / `coreFanMetricSummary` / `coreFanInsight` フィールドの
+実際のクエリ構造をバンドルから取得・確定した。
+
+オーディエンスは3層に分類される：**コアファン**（高エンゲージメント）・
+**発展途上オーディエンス**・**新規オーディエンス**。
+
+### オペレーション一覧
+
+| オペレーション名 | 種別 | 用途 |
+|----------------|------|------|
+| `getAudienceGrowthTimeSeries` | query | 3層オーディエンス日次時系列 |
+| `getAudienceGrowthMetricSummary` | query | サマリー（前期比・獲得コアファン数付き） |
+| `getAudienceGrowthInsights` | query | コアファンと全体オーディエンスの行動比較 |
+
+### `getAudienceGrowthTimeSeries` — コアファン層別日次時系列
+
+**重要：** `startDate` / `endDate` は `"YYYY-MM-DD"` 形式の文字列。
+他のアナリティクスクエリが使う `AnalyticsWindow` enum ではない。
+
+```graphql
+query getAudienceGrowthTimeSeries(
+  $showUri: ShowUri!, $startDate: String!, $endDate: String!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    coreFanTimeSeries(getCoreFanTimeSeriesRequest: {
+      startDate: $startDate, endDate: $endDate
+    }) {
+      timeSeries {
+        date
+        coreFans
+        coreFansPercent
+        developingAudience
+        developingAudiencePercent
+        newAudience
+        newAudiencePercent
+        totalAudience
+        totalAudiencePercent
+      }
+    }
+  }
+}
+```
+
+### `getAudienceGrowthMetricSummary` — サマリーと前期比
+
+```graphql
+query getAudienceGrowthMetricSummary(
+  $showUri: ShowUri!, $startDate: String!, $endDate: String!, $isAllTime: Boolean!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    coreFanMetricSummary(getCoreFanMetricSummaryRequest: {
+      startDate: $startDate, endDate: $endDate, isAllTime: $isAllTime
+    }) {
+      summary {
+        newAudience
+        newAudiencePercent
+        developingAudience
+        developingAudiencePercent
+        coreFans
+        coreFansPercent
+        totalAudience
+        totalAudiencePercent
+        gainedCoreFans
+        startDate
+        endDate
+        lookbackStartDate
+        lookbackEndDate
+      }
+    }
+  }
+}
+```
+
+`gainedCoreFans` = 期間中に新たに獲得したコアファン数。
+
+### `getAudienceGrowthInsights` — コアファン行動インサイト
+
+```graphql
+query getAudienceGrowthInsights(
+  $showUri: ShowUri!, $startDate: String!, $endDate: String!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    coreFanInsight(getCoreFanInsightRequest: {
+      startDate: $startDate, endDate: $endDate
+    }) {
+      insight {
+        averageEpisodeRetentionCoreFansPercent
+        averageEpisodeRetentionTotalAudiencePercent
+        averageEpisodeRetentionDiffPercent
+        averageConsumptionHoursCoreFans
+        averageConsumptionHoursTotalAudience
+        averageConsumptionHoursDiffPercent
+      }
+    }
+  }
+}
+```
+
+---
+
+## ベンチマーククエリ（2026年6月追加）
+
+### `getBenchmarkTotal` / `getBenchmarkTimeSeries`
+
+自分のショーを類似ショーのパーセンタイル（20/40/50/60/80）と比較する。
+
+```graphql
+query getBenchmarkTotal(
+  $showUri: ShowUri!,
+  $window: AnalyticsWindow!,
+  $benchmarkMetricType: BenchmarkMetricType!,
+  $benchmarkEpisodePool: BenchmarkEpisodePool!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    benchmarkTotal: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_BENCHMARK_EPISODE,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: $window,
+      benchmarkParams: {
+        metricType: $benchmarkMetricType,
+        episodePool: $benchmarkEpisodePool,
+        percentiles: [20, 40, 50, 60, 80]
+      }
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on BenchmarkTimeSeriesValue {
+            points {
+              label
+              percentiles { percentile value }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+#### `BenchmarkMetricType` enum 値
+
+| 値 | 説明 |
+|----|------|
+| `BENCHMARK_ALL_PLATFORM_AUDIENCE` | 全プラットフォームユニークオーディエンス |
+| `BENCHMARK_AVG_CONSUMPTION_TIME` | 平均視聴時間 |
+| `BENCHMARK_COMMENTS` | コメント数 |
+| `BENCHMARK_CONSUMPTION_TIME` | 総視聴時間 |
+| `BENCHMARK_EPISODE_COMPLETION_PERCENT` | エピソード完全再生率 |
+| `BENCHMARK_IMPRESSIONS` | インプレッション数 |
+| `BENCHMARK_OFF_PLATFORM_AUDIENCE` | オフプラットフォームオーディエンス |
+| `BENCHMARK_OFF_PLATFORM_DOWNLOADS` | オフプラットフォームダウンロード数 |
+| `BENCHMARK_PLAYS` | 再生数 |
+| `BENCHMARK_PLAYS_AND_DOWNLOADS` | 再生数＋ダウンロード数 |
+| `BENCHMARK_RETENTION` | 前週比リテンション率 |
+| `BENCHMARK_SPOTIFY_AUDIENCE` | Spotify 専用オーディエンス |
+| `BENCHMARK_WATCH_TIME_PERCENT` | 視聴時間率（動画） |
+
+#### `BenchmarkEpisodePool` enum 値
+
+| 値 | 説明 |
+|----|------|
+| `ALL_EPISODES` | すべてのエピソード |
+| `LAST_10_EPISODES` | 最新10エピソード |
+
+---
+
+## AI アナリティクスインサイト（2026年6月追加）
+
+| オペレーション名 | 種別 | 用途 |
+|----------------|------|------|
+| `generateAnalyticsInsight` | mutation | AI インサイト生成を依頼 |
+| `getAnalyticsInsight` | query | 生成済みインサイトを ID で取得 |
+| `submitAnalyticsInsightFeedback` | mutation | インサイトへの評価（thumbs up/down）を送信 |
+
+```graphql
+mutation generateAnalyticsInsight($generateInsightRequest: GenerateInsightRequestInput!) {
+  generateAnalyticsInsight(generateInsightRequest: $generateInsightRequest) {
+    insightId
+    state
+    payload
+    generatedAt
+  }
+}
+
+query getAnalyticsInsight($showUri: ShowUri!, $insightId: String!) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    analyticsInsight(getInsightRequest: {insightId: $insightId}) {
+      insightId
+      state
+      payload
+      generatedAt
+    }
+  }
+}
+```
+
+---
+
+## enum 追加値（2026年6月）
+
+### `ShowAnalyticsMetricType` 追加値
+
+| 値 | 説明 |
+|----|------|
+| `SHOW_CONSUMPTION` | 総視聴時間 → `ConsumptionValue` |
+| `SHOW_AVERAGE_CONSUMPTION_TIME` | 平均視聴時間 → `AverageConsumptionTimeValue` |
+| `SHOW_RETENTION` | 前週比リテンション率 → `TimeSeriesValue<RatioValueFloat>` |
+| `SHOW_BENCHMARK_EPISODE` | ベンチマーク比較（`benchmarkParams` 引数必須） |
+| `SHOW_STREAMS_AND_DOWNLOADS_AVERAGE` | 全プラットフォーム移動平均 |
+| `SHOW_STREAMS_AND_DOWNLOADS_BY_APP` | プラットフォーム分布（Apple / Spotify / Amazon 等） |
+| `SHOW_STREAMS_AND_DOWNLOADS_BY_DEVICE` | デバイス種別分布 |
+| `SHOW_STREAMS_AND_DOWNLOADS_BY_GEO_ALL_PLATFORMS` | 全プラットフォーム地域分布 |
+| `TOP_EPISODES_BY_IMPRESSIONS_FACETED` | インプレッション別トップエピソード（ソース別内訳付き） |
+| `SHOW_IMPRESSIONS_FACETED` | ファセット付きインプレッション |
+| `SHOW_STREAMS_FACETED` | ファセット付きストリーム |
+| `SHOW_FOLLOWER_GROWTH` | フォロワー増減時系列 |
+
+### `EpisodeAnalyticsMetricType` 追加値
+
+| 値 | 説明 |
+|----|------|
+| `EPISODE_AVERAGE_COMPLETION_RATE` | 平均完全再生率（0〜1 float） |
+| `EPISODE_AVERAGE_CONSUMPTION_TIME` | 平均視聴時間 |
+| `EPISODE_CONSUMPTION` | 総視聴時間 |
+| `EPISODE_AUDIENCE_SIZE` | オーディエンスサイズ |
+| `EPISODE_IMPRESSIONS` | インプレッション |
+| `EPISODE_IMPRESSIONS_FACETED` | ファセット付きインプレッション |
+| `EPISODE_IMPRESSIONS_FUNNEL` | インプレッションファネル |
+| `EPISODE_IMPRESSIONS_TO_PLAYS_RATE` | インプレッション→再生転換率 |
+| `EPISODE_DISCOVERY_FUNNEL` | エピソードレベルのディスカバリーファネル |
+| `EPISODE_PLAYS_FACETED` | ファセット付き再生 |
+| `EPISODE_STREAMS_FACETED` | ファセット付きストリーム |
+| `EPISODE_RETENTION` | エピソードレベルのリテンション |
+| `EPISODE_SPOTIFY_PLAYS_BY_COUNTRY` | Spotify 再生の国別分布 |
+
+### `AnalyticsWindow` 追加値
+
+| 値 | 説明 |
+|----|------|
+| `WINDOW_FIRST_SEVEN_DAYS` | エピソード公開後7日間 |
+| `WINDOW_FIRST_THIRTY_DAYS` | エピソード公開後30日間 |
+| `WINDOW_FIRST_SIXTY_DAYS` | エピソード公開後60日間 |
+| `WINDOW_LAST_SIXTY_DAYS` | 過去60日間 |
+| `WINDOW_SINCE_PUBLISHED` | 公開日以降すべて |
+| `WINDOW_UNSPECIFIED` | 未指定（全期間平均等に使用） |
 
 ---
 
