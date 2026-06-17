@@ -45,8 +45,11 @@ NEW_TITLE     = "Ep. 42 — How Podcasts Work"
 NEW_DESC      = "<p>Episode description in HTML.</p>"
 # Publish at 06:00 JST → 21:00 UTC previous day
 JST = timezone(timedelta(hours=9))
-publish_jst = datetime(2026, 6, 1, 6, 0, 0, tzinfo=JST)
-PUBLISH_ON  = publish_jst.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+publish_jst  = datetime(2026, 6, 1, 6, 0, 0, tzinfo=JST)
+pub_utc      = publish_jst.astimezone(timezone.utc)
+# publishOn expects a Unix integer; wizardDraftedToPublishOn expects ISO 8601
+PUBLISH_ON_UNIX = int(pub_utc.timestamp())
+PUBLISH_ON_ISO  = pub_utc.strftime("%Y-%m-%dT%H:%M:%S.000Z")
 
 BASE = "https://api-v5.anchor.fm"
 
@@ -94,8 +97,8 @@ payload = {
     "episodeType":              overview.get("podcastEpisodeType", "full"),
     "isPublished":              overview.get("isPublished", False),
     "podcastEpisodeIsExplicit": overview.get("podcastEpisodeIsExplicit", False),
-    "publishOn":                PUBLISH_ON,
-    "wizardDraftedToPublishOn": PUBLISH_ON,
+    "publishOn":                PUBLISH_ON_UNIX,   # Unix integer (ISO string silently corrupts)
+    "wizardDraftedToPublishOn": PUBLISH_ON_ISO,    # ISO 8601 string (integer returns HTTP 400)
 }
 r = requests.post(
     f"{BASE}/v3/episodes/{anchor_id}/update?isMumsCompatible=true",
@@ -335,6 +338,8 @@ station_id = ids["stationId"]
 user_id    = ids["userId"]
 
 # Step 1: Get signed URL
+# Audio → S3 (returns requestUuid/signedUrl/fileKey)
+# Video → GCS (returns uploadId/url/headers)
 filename  = os.path.basename(FILE_PATH)
 mime_type = "audio/mp3"   # adjust for video: "video/mp4"
 r = requests.get(
@@ -342,11 +347,17 @@ r = requests.get(
     f"?filename={filename}&type={mime_type}&isMumsCompatible=true",
     headers=headers_get,
 )
-signed    = r.json()
-upload_id = signed["uploadId"]
-signed_url = signed["url"]
+signed = r.json()
 
-# Step 2: PUT to GCS
+# Detect storage backend by response shape
+if "signedUrl" in signed:          # S3 (audio)
+    request_uuid = signed["requestUuid"]
+    signed_url   = signed["signedUrl"]
+else:                               # GCS (video)
+    request_uuid = signed["uploadId"]
+    signed_url   = signed["url"]
+
+# Step 2: PUT to storage
 with open(FILE_PATH, "rb") as f:
     file_data = f.read()
 
@@ -362,22 +373,25 @@ payload = {
     "isExtractedFromVideo": False,            # True for mp4/mov
     "isMultipartUpload":   True,
     "parts":               [{"partNumber": 1, "etag": etag}],
-    "uploadId":            upload_id,
+    "uploadId":            request_uuid,      # requestUuid for S3, uploadId for GCS
     "episodeId":           anchor_id,
     "stationId":           station_id,
 }
 requests.post(
-    f"{BASE}/v3/upload/{upload_id}/process_upload?isMumsCompatible=true",
+    f"{BASE}/v3/upload/{request_uuid}/process_upload?isMumsCompatible=true",
     json=payload,
     headers=headers_post,
 ).raise_for_status()
 
-# Step 4: Poll until complete
-for _ in range(20):
+# Step 4: Poll until complete (audio may return 404 for ~60s after process_upload)
+for _ in range(60):
     r = requests.get(
-        f"{BASE}/v3/upload/media/{upload_id}?includeMediaValidation=true&isMumsCompatible=true",
+        f"{BASE}/v3/upload/media/{request_uuid}?includeMediaValidation=true&isMumsCompatible=true",
         headers=headers_get,
     )
+    if r.status_code == 404:
+        time.sleep(5)
+        continue
     status = r.json().get("status")
     if status == "completed":
         print("Upload complete")

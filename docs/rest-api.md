@@ -156,8 +156,8 @@ type, explicit flag, and scheduled publish time in a single call.
   "episodeType": "full",
   "isPublished": false,
   "podcastEpisodeIsExplicit": false,
-  "publishOn": "2026-05-31T21:00:00.000Z",
-  "wizardDraftedToPublishOn": "2026-05-31T21:00:00.000Z"
+  "publishOn": 1748732400,
+  "wizardDraftedToPublishOn": "2026-06-01T21:00:00.000Z"
 }
 ```
 
@@ -169,8 +169,8 @@ type, explicit flag, and scheduled publish time in a single call.
 | `episodeType` | string | Yes | `"full"` / `"trailer"` / `"bonus"` |
 | `isPublished` | boolean | Yes | Pass the current value from `/overview` to preserve state |
 | `podcastEpisodeIsExplicit` | boolean | Yes | Same as above |
-| `publishOn` | string | No | UTC ISO 8601. Required when scheduling |
-| `wizardDraftedToPublishOn` | string | No | Set to the same value as `publishOn` |
+| `publishOn` | integer | No | **Unix timestamp (seconds).** Required when scheduling. See warning below |
+| `wizardDraftedToPublishOn` | string | No | UTC ISO 8601. Must match `publishOn` in wall-clock time |
 
 ### Response
 
@@ -195,20 +195,27 @@ HTTP 200 on success:
     `publishOn` via this endpoint. Use the S4C UI or Playwright to modify
     the publish date of a live episode.
 
-!!! note "`publishOn` timezone"
-    Always specify `publishOn` in **UTC**. To publish at 06:00 JST, use the
-    previous day at 21:00 UTC.
+!!! warning "`publishOn` must be a Unix timestamp integer"
+    `publishOn` expects a **Unix timestamp in integer seconds**, not an ISO 8601
+    string. Sending an ISO string (e.g. `"2026-06-01T21:00:00.000Z"`) causes
+    the server to parse only the leading digits as an integer — `"2026"` becomes
+    `2026` seconds, storing `1970-01-01T00:33:46.000Z`.
+
+    `wizardDraftedToPublishOn` is the opposite: it requires an **ISO 8601
+    string**. Sending an integer returns HTTP 400.
 
     ```python
     from datetime import datetime, timezone, timedelta
     JST = timezone(timedelta(hours=9))
     publish_jst = datetime(2026, 6, 1, 6, 0, 0, tzinfo=JST)
-    publish_utc = publish_jst.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
-    # → "2026-05-31T21:00:00.000Z"
+    pub_utc = publish_jst.astimezone(timezone.utc)
+    publish_on_unix = int(pub_utc.timestamp())                    # → 1748732400
+    publish_on_iso  = pub_utc.strftime("%Y-%m-%dT%H:%M:%S.000Z") # → "2026-05-31T21:00:00.000Z"
     ```
 
 === "Python"
     ```python
+    pub_utc = publish_jst.astimezone(timezone.utc)
     payload = {
         "userId": overview["userId"],
         "title": "New episode title",
@@ -216,8 +223,8 @@ HTTP 200 on success:
         "episodeType": overview.get("podcastEpisodeType", "full"),
         "isPublished": overview.get("isPublished", False),
         "podcastEpisodeIsExplicit": overview.get("podcastEpisodeIsExplicit", False),
-        "publishOn": "2026-06-01T21:00:00.000Z",
-        "wizardDraftedToPublishOn": "2026-06-01T21:00:00.000Z",
+        "publishOn": int(pub_utc.timestamp()),                    # Unix integer
+        "wizardDraftedToPublishOn": pub_utc.strftime("%Y-%m-%dT%H:%M:%S.000Z"),  # ISO string
     }
     r = requests.post(
         f"https://api-v5.anchor.fm/v3/episodes/{anchor_id}/update?isMumsCompatible=true",
@@ -233,7 +240,7 @@ HTTP 200 on success:
       -H "Content-Type: application/json" \
       -H "Origin: https://creators.spotify.com" \
       -H "Referer: https://creators.spotify.com/" \
-      -d '{"userId":YOUR_USER_ID,"title":"New title","description":"<p>Desc</p>","episodeType":"full","isPublished":false,"podcastEpisodeIsExplicit":false,"publishOn":"2026-06-01T21:00:00.000Z","wizardDraftedToPublishOn":"2026-06-01T21:00:00.000Z"}' \
+      -d '{"userId":YOUR_USER_ID,"title":"New title","description":"<p>Desc</p>","episodeType":"full","isPublished":false,"podcastEpisodeIsExplicit":false,"publishOn":1748732400,"wizardDraftedToPublishOn":"2026-06-01T21:00:00.000Z"}' \
       "https://api-v5.anchor.fm/v3/episodes/${ANCHOR_ID}/update?isMumsCompatible=true"
     ```
 
@@ -787,11 +794,22 @@ If you compare the raw value from `/overview` against the value you
 originally posted, they will not match exactly. Normalise both sides before
 comparing.
 
-### publishOn must be an ISO 8601 string — not a Unix timestamp
+### publishOn must be a Unix timestamp integer — not an ISO 8601 string
 
-Passing an integer (e.g. the year `2026`) as `publishOn` in the update body
-will produce a timestamp like `"1970-01-01T00:33:46.000Z"`. Always use a
-full ISO 8601 string such as `"2026-06-01T21:00:00.000Z"`.
+Passing an ISO 8601 string (e.g. `"2026-06-01T21:00:00.000Z"`) as `publishOn`
+in the update body will silently corrupt the value. The server parses only the
+leading digits as an integer — `"2026"` becomes `2026` seconds from epoch,
+producing `"1970-01-01T00:33:46.000Z"`.
+
+Always pass `publishOn` as a Unix timestamp integer:
+
+```python
+publishOn = int(datetime(2026, 6, 1, 21, 0, 0, tzinfo=timezone.utc).timestamp())
+# → 1748732400
+```
+
+`wizardDraftedToPublishOn` behaves oppositely — it requires an ISO 8601 string
+and returns HTTP 400 if given an integer. See section 1-C for the full example.
 
 ---
 
@@ -822,7 +840,18 @@ GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&type={MIME_TYP
 | `filename` | `episode.mp4` | File name to upload |
 | `type` | `video/mp4` | MIME type |
 
-**Response:**
+**Response — two variants depending on storage backend:**
+
+Audio files are routed to **AWS S3** and return:
+```json
+{
+  "requestUuid": "b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc",
+  "fileKey": "b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc/episode.mp3",
+  "signedUrl": "https://audio-uploaded-default-production.s3.us-west-1.amazonaws.com/..."
+}
+```
+
+Video files are routed to **Google Cloud Storage** and return:
 ```json
 {
   "uploadId": "9e1fdfce-4485-6bde-e582-3b7c84978d55",
@@ -831,10 +860,13 @@ GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&type={MIME_TYP
 }
 ```
 
-### 6-B. PUT the File to Google Cloud Storage
+Use `signedUrl` / `requestUuid` for audio; `url` / `uploadId` for video.
+
+### 6-B. PUT the File to Storage
 
 ```
-PUT {signed_url}
+PUT {signedUrl}           # audio (S3)
+PUT {url}                 # video (GCS)
 Content-Type: {MIME_TYPE}
 ```
 
@@ -843,7 +875,24 @@ Save the `ETag` response header — you need it in the next step.
 ### 6-C. Notify Upload Completion
 
 ```
-POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+POST /v3/upload/{requestUuid}/process_upload?isMumsCompatible=true   # audio
+POST /v3/upload/{uploadId}/process_upload?isMumsCompatible=true      # video
+```
+
+**Request body (audio):**
+```json
+{
+  "userId": YOUR_USER_ID,
+  "uploadType": "default",
+  "origin": "episode-media:upload",
+  "caption": "episode.mp3",
+  "isExtractedFromVideo": false,
+  "isMultipartUpload": true,
+  "parts": [{ "partNumber": 1, "etag": "9e3290d363f9552ada7cb4fa412a9fc7" }],
+  "uploadId": "b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc",
+  "episodeId": 120525547,
+  "stationId": YOUR_STATION_ID
+}
 ```
 
 **Request body (video):**
@@ -864,18 +913,16 @@ POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `uploadType` | string | `"video"` for video files; `"default"` for audio files (**not** `"audio"`) |
+| `uploadType` | string | `"default"` for audio; `"video"` for video (**not** `"audio"`) |
 | `isExtractedFromVideo` | boolean | `true` for mp4/mov; `false` for audio-only |
-| `parts` | array | List of ETags from the GCS PUT response |
-
-!!! warning
-    For audio files, use `uploadType: "default"`, **not** `"audio"`. This
-    was confirmed against a live session in May 2026.
+| `parts` | array | List of ETags from the storage PUT response |
+| `uploadId` | string | For audio: use `requestUuid` from 6-A. For video: use `uploadId` from 6-A |
 
 ### 6-D. Poll for Media Validation
 
 ```
-GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&isMumsCompatible=true
+GET /v3/upload/media/{requestUuid}?includeMediaValidation=true&isMumsCompatible=true  # audio
+GET /v3/upload/media/{uploadId}?includeMediaValidation=true&isMumsCompatible=true     # video
 ```
 
 | Response field | Description |
@@ -886,3 +933,8 @@ GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&isMumsCompatible=tr
 | `validationStatus` | Validation result |
 
 Poll until `status` is `"completed"`.
+
+!!! note "Audio polling may return 404 transiently"
+    For audio (S3) uploads, the poll endpoint sometimes returns HTTP 404
+    for 30–60 seconds after `process_upload` completes before the record
+    becomes available. Retry with backoff up to ~300 seconds.
