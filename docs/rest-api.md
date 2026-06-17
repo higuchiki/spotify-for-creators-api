@@ -898,7 +898,7 @@ POST /v3/upload/{uploadId}/process_upload?isMumsCompatible=true      # video
 **Request body (video):**
 ```json
 {
-  "userId": YOUR_STATION_ID,
+  "userId": YOUR_USER_ID,
   "uploadType": "video",
   "origin": "episode-media:upload",
   "caption": "episode.mp4",
