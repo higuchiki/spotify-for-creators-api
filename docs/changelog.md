@@ -1,5 +1,24 @@
 # Changelog
 
+## 2026-06-17 — Fix publishOn integer requirement; document S3 audio upload path
+
+**Source:** Live EP upload testing against ぼくらの戦略論 show (52.5 MB mp3, S3 path).
+
+### rest-api.md / recipes.md
+
+- **`publishOn` corrected to Unix integer** — sending an ISO 8601 string silently
+  corrupts the value (API parses leading digits `"2026"` as 2026 seconds from epoch
+  → `1970-01-01T00:33:46.000Z`). `wizardDraftedToPublishOn` is the opposite: it
+  requires ISO 8601 and returns HTTP 400 if given an integer.
+- **Audio upload routes to AWS S3, not GCS** — signed URL response for audio returns
+  `{ requestUuid, signedUrl, fileKey }` instead of `{ uploadId, url, headers }`.
+  process_upload and poll endpoints also use `requestUuid` for audio.
+- **Poll endpoint returns 404 transiently for audio** — up to ~60 s after
+  `process_upload` completes before the record is available. Retry with backoff.
+- Fixed `userId` (not `stationId`) in video process_upload request body.
+
+---
+
 ## 2026-06-12 — Engagement Tab and New Metrics Documented (Jun 2026 Research)
 
 **Research method:** JavaScript bundle analysis — extracted and reconstructed

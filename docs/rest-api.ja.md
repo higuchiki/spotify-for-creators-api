@@ -115,7 +115,7 @@ POST /v3/episodes/{ANCHOR_ID}/update?isMumsCompatible=true
   "episodeType": "full",
   "isPublished": false,
   "podcastEpisodeIsExplicit": false,
-  "publishOn": "2026-05-31T21:00:00.000Z",
+  "publishOn": 1748732400,
   "wizardDraftedToPublishOn": "2026-05-31T21:00:00.000Z"
 }
 ```
@@ -128,8 +128,24 @@ POST /v3/episodes/{ANCHOR_ID}/update?isMumsCompatible=true
 | `episodeType` | ✅ | `"full"` / `"trailer"` / `"bonus"` |
 | `isPublished` | ✅ | 現状を維持する場合は `/overview` の値をそのまま渡す |
 | `podcastEpisodeIsExplicit` | ✅ | 同上 |
-| `publishOn` | — | UTC ISO8601。scheduled の場合は必須 |
-| `wizardDraftedToPublishOn` | — | `publishOn` と同じ値を入れる |
+| `publishOn` | — | **Unix タイムスタンプ（整数秒）**。scheduled の場合は必須。ISO 8601 文字列を送ると値がサイレントに破損する |
+| `wizardDraftedToPublishOn` | — | **UTC ISO 8601 文字列**。`publishOn` と同一の壁時計時刻を指定する。整数を送ると HTTP 400 |
+
+!!! warning "`publishOn` は Unix 整数、`wizardDraftedToPublishOn` は ISO 文字列"
+    `publishOn` に ISO 8601 文字列（例: `"2026-06-01T21:00:00.000Z"`）を送ると値がサイレントに破損する。
+    API は先頭の数字だけを整数として解釈するため、`"2026"` が 2026 秒として格納され
+    `1970-01-01T00:33:46.000Z` になる。
+    
+    `wizardDraftedToPublishOn` は逆で ISO 8601 文字列が必須（整数を送ると HTTP 400）。
+
+    ```python
+    from datetime import datetime, timezone, timedelta
+    JST = timezone(timedelta(hours=9))
+    publish_jst = datetime(2026, 6, 1, 6, 0, 0, tzinfo=JST)
+    pub_utc = publish_jst.astimezone(timezone.utc)
+    publish_on_unix = int(pub_utc.timestamp())                    # → 1748732400
+    publish_on_iso  = pub_utc.strftime("%Y-%m-%dT%H:%M:%S.000Z") # → "2026-05-31T21:00:00.000Z"
+    ```
 
 **レスポンス**: 成功時 HTTP 200
 
@@ -620,9 +636,16 @@ curl -X POST \
 
 ---
 
-## 音声/動画アップロード（6-A 〜 6-E）
+## 音声/動画アップロード（6-A 〜 6-D）
 
 **対応フォーマット**：mp3, m4a, aifc, aiff, ogg, wav, flac, mp4, mov
+
+**ファイルサイズ上限**
+
+| 種別 | 上限 |
+|------|------|
+| 動画 | 4 GB |
+| 音声 | 500 MB |
 
 ### 6-A. アップロード署名付きURL取得
 
@@ -632,10 +655,22 @@ GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&type={MIME_TYP
 
 | パラメータ | 例 | 説明 |
 |-----------|-----|------|
-| `filename` | `episode.mp4` | アップロードするファイル名 |
-| `type` | `video/mp4` | MIMEタイプ（音声なら `audio/mp3` 等） |
+| `filename` | `episode.mp3` | アップロードするファイル名 |
+| `type` | `audio/mp3` | MIMEタイプ（動画なら `video/mp4`） |
 
-**レスポンス例**
+**レスポンス — ストレージバックエンドによって2種類：**
+
+音声ファイルは **AWS S3** にルーティングされ、以下を返す：
+
+```json
+{
+  "requestUuid": "b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc",
+  "fileKey": "b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc/episode.mp3",
+  "signedUrl": "https://audio-uploaded-default-production.s3.us-west-1.amazonaws.com/..."
+}
+```
+
+動画ファイルは **Google Cloud Storage** にルーティングされ、以下を返す：
 
 ```json
 {
@@ -645,10 +680,13 @@ GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&type={MIME_TYP
 }
 ```
 
-### 6-B. Google Cloud Storage への直接 PUT
+音声は `signedUrl` / `requestUuid` を使う。動画は `url` / `uploadId` を使う。
+
+### 6-B. ストレージへの直接 PUT
 
 ```
-PUT {signed_url}
+PUT {signedUrl}    # 音声（S3）
+PUT {url}          # 動画（GCS）
 Content-Type: {MIME_TYPE}
 ```
 
@@ -657,38 +695,59 @@ Content-Type: {MIME_TYPE}
 ### 6-C. アップロード完了通知（process_upload）
 
 ```
-POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+POST /v3/upload/{requestUuid}/process_upload?isMumsCompatible=true   # 音声
+POST /v3/upload/{uploadId}/process_upload?isMumsCompatible=true      # 動画
 ```
 
-**リクエストボディ（ビデオの場合）**
+**リクエストボディ（音声の場合）**
 
 ```json
 {
-  "userId": YOUR_STATION_ID,
+  "userId": YOUR_USER_ID,
+  "uploadType": "default",
+  "origin": "episode-media:upload",
+  "caption": "episode.mp3",
+  "isExtractedFromVideo": false,
+  "isMultipartUpload": true,
+  "parts": [{ "partNumber": 1, "etag": "9e3290d363f9552ada7cb4fa412a9fc7" }],
+  "uploadId": "b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc",
+  "episodeId": 120525547,
+  "stationId": YOUR_STATION_ID
+}
+```
+
+**リクエストボディ（動画の場合）**
+
+```json
+{
+  "userId": YOUR_USER_ID,
   "uploadType": "video",
   "origin": "episode-media:upload",
   "caption": "episode.mp4",
   "isExtractedFromVideo": true,
   "isMultipartUpload": true,
-  "parts": [
-    { "partNumber": 1, "etag": "4d49fffd0ed1c6a291577ac47d26b997" }
-  ],
+  "parts": [{ "partNumber": 1, "etag": "4d49fffd0ed1c6a291577ac47d26b997" }],
   "uploadId": "9e1fdfce-4485-6bde-e582-3b7c84978d55",
   "episodeId": 120525547,
   "stationId": YOUR_STATION_ID
 }
 ```
 
-!!! warning "uploadType の注意"
-    音声ファイルは `uploadType: "default"` を使う。`"audio"` は誤り（2026-05-26 実測確認）。
+| パラメータ | 型 | 説明 |
+|-----------|-----|------|
+| `uploadType` | string | 音声は `"default"`（`"audio"` は誤り）。動画は `"video"` |
+| `isExtractedFromVideo` | boolean | mp4/mov は `true`、音声のみのファイルは `false` |
+| `parts` | array | ストレージ PUT レスポンスの ETag 一覧 |
+| `uploadId` | string | 音声は 6-A の `requestUuid`。動画は 6-A の `uploadId` |
 
-### 6-D. メディア検証確認
+### 6-D. メディア検証確認（ポーリング）
+
+```
+GET /v3/upload/media/{requestUuid}?includeMediaValidation=true&isMumsCompatible=true  # 音声
+GET /v3/upload/media/{uploadId}?includeMediaValidation=true&isMumsCompatible=true     # 動画
+```
 
 `status` が `"completed"` になるまでポーリングする。
-
-```
-GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&isMumsCompatible=true
-```
 
 **レスポンスフィールド（主要）**
 
@@ -697,6 +756,10 @@ GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&isMumsCompatible=tr
 | `status` | string | `"processing"` / `"completed"` / `"failed"` |
 | `mediaType` | string | `"video"` / `"audio"` |
 | `durationInMilliseconds` | integer | 動画/音声の長さ（ms） |
+
+!!! note "音声ポーリングは一時的に 404 を返すことがある"
+    音声（S3）アップロードでは、`process_upload` 完了後 30〜60 秒程度ポーリングエンドポイントが
+    HTTP 404 を返すことがある。バックオフを入れながら最大約 300 秒までリトライすること。
 
 ---
 
@@ -713,18 +776,23 @@ GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&isMumsCompatible=tr
 
 `isPublished: false`（draft 状態）のエピソードに対して `GET /v3/episodes/{ANCHOR_ID}/overview` を呼ぶと **HTTP 403 Forbidden** が返る。
 
-### publishOn のタイムゾーン
+### publishOn は Unix 整数で指定する
 
-`publishOn` は **UTC** で指定する。JST 06:00 に公開したい場合は前日 21:00 UTC。
+`publishOn` には **Unix タイムスタンプ（整数秒）** を指定する。ISO 8601 文字列を送ると値がサイレントに破損する（API が先頭の数字だけを整数として解釈し、1970年になる）。
+
+JST 06:00 に公開したい場合：
 
 ```python
 from datetime import datetime, timezone, timedelta
 
 JST = timezone(timedelta(hours=9))
 publish_jst = datetime(2026, 6, 1, 6, 0, 0, tzinfo=JST)
-publish_utc_str = publish_jst.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
-# → "2026-05-31T21:00:00.000Z"
+pub_utc = publish_jst.astimezone(timezone.utc)
+publish_on_unix = int(pub_utc.timestamp())                    # → 1748732400
+publish_on_iso  = pub_utc.strftime("%Y-%m-%dT%H:%M:%S.000Z") # → "2026-05-31T21:00:00.000Z"
 ```
+
+`wizardDraftedToPublishOn` は逆に ISO 8601 文字列が必須（整数を送ると HTTP 400）。詳細は 1-C の警告を参照。
 
 ### publishOn を isPublished: false → true に一発設定する挙動
 

@@ -1,5 +1,18 @@
 # 更新履歴
 
+## 2026年6月17日 — publishOn の整数要件の修正・音声アップロードの S3 パスを文書化
+
+**調査方法：** ぼくらの戦略論番組への実際の EP アップロード（52.5 MB mp3、S3 パス）によるライブテスト。
+
+### rest-api.ja.md / recipes.ja.md
+
+- **`publishOn` を Unix 秒整数に修正** — ISO 8601 文字列を送ると値がサイレントに破損する（API が先頭の数字 `"2026"` を 2026 秒として解釈し `1970-01-01T00:33:46.000Z` になる）。`wizardDraftedToPublishOn` は逆で ISO 8601 文字列が必須（整数を送ると HTTP 400）。
+- **音声アップロードは GCS ではなく AWS S3 にルーティングされる** — 音声の署名付き URL レスポンスは `{ uploadId, url, headers }` ではなく `{ requestUuid, signedUrl, fileKey }` を返す。process_upload と poll エンドポイントも音声では `requestUuid` を使用する。
+- **音声のポーリングエンドポイントは一時的に 404 を返す** — `process_upload` 完了後、最大約 60 秒間レコードが利用できなくなる場合がある。バックオフでリトライすること。
+- 動画 process_upload リクエストボディの `userId`（`stationId` ではない）を修正。
+
+---
+
 ## 2026年6月12日 — エンゲージメントタブと新メトリクスの文書化（2026年6月調査）
 
 **調査方法：** JavaScript バンドル解析 — S4C アナリティクス マイクロフロントエンドの
