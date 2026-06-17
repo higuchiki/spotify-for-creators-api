@@ -666,6 +666,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-17-fix-publishon-integer-requirement-document-s3-audio-upload-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-17 — Fix publishOn integer requirement; document S3 audio upload path
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-06-17 — Fix publishOn integer requirement; document S3 audio upload path">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rest-apimd-recipesmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rest-api.md / recipes.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-12-engagement-tab-and-new-metrics-documented-jun-2026-research" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -844,6 +872,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-17-fix-publishon-integer-requirement-document-s3-audio-upload-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-17 — Fix publishOn integer requirement; document S3 audio upload path
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-06-17 — Fix publishOn integer requirement; document S3 audio upload path">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rest-apimd-recipesmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rest-api.md / recipes.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-12-engagement-tab-and-new-metrics-documented-jun-2026-research" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1005,6 +1061,22 @@
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h2 id="2026-06-17-fix-publishon-integer-requirement-document-s3-audio-upload-path">2026-06-17 — Fix publishOn integer requirement; document S3 audio upload path<a class="headerlink" href="#2026-06-17-fix-publishon-integer-requirement-document-s3-audio-upload-path" title="Permanent link">&para;</a></h2>
+<p><strong>Source:</strong> Live EP upload testing against ぼくらの戦略論 show (52.5 MB mp3, S3 path).</p>
+<h3 id="rest-apimd-recipesmd">rest-api.md / recipes.md<a class="headerlink" href="#rest-apimd-recipesmd" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>publishOn</code> corrected to Unix integer</strong> — sending an ISO 8601 string silently
+  corrupts the value (API parses leading digits <code>"2026"</code> as 2026 seconds from epoch
+  → <code>1970-01-01T00:33:46.000Z</code>). <code>wizardDraftedToPublishOn</code> is the opposite: it
+  requires ISO 8601 and returns HTTP 400 if given an integer.</li>
+<li><strong>Audio upload routes to AWS S3, not GCS</strong> — signed URL response for audio returns
+  <code>{ requestUuid, signedUrl, fileKey }</code> instead of <code>{ uploadId, url, headers }</code>.
+  process_upload and poll endpoints also use <code>requestUuid</code> for audio.</li>
+<li><strong>Poll endpoint returns 404 transiently for audio</strong> — up to ~60 s after
+  <code>process_upload</code> completes before the record is available. Retry with backoff.</li>
+<li>Fixed <code>userId</code> (not <code>stationId</code>) in video process_upload request body.</li>
+</ul>
+<hr />
 <h2 id="2026-06-12-engagement-tab-and-new-metrics-documented-jun-2026-research">2026-06-12 — Engagement Tab and New Metrics Documented (Jun 2026 Research)<a class="headerlink" href="#2026-06-12-engagement-tab-and-new-metrics-documented-jun-2026-research" title="Permanent link">&para;</a></h2>
 <p><strong>Research method:</strong> JavaScript bundle analysis — extracted and reconstructed
 GraphQL ASTs from the S4C analytics microfrontend bundle

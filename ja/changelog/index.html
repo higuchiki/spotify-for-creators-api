@@ -666,6 +666,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026617-publishon-s3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月17日 — publishOn の整数要件の修正・音声アップロードの S3 パスを文書化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026年6月17日 — publishOn の整数要件の修正・音声アップロードの S3 パスを文書化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rest-apijamd-recipesjamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rest-api.ja.md / recipes.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026612-20266" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -844,6 +872,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026617-publishon-s3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月17日 — publishOn の整数要件の修正・音声アップロードの S3 パスを文書化
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026年6月17日 — publishOn の整数要件の修正・音声アップロードの S3 パスを文書化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rest-apijamd-recipesjamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rest-api.ja.md / recipes.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026612-20266" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1005,6 +1061,16 @@
 
 
 <h1 id="_1">更新履歴<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="2026617-publishon-s3">2026年6月17日 — publishOn の整数要件の修正・音声アップロードの S3 パスを文書化<a class="headerlink" href="#2026617-publishon-s3" title="Permanent link">&para;</a></h2>
+<p><strong>調査方法：</strong> ぼくらの戦略論番組への実際の EP アップロード（52.5 MB mp3、S3 パス）によるライブテスト。</p>
+<h3 id="rest-apijamd-recipesjamd">rest-api.ja.md / recipes.ja.md<a class="headerlink" href="#rest-apijamd-recipesjamd" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>publishOn</code> を Unix 秒整数に修正</strong> — ISO 8601 文字列を送ると値がサイレントに破損する（API が先頭の数字 <code>"2026"</code> を 2026 秒として解釈し <code>1970-01-01T00:33:46.000Z</code> になる）。<code>wizardDraftedToPublishOn</code> は逆で ISO 8601 文字列が必須（整数を送ると HTTP 400）。</li>
+<li><strong>音声アップロードは GCS ではなく AWS S3 にルーティングされる</strong> — 音声の署名付き URL レスポンスは <code>{ uploadId, url, headers }</code> ではなく <code>{ requestUuid, signedUrl, fileKey }</code> を返す。process_upload と poll エンドポイントも音声では <code>requestUuid</code> を使用する。</li>
+<li><strong>音声のポーリングエンドポイントは一時的に 404 を返す</strong> — <code>process_upload</code> 完了後、最大約 60 秒間レコードが利用できなくなる場合がある。バックオフでリトライすること。</li>
+<li>動画 process_upload リクエストボディの <code>userId</code>（<code>stationId</code> ではない）を修正。</li>
+</ul>
+<hr />
 <h2 id="2026612-20266">2026年6月12日 — エンゲージメントタブと新メトリクスの文書化（2026年6月調査）<a class="headerlink" href="#2026612-20266" title="Permanent link">&para;</a></h2>
 <p><strong>調査方法：</strong> JavaScript バンドル解析 — S4C アナリティクス マイクロフロントエンドの
 バンドル（<code>microfrontend-analytics-cdn.spotifycdn.com</code>）から GraphQL AST を

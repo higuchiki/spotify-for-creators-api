@@ -1234,10 +1234,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#publishon-must-be-an-iso-8601-string-not-a-unix-timestamp" class="md-nav__link">
+  <a href="#publishon-must-be-a-unix-timestamp-integer-not-an-iso-8601-string" class="md-nav__link">
     <span class="md-ellipsis">
       
-        publishOn must be an ISO 8601 string — not a Unix timestamp
+        publishOn must be a Unix timestamp integer — not an ISO 8601 string
       
     </span>
   </a>
@@ -1295,10 +1295,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#6-b-put-the-file-to-google-cloud-storage" class="md-nav__link">
+  <a href="#6-b-put-the-file-to-storage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6-B. PUT the File to Google Cloud Storage
+        6-B. PUT the File to Storage
       
     </span>
   </a>
@@ -2149,10 +2149,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#publishon-must-be-an-iso-8601-string-not-a-unix-timestamp" class="md-nav__link">
+  <a href="#publishon-must-be-a-unix-timestamp-integer-not-an-iso-8601-string" class="md-nav__link">
     <span class="md-ellipsis">
       
-        publishOn must be an ISO 8601 string — not a Unix timestamp
+        publishOn must be a Unix timestamp integer — not an ISO 8601 string
       
     </span>
   </a>
@@ -2210,10 +2210,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#6-b-put-the-file-to-google-cloud-storage" class="md-nav__link">
+  <a href="#6-b-put-the-file-to-storage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6-B. PUT the File to Google Cloud Storage
+        6-B. PUT the File to Storage
       
     </span>
   </a>
@@ -2483,8 +2483,8 @@ type, explicit flag, and scheduled publish time in a single call.</p>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="nt">&quot;episodeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;full&quot;</span><span class="p">,</span>
 </span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="nt">&quot;isPublished&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
 </span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-31T21:00:00.000Z&quot;</span><span class="p">,</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">  </span><span class="nt">&quot;wizardDraftedToPublishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-31T21:00:00.000Z&quot;</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1748732400</span><span class="p">,</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">  </span><span class="nt">&quot;wizardDraftedToPublishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-06-01T21:00:00.000Z&quot;</span>
 </span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="p">}</span>
 </span></code></pre></div>
 <table>
@@ -2535,15 +2535,15 @@ type, explicit flag, and scheduled publish time in a single call.</p>
 </tr>
 <tr>
 <td><code>publishOn</code></td>
-<td>string</td>
+<td>integer</td>
 <td>No</td>
-<td>UTC ISO 8601. Required when scheduling</td>
+<td><strong>Unix timestamp (seconds).</strong> Required when scheduling. See warning below</td>
 </tr>
 <tr>
 <td><code>wizardDraftedToPublishOn</code></td>
 <td>string</td>
 <td>No</td>
-<td>Set to the same value as <code>publishOn</code></td>
+<td>UTC ISO 8601. Must match <code>publishOn</code> in wall-clock time</td>
 </tr>
 </tbody>
 </table>
@@ -2568,35 +2568,41 @@ for future publication). This is the correct way to schedule an episode.</p>
 <code>publishOn</code> via this endpoint. Use the S4C UI or Playwright to modify
 the publish date of a live episode.</p>
 </div>
-<div class="admonition note">
-<p class="admonition-title"><code>publishOn</code> timezone</p>
-<p>Always specify <code>publishOn</code> in <strong>UTC</strong>. To publish at 06:00 JST, use the
-previous day at 21:00 UTC.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>publishOn</code> must be a Unix timestamp integer</p>
+<p><code>publishOn</code> expects a <strong>Unix timestamp in integer seconds</strong>, not an ISO 8601
+string. Sending an ISO string (e.g. <code>"2026-06-01T21:00:00.000Z"</code>) causes
+the server to parse only the leading digits as an integer — <code>"2026"</code> becomes
+<code>2026</code> seconds, storing <code>1970-01-01T00:33:46.000Z</code>.</p>
+<p><code>wizardDraftedToPublishOn</code> is the opposite: it requires an <strong>ISO 8601
+string</strong>. Sending an integer returns HTTP 400.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">JST</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">publish_jst</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">JST</span><span class="p">)</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">publish_utc</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">)</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1"># → &quot;2026-05-31T21:00:00.000Z&quot;</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">pub_utc</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">publish_on_unix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pub_utc</span><span class="o">.</span><span class="n">timestamp</span><span class="p">())</span>                    <span class="c1"># → 1748732400</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">publish_on_iso</span>  <span class="o">=</span> <span class="n">pub_utc</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">)</span> <span class="c1"># → &quot;2026-05-31T21:00:00.000Z&quot;</span>
 </span></code></pre></div>
 </div>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Python</label><label for="__tabbed_3_2">cURL</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="s2">&quot;userId&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="p">[</span><span class="s2">&quot;userId&quot;</span><span class="p">],</span>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;New episode title&quot;</span><span class="p">,</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;p&gt;New description&lt;/p&gt;&quot;</span><span class="p">,</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="s2">&quot;episodeType&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;podcastEpisodeType&quot;</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">),</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="s2">&quot;isPublished&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;isPublished&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    <span class="s2">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    <span class="s2">&quot;publishOn&quot;</span><span class="p">:</span> <span class="s2">&quot;2026-06-01T21:00:00.000Z&quot;</span><span class="p">,</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>    <span class="s2">&quot;wizardDraftedToPublishOn&quot;</span><span class="p">:</span> <span class="s2">&quot;2026-06-01T21:00:00.000Z&quot;</span><span class="p">,</span>
-</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="p">}</span>
-</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">{</span><span class="n">anchor_id</span><span class="si">}</span><span class="s2">/update?isMumsCompatible=true&quot;</span><span class="p">,</span>
-</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>    <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
-</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>    <span class="n">headers</span><span class="o">=</span><span class="n">headers_post</span><span class="p">,</span>
-</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">pub_utc</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="s2">&quot;userId&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="p">[</span><span class="s2">&quot;userId&quot;</span><span class="p">],</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;New episode title&quot;</span><span class="p">,</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;p&gt;New description&lt;/p&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="s2">&quot;episodeType&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;podcastEpisodeType&quot;</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">),</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    <span class="s2">&quot;isPublished&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;isPublished&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    <span class="s2">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>    <span class="s2">&quot;publishOn&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">pub_utc</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()),</span>                    <span class="c1"># Unix integer</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>    <span class="s2">&quot;wizardDraftedToPublishOn&quot;</span><span class="p">:</span> <span class="n">pub_utc</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">),</span>  <span class="c1"># ISO string</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="p">}</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">{</span><span class="n">anchor_id</span><span class="si">}</span><span class="s2">/update?isMumsCompatible=true&quot;</span><span class="p">,</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>    <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>    <span class="n">headers</span><span class="o">=</span><span class="n">headers_post</span><span class="p">,</span>
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -2605,7 +2611,7 @@ previous day at 21:00 UTC.</p>
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Origin: https://creators.spotify.com&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Referer: https://creators.spotify.com/&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;userId&quot;:YOUR_USER_ID,&quot;title&quot;:&quot;New title&quot;,&quot;description&quot;:&quot;&lt;p&gt;Desc&lt;/p&gt;&quot;,&quot;episodeType&quot;:&quot;full&quot;,&quot;isPublished&quot;:false,&quot;podcastEpisodeIsExplicit&quot;:false,&quot;publishOn&quot;:&quot;2026-06-01T21:00:00.000Z&quot;,&quot;wizardDraftedToPublishOn&quot;:&quot;2026-06-01T21:00:00.000Z&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;userId&quot;:YOUR_USER_ID,&quot;title&quot;:&quot;New title&quot;,&quot;description&quot;:&quot;&lt;p&gt;Desc&lt;/p&gt;&quot;,&quot;episodeType&quot;:&quot;full&quot;,&quot;isPublished&quot;:false,&quot;podcastEpisodeIsExplicit&quot;:false,&quot;publishOn&quot;:1748732400,&quot;wizardDraftedToPublishOn&quot;:&quot;2026-06-01T21:00:00.000Z&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">${</span><span class="nv">ANCHOR_ID</span><span class="si">}</span><span class="s2">/update?isMumsCompatible=true&quot;</span>
 </span></code></pre></div>
 </div>
@@ -3203,10 +3209,17 @@ these transformations:</p>
 <p>If you compare the raw value from <code>/overview</code> against the value you
 originally posted, they will not match exactly. Normalise both sides before
 comparing.</p>
-<h3 id="publishon-must-be-an-iso-8601-string-not-a-unix-timestamp">publishOn must be an ISO 8601 string — not a Unix timestamp<a class="headerlink" href="#publishon-must-be-an-iso-8601-string-not-a-unix-timestamp" title="Permanent link">&para;</a></h3>
-<p>Passing an integer (e.g. the year <code>2026</code>) as <code>publishOn</code> in the update body
-will produce a timestamp like <code>"1970-01-01T00:33:46.000Z"</code>. Always use a
-full ISO 8601 string such as <code>"2026-06-01T21:00:00.000Z"</code>.</p>
+<h3 id="publishon-must-be-a-unix-timestamp-integer-not-an-iso-8601-string">publishOn must be a Unix timestamp integer — not an ISO 8601 string<a class="headerlink" href="#publishon-must-be-a-unix-timestamp-integer-not-an-iso-8601-string" title="Permanent link">&para;</a></h3>
+<p>Passing an ISO 8601 string (e.g. <code>"2026-06-01T21:00:00.000Z"</code>) as <code>publishOn</code>
+in the update body will silently corrupt the value. The server parses only the
+leading digits as an integer — <code>"2026"</code> becomes <code>2026</code> seconds from epoch,
+producing <code>"1970-01-01T00:33:46.000Z"</code>.</p>
+<p>Always pass <code>publishOn</code> as a Unix timestamp integer:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="n">publishOn</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span><span class="o">.</span><span class="n">timestamp</span><span class="p">())</span>
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="c1"># → 1748732400</span>
+</span></code></pre></div>
+<p><code>wizardDraftedToPublishOn</code> behaves oppositely — it requires an ISO 8601 string
+and returns HTTP 400 if given an integer. See section 1-C for the full example.</p>
 <hr />
 <h2 id="media-upload-flow-audio-video">Media Upload Flow (Audio / Video)<a class="headerlink" href="#media-upload-flow-audio-video" title="Permanent link">&para;</a></h2>
 <p>See <a href="../recipes/#media-upload">Recipes — Media upload</a> for the full
@@ -3233,7 +3246,7 @@ end-to-end Python example using endpoints <strong>6-A through 6-D</strong>.</p>
 </tbody>
 </table>
 <h3 id="6-a-get-a-signed-upload-url">6-A. Get a Signed Upload URL<a class="headerlink" href="#6-a-get-a-signed-upload-url" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&amp;type={MIME_TYPE}&amp;isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&amp;type={MIME_TYPE}&amp;isMumsCompatible=true
 </span></code></pre></div>
 <table>
 <thead>
@@ -3256,34 +3269,59 @@ end-to-end Python example using endpoints <strong>6-A through 6-D</strong>.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>Response:</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="p">{</span>
-</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
-</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor_exclusive_media_upload_production/...&quot;</span><span class="p">,</span>
-</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a><span class="w">  </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a><span class="p">}</span>
+<p><strong>Response — two variants depending on storage backend:</strong></p>
+<p>Audio files are routed to <strong>AWS S3</strong> and return:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="p">{</span>
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a><span class="w">  </span><span class="nt">&quot;requestUuid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc&quot;</span><span class="p">,</span>
+</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a><span class="w">  </span><span class="nt">&quot;fileKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc/episode.mp3&quot;</span><span class="p">,</span>
+</span><span id="__span-61-4"><a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a><span class="w">  </span><span class="nt">&quot;signedUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://audio-uploaded-default-production.s3.us-west-1.amazonaws.com/...&quot;</span>
+</span><span id="__span-61-5"><a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a><span class="p">}</span>
 </span></code></pre></div></p>
-<h3 id="6-b-put-the-file-to-google-cloud-storage">6-B. PUT the File to Google Cloud Storage<a class="headerlink" href="#6-b-put-the-file-to-google-cloud-storage" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>PUT {signed_url}
-</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>Content-Type: {MIME_TYPE}
+<p>Video files are routed to <strong>Google Cloud Storage</strong> and return:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="p">{</span>
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor_exclusive_media_upload_production/...&quot;</span><span class="p">,</span>
+</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a><span class="w">  </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p>Use <code>signedUrl</code> / <code>requestUuid</code> for audio; <code>url</code> / <code>uploadId</code> for video.</p>
+<h3 id="6-b-put-the-file-to-storage">6-B. PUT the File to Storage<a class="headerlink" href="#6-b-put-the-file-to-storage" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>PUT {signedUrl}           # audio (S3)
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>PUT {url}                 # video (GCS)
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>Content-Type: {MIME_TYPE}
 </span></code></pre></div>
 <p>Save the <code>ETag</code> response header — you need it in the next step.</p>
 <h3 id="6-c-notify-upload-completion">6-C. Notify Upload Completion<a class="headerlink" href="#6-c-notify-upload-completion" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>POST /v3/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>POST /v3/upload/{requestUuid}/process_upload?isMumsCompatible=true   # audio
+</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>POST /v3/upload/{uploadId}/process_upload?isMumsCompatible=true      # video
 </span></code></pre></div>
+<p><strong>Request body (audio):</strong>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="p">{</span>
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_USER_ID</span><span class="p">,</span>
+</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
+</span><span id="__span-65-5"><a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp3&quot;</span><span class="p">,</span>
+</span><span id="__span-65-6"><a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-65-7"><a id="__codelineno-65-7" name="__codelineno-65-7" href="#__codelineno-65-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-65-8"><a id="__codelineno-65-8" name="__codelineno-65-8" href="#__codelineno-65-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e3290d363f9552ada7cb4fa412a9fc7&quot;</span><span class="w"> </span><span class="p">}],</span>
+</span><span id="__span-65-9"><a id="__codelineno-65-9" name="__codelineno-65-9" href="#__codelineno-65-9"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc&quot;</span><span class="p">,</span>
+</span><span id="__span-65-10"><a id="__codelineno-65-10" name="__codelineno-65-10" href="#__codelineno-65-10"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
+</span><span id="__span-65-11"><a id="__codelineno-65-11" name="__codelineno-65-11" href="#__codelineno-65-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
+</span><span id="__span-65-12"><a id="__codelineno-65-12" name="__codelineno-65-12" href="#__codelineno-65-12"></a><span class="p">}</span>
+</span></code></pre></div></p>
 <p><strong>Request body (video):</strong>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="p">{</span>
-</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
-</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;video&quot;</span><span class="p">,</span>
-</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
-</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp4&quot;</span><span class="p">,</span>
-</span><span id="__span-63-6"><a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-63-7"><a id="__codelineno-63-7" name="__codelineno-63-7" href="#__codelineno-63-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-63-8"><a id="__codelineno-63-8" name="__codelineno-63-8" href="#__codelineno-63-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d49fffd0ed1c6a291577ac47d26b997&quot;</span><span class="w"> </span><span class="p">}],</span>
-</span><span id="__span-63-9"><a id="__codelineno-63-9" name="__codelineno-63-9" href="#__codelineno-63-9"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
-</span><span id="__span-63-10"><a id="__codelineno-63-10" name="__codelineno-63-10" href="#__codelineno-63-10"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
-</span><span id="__span-63-11"><a id="__codelineno-63-11" name="__codelineno-63-11" href="#__codelineno-63-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
-</span><span id="__span-63-12"><a id="__codelineno-63-12" name="__codelineno-63-12" href="#__codelineno-63-12"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="p">{</span>
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_USER_ID</span><span class="p">,</span>
+</span><span id="__span-66-3"><a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;video&quot;</span><span class="p">,</span>
+</span><span id="__span-66-4"><a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
+</span><span id="__span-66-5"><a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp4&quot;</span><span class="p">,</span>
+</span><span id="__span-66-6"><a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-66-7"><a id="__codelineno-66-7" name="__codelineno-66-7" href="#__codelineno-66-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-66-8"><a id="__codelineno-66-8" name="__codelineno-66-8" href="#__codelineno-66-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d49fffd0ed1c6a291577ac47d26b997&quot;</span><span class="w"> </span><span class="p">}],</span>
+</span><span id="__span-66-9"><a id="__codelineno-66-9" name="__codelineno-66-9" href="#__codelineno-66-9"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-66-10"><a id="__codelineno-66-10" name="__codelineno-66-10" href="#__codelineno-66-10"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
+</span><span id="__span-66-11"><a id="__codelineno-66-11" name="__codelineno-66-11" href="#__codelineno-66-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
+</span><span id="__span-66-12"><a id="__codelineno-66-12" name="__codelineno-66-12" href="#__codelineno-66-12"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <table>
 <thead>
@@ -3297,7 +3335,7 @@ end-to-end Python example using endpoints <strong>6-A through 6-D</strong>.</p>
 <tr>
 <td><code>uploadType</code></td>
 <td>string</td>
-<td><code>"video"</code> for video files; <code>"default"</code> for audio files (<strong>not</strong> <code>"audio"</code>)</td>
+<td><code>"default"</code> for audio; <code>"video"</code> for video (<strong>not</strong> <code>"audio"</code>)</td>
 </tr>
 <tr>
 <td><code>isExtractedFromVideo</code></td>
@@ -3307,17 +3345,18 @@ end-to-end Python example using endpoints <strong>6-A through 6-D</strong>.</p>
 <tr>
 <td><code>parts</code></td>
 <td>array</td>
-<td>List of ETags from the GCS PUT response</td>
+<td>List of ETags from the storage PUT response</td>
+</tr>
+<tr>
+<td><code>uploadId</code></td>
+<td>string</td>
+<td>For audio: use <code>requestUuid</code> from 6-A. For video: use <code>uploadId</code> from 6-A</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>For audio files, use <code>uploadType: "default"</code>, <strong>not</strong> <code>"audio"</code>. This
-was confirmed against a live session in May 2026.</p>
-</div>
 <h3 id="6-d-poll-for-media-validation">6-D. Poll for Media Validation<a class="headerlink" href="#6-d-poll-for-media-validation" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>GET /v3/upload/media/{UPLOAD_ID}?includeMediaValidation=true&amp;isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>GET /v3/upload/media/{requestUuid}?includeMediaValidation=true&amp;isMumsCompatible=true  # audio
+</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>GET /v3/upload/media/{uploadId}?includeMediaValidation=true&amp;isMumsCompatible=true     # video
 </span></code></pre></div>
 <table>
 <thead>
@@ -3346,6 +3385,12 @@ was confirmed against a live session in May 2026.</p>
 </tbody>
 </table>
 <p>Poll until <code>status</code> is <code>"completed"</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Audio polling may return 404 transiently</p>
+<p>For audio (S3) uploads, the poll endpoint sometimes returns HTTP 404
+for 30–60 seconds after <code>process_upload</code> completes before the record
+becomes available. Retry with backoff up to ~300 seconds.</p>
+</div>
 
 
 
