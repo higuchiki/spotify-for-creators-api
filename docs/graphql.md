@@ -1853,3 +1853,75 @@ mutation submitAnalyticsInsightFeedback(
 |---------|--------|
 | Transcript editing | Could not be captured. The test account showed "transcript feature unavailable" — likely requires a paid plan or specific eligibility |
 | Chapter create / update / delete mutations | Could not be captured. The test show had too few or too short episodes to unlock chapters |
+
+---
+
+## showsForUser — List All Shows for Authenticated User
+
+**Verified: 2026-06-21**
+
+Returns all shows managed by the currently authenticated user. Useful for
+resolving show IDs without navigating the S4C dashboard.
+
+```graphql
+query {
+  showsForUser {
+    shows {
+      name
+      uri
+    }
+    pagination {
+      # additional pagination fields available
+    }
+  }
+}
+```
+
+### Response
+
+```json
+{
+  "data": {
+    "showsForUser": {
+      "shows": [
+        {
+          "name": "ぼくらの戦略論",
+          "uri": "spotify:show:5vXOMdLUviA9dGrWXy79cF"
+        }
+      ]
+    }
+  }
+}
+```
+
+The show ID (for use in `--show-id` CLI argument or other API calls) is
+the last segment of the `uri` field: `spotify:show:<SHOW_ID>`.
+
+### Python example
+
+```python
+import requests
+
+headers = {
+    "Authorization": f"Bearer {bearer}",
+    "Content-Type": "application/json",
+}
+res = requests.post(
+    "https://creators-graph.spotify.com/v2/graph-pq",
+    headers=headers,
+    json={"query": "{ showsForUser { shows { name uri } } }"},
+)
+shows = res.json()["data"]["showsForUser"]["shows"]
+for show in shows:
+    show_id = show["uri"].split(":")[-1]
+    print(show_id, show["name"])
+```
+
+### Notes
+
+- Returns up to 65+ shows in a single call (no pagination needed in practice).
+- The `Show` type exposes many fields beyond `name` and `uri` — see schema
+  introspection via `__type(name: "Show")` for the full field list.
+- The `anchor.fm REST` endpoint `GET /v3/stations/status` covers the same
+  use-case but returns 403 with the SpotifyConnector Bearer token. Use this
+  GraphQL query instead.

@@ -1062,3 +1062,70 @@ query getAnalyticsInsight($showUri: ShowUri!, $insightId: String!) {
 |----------------|----------------|
 | トランスクリプト編集 mutation | テストアカウントでは「文字起こし機能が利用できません」と表示され無効化。有料プランまたは特定条件でのみ有効化される機能と推定 |
 | チャプター作成・更新・削除 mutation | テストショーはエピソード数が少なく資格なし。`getChaptersEligibility` query で条件を確認してから実装を試みること |
+
+---
+
+## showsForUser — 認証ユーザーの番組一覧取得
+
+**検証日: 2026-06-21**
+
+認証ユーザーが管理するすべての番組を取得する。ダッシュボードを操作せずに
+Show ID を解決するときに使用する。
+
+```graphql
+query {
+  showsForUser {
+    shows {
+      name
+      uri
+    }
+  }
+}
+```
+
+### レスポンス例
+
+```json
+{
+  "data": {
+    "showsForUser": {
+      "shows": [
+        {
+          "name": "ぼくらの戦略論",
+          "uri": "spotify:show:5vXOMdLUviA9dGrWXy79cF"
+        }
+      ]
+    }
+  }
+}
+```
+
+Show ID は `uri` の末尾セグメント（`spotify:show:<SHOW_ID>` の `<SHOW_ID>` 部分）。
+
+### Python サンプル
+
+```python
+import requests
+
+headers = {
+    "Authorization": f"Bearer {bearer}",
+    "Content-Type": "application/json",
+}
+res = requests.post(
+    "https://creators-graph.spotify.com/v2/graph-pq",
+    headers=headers,
+    json={"query": "{ showsForUser { shows { name uri } } }"},
+)
+shows = res.json()["data"]["showsForUser"]["shows"]
+for show in shows:
+    show_id = show["uri"].split(":")[-1]
+    print(show_id, show["name"])
+```
+
+### 備考
+
+- 65件以上でもページネーション不要で一括取得可能（実績値）。
+- `Show` 型は `name` / `uri` 以外にも多数のフィールドを持つ。
+  `__type(name: "Show")` でスキーマを確認できる。
+- anchor.fm REST の `GET /v3/stations/status` は同等の機能を持つが、
+  SpotifyConnector で取得したトークンでは 403 になる。このクエリを使うこと。
