@@ -666,6 +666,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026624-showbyshowurishowcomments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月24日 — showByShowUri.showComments の文書化（番組横断コメント取得）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026年6月24日 — showByShowUri.showComments の文書化（番組横断コメント取得）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        graphql.md / graphql.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026617-publishon-s3" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -872,6 +900,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026624-showbyshowurishowcomments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年6月24日 — showByShowUri.showComments の文書化（番組横断コメント取得）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026年6月24日 — showByShowUri.showComments の文書化（番組横断コメント取得）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        graphql.md / graphql.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026617-publishon-s3" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1061,6 +1117,16 @@
 
 
 <h1 id="_1">更新履歴<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="2026624-showbyshowurishowcomments">2026年6月24日 — showByShowUri.showComments の文書化（番組横断コメント取得）<a class="headerlink" href="#2026624-showbyshowurishowcomments" title="Permanent link">&para;</a></h2>
+<p><strong>調査方法：</strong> 収録前コメントダイジェストツール開発中にライブ API テストで確認。</p>
+<h3 id="graphqlmd-graphqljamd">graphql.md / graphql.ja.md<a class="headerlink" href="#graphqlmd-graphqljamd" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>getLatestCommentsForShow</code> は PQ エイリアスであり実在するクエリフィールドではない</strong> — ブラウザのネットワークトラフィックにはこのオペレーション名が見えるが、<code>/v2/graph-pq</code> スキーマには存在しない。アドホッククエリとして送ると <code>ValidationError</code> が返る。</li>
+<li><strong>正しいパス：<code>showByShowUri</code> → <code>Show.showComments(…)</code></strong> — アナリティクス取得と同じ入り口で、<code>analytics</code> の代わりに <code>showComments</code> をネストフィールドとして指定する。番組全エピソードのコメントを1リクエストで取得できる。</li>
+<li><strong><code>NEEDS_REVIEW</code> フィルターは <code>DataFetchingException</code> を引き起こす</strong> — <code>showComments</code> 使用時は <code>primaryFilters</code> に <code>LIST_COMMENT_PRIMARY_FILTER_PUBLISHED</code> のみを指定すること。<code>getCommentsForEpisode</code> では両フィルター値が安全に使えるのと対照的。</li>
+<li>フルクエリスキーマと動作確認済みの variables 例（<code>pageSize: 20</code>、ルートコメントのみ）を追加。</li>
+</ul>
+<hr />
 <h2 id="2026617-publishon-s3">2026年6月17日 — publishOn の整数要件の修正・音声アップロードの S3 パスを文書化<a class="headerlink" href="#2026617-publishon-s3" title="Permanent link">&para;</a></h2>
 <p><strong>調査方法：</strong> ぼくらの戦略論番組への実際の EP アップロード（52.5 MB mp3、S3 パス）によるライブテスト。</p>
 <h3 id="rest-apijamd-recipesjamd">rest-api.ja.md / recipes.ja.md<a class="headerlink" href="#rest-apijamd-recipesjamd" title="Permanent link">&para;</a></h3>

@@ -666,6 +666,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-24-document-showbyshowurishowcomments-cross-episode-comment-fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-24 — Document showByShowUri.showComments (cross-episode comment fetch)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-06-24 — Document showByShowUri.showComments (cross-episode comment fetch)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        graphql.md / graphql.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-17-fix-publishon-integer-requirement-document-s3-audio-upload-path" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -872,6 +900,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-24-document-showbyshowurishowcomments-cross-episode-comment-fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-24 — Document showByShowUri.showComments (cross-episode comment fetch)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-06-24 — Document showByShowUri.showComments (cross-episode comment fetch)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        graphql.md / graphql.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-17-fix-publishon-integer-requirement-document-s3-audio-upload-path" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1061,6 +1117,23 @@
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h2 id="2026-06-24-document-showbyshowurishowcomments-cross-episode-comment-fetch">2026-06-24 — Document showByShowUri.showComments (cross-episode comment fetch)<a class="headerlink" href="#2026-06-24-document-showbyshowurishowcomments-cross-episode-comment-fetch" title="Permanent link">&para;</a></h2>
+<p><strong>Source:</strong> Live API testing while building a pre-recording comment digest tool.</p>
+<h3 id="graphqlmd-graphqljamd">graphql.md / graphql.ja.md<a class="headerlink" href="#graphqlmd-graphqljamd" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>getLatestCommentsForShow</code> is a PQ alias, not a real query field</strong> — the
+  operation name appears in browser network traffic but does not exist in the
+  <code>/v2/graph-pq</code> schema. Sending it as an ad-hoc query returns a <code>ValidationError</code>.</li>
+<li><strong>Correct path: <code>showByShowUri</code> → <code>Show.showComments(…)</code></strong> — same entry point
+  used for analytics, with <code>showComments</code> as the nested field instead of
+  <code>analytics</code>. Returns comments across all episodes of the show in a single request.</li>
+<li><strong><code>NEEDS_REVIEW</code> filter causes <code>DataFetchingException</code></strong> — <code>primaryFilters</code> must
+  contain only <code>LIST_COMMENT_PRIMARY_FILTER_PUBLISHED</code> when using <code>showComments</code>.
+  Contrast with <code>getCommentsForEpisode</code>, which accepts both filter values safely.</li>
+<li>Added full query schema and working variables example (<code>pageSize: 20</code>, root
+  comments only).</li>
+</ul>
+<hr />
 <h2 id="2026-06-17-fix-publishon-integer-requirement-document-s3-audio-upload-path">2026-06-17 — Fix publishOn integer requirement; document S3 audio upload path<a class="headerlink" href="#2026-06-17-fix-publishon-integer-requirement-document-s3-audio-upload-path" title="Permanent link">&para;</a></h2>
 <p><strong>Source:</strong> Live EP upload testing against ぼくらの戦略論 show (52.5 MB mp3, S3 path).</p>
 <h3 id="rest-apimd-recipesmd">rest-api.md / recipes.md<a class="headerlink" href="#rest-apimd-recipesmd" title="Permanent link">&para;</a></h3>
