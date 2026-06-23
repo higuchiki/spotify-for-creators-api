@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-06-24 — Document showByShowUri.showComments (cross-episode comment fetch)
+
+**Source:** Live API testing while building a pre-recording comment digest tool.
+
+### graphql.md / graphql.ja.md
+
+- **`getLatestCommentsForShow` is a PQ alias, not a real query field** — the
+  operation name appears in browser network traffic but does not exist in the
+  `/v2/graph-pq` schema. Sending it as an ad-hoc query returns a `ValidationError`.
+- **Correct path: `showByShowUri` → `Show.showComments(…)`** — same entry point
+  used for analytics, with `showComments` as the nested field instead of
+  `analytics`. Returns comments across all episodes of the show in a single request.
+- **`NEEDS_REVIEW` filter causes `DataFetchingException`** — `primaryFilters` must
+  contain only `LIST_COMMENT_PRIMARY_FILTER_PUBLISHED` when using `showComments`.
+  Contrast with `getCommentsForEpisode`, which accepts both filter values safely.
+- Added full query schema and working variables example (`pageSize: 20`, root
+  comments only).
+
+---
+
 ## 2026-06-17 — Fix publishOn integer requirement; document S3 audio upload path
 
 **Source:** Live EP upload testing against ぼくらの戦略論 show (52.5 MB mp3, S3 path).

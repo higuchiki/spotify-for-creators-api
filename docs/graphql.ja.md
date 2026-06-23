@@ -500,6 +500,55 @@ query getCommentsForEpisode {
 }
 ```
 
+### 番組横断コメント一覧取得（showByShowUri.showComments）— 2026-06-23 動作確認済み
+
+> **重要：** ネットワークキャプチャでは `getLatestCommentsForShow` というオペレーション名が見えるが、
+> これは **Persisted Query のエイリアス名** であり、`/v2/graph-pq` スキーマの
+> トップレベルフィールドには**存在しない**。
+> 実際のパスは `showByShowUri` → `Show.showComments(…)` で、アナリティクス取得と同じ入り口を使う。
+
+```graphql
+query getShowComments {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    showComments(
+      primaryFilters: [String!]!
+      commentTypesFilters: [String!]!
+      secondaryFilters: [String!]!
+      repliesFilter: [String!]!
+      pageSize: Int!
+    ) {
+      comments {
+        commentUri
+        textContent
+        episodeUri
+        episodeTitle
+        createdAt
+        status
+      }
+      pageToken
+    }
+  }
+}
+```
+
+> **注意：** `primaryFilters` に `LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW` を含めると
+> `DataFetchingException` が発生する（2026-06-23 確認）。
+> `LIST_COMMENT_PRIMARY_FILTER_PUBLISHED` のみを指定すること。
+
+**variables 例（公開済みルートコメント・最大20件）**
+```json
+{
+  "primaryFilters": ["LIST_COMMENT_PRIMARY_FILTER_PUBLISHED"],
+  "commentTypesFilters": ["LIST_COMMENT_TYPE_FILTER_ROOT"],
+  "secondaryFilters": [],
+  "repliesFilter": ["LIST_COMMENT_PRIMARY_FILTER_PUBLISHED"],
+  "pageSize": 20
+}
+```
+
+このクエリは**番組全体（全エピソード）のコメントを1リクエストで取得**できる。
+収録前のコメントダイジェスト作成などに活用できる。
+
 ---
 
 ## コメント機能の仕様まとめ

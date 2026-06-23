@@ -401,6 +401,57 @@ query getCommentsForEpisode {
 }
 ```
 
+### Get Comments for a Show (Cross-episode) — Verified 2026-06-23
+
+> **Important:** The operation name `getLatestCommentsForShow` appears in browser
+> network traffic, but it is a **Persisted Query alias** — it does **not** exist as a
+> top-level field in the `/v2/graph-pq` schema. The actual path is
+> `showByShowUri` → `Show.showComments(…)`, the same entry point used for analytics.
+
+```graphql
+query getShowComments {
+  showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
+    showComments(
+      primaryFilters: [String!]!
+      commentTypesFilters: [String!]!
+      secondaryFilters: [String!]!
+      repliesFilter: [String!]!
+      pageSize: Int!
+    ) {
+      comments {
+        commentUri
+        textContent
+        episodeUri
+        episodeTitle
+        createdAt
+        status
+      }
+      pageToken
+    }
+  }
+}
+```
+
+> **Warning:** Including `LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW` in
+> `primaryFilters` causes a `DataFetchingException`. Use
+> `LIST_COMMENT_PRIMARY_FILTER_PUBLISHED` only.
+
+**Variables example (published root comments, up to 20):**
+```json
+{
+  "primaryFilters": ["LIST_COMMENT_PRIMARY_FILTER_PUBLISHED"],
+  "commentTypesFilters": ["LIST_COMMENT_TYPE_FILTER_ROOT"],
+  "secondaryFilters": [],
+  "repliesFilter": ["LIST_COMMENT_PRIMARY_FILTER_PUBLISHED"],
+  "pageSize": 20
+}
+```
+
+This query fetches comments across **all episodes of the show** in a single
+request — useful for building a comment digest before each recording session.
+
+---
+
 ### Get Comment Replies
 
 ```graphql

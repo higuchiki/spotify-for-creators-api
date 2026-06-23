@@ -1,5 +1,18 @@
 # 更新履歴
 
+## 2026年6月24日 — showByShowUri.showComments の文書化（番組横断コメント取得）
+
+**調査方法：** 収録前コメントダイジェストツール開発中にライブ API テストで確認。
+
+### graphql.md / graphql.ja.md
+
+- **`getLatestCommentsForShow` は PQ エイリアスであり実在するクエリフィールドではない** — ブラウザのネットワークトラフィックにはこのオペレーション名が見えるが、`/v2/graph-pq` スキーマには存在しない。アドホッククエリとして送ると `ValidationError` が返る。
+- **正しいパス：`showByShowUri` → `Show.showComments(…)`** — アナリティクス取得と同じ入り口で、`analytics` の代わりに `showComments` をネストフィールドとして指定する。番組全エピソードのコメントを1リクエストで取得できる。
+- **`NEEDS_REVIEW` フィルターは `DataFetchingException` を引き起こす** — `showComments` 使用時は `primaryFilters` に `LIST_COMMENT_PRIMARY_FILTER_PUBLISHED` のみを指定すること。`getCommentsForEpisode` では両フィルター値が安全に使えるのと対照的。
+- フルクエリスキーマと動作確認済みの variables 例（`pageSize: 20`、ルートコメントのみ）を追加。
+
+---
+
 ## 2026年6月17日 — publishOn の整数要件の修正・音声アップロードの S3 パスを文書化
 
 **調査方法：** ぼくらの戦略論番組への実際の EP アップロード（52.5 MB mp3、S3 パス）によるライブテスト。
