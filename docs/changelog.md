@@ -1,5 +1,32 @@
 # Changelog
 
+## 2026-06-24 — Bidirectional EN/JA documentation sync
+
+**Source:** Manual diff and sync pass across all three doc pairs.
+
+### graphql.ja.md
+
+- Added Operations Reference tables for Analytics — Engagement Tab, Discovery Tab,
+  Benchmark, and AI Insights (mirroring the EN structure)
+- Added Analytics Overview Tab and Audience Tab operation tables with all Jun 2026
+  operations (`getShowMetadata`, `getShowStreams`, `getPerformanceStats`, etc.)
+- Added Episode List Page and Episode Create/Settings Page sections
+- Added full GraphQL query bodies for `getEngagementStats`, `getEngagementStatsNRT`,
+  `getShowRetention`, and `getEpisodeTimeSeriesByMetric` (including
+  `foregroundConsumptionPercent` note)
+- Added variables examples and `!!! note` blocks for comment mutations
+  (approve, delete, reply, `markCommentAsRead`, pin, unpin, block)
+- Added `pagination` field to `showsForUser` query (matching EN)
+
+### rest-api.ja.md
+
+- Added ID System table describing the four ID types and their usage
+- Added cURL samples alongside Python samples for 1-A, 1-B, 1-C, and 1-L
+- Added `!!! warning` block for draft episode 403 behavior in 1-B
+- Added field description table (`stationId` / `userId` / `webStationId`) in 1-L
+
+---
+
 ## 2026-06-24 — Document showByShowUri.showComments (cross-episode comment fetch)
 
 **Source:** Live API testing while building a pre-recording comment digest tool.

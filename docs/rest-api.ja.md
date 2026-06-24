@@ -32,6 +32,19 @@ Referer: https://creators.spotify.com/
 
 ---
 
+## ID システム
+
+anchor.fm API は **anchor numeric ID**（整数）を使う。S4C UI や GraphQL で見える Spotify 文字列 ID とは異なる。ほとんどのエンドポイントを呼ぶ前に変換が必要。
+
+| ID の種類 | 例 | 使用箇所 |
+|-----------|----|---------|
+| Spotify Episode ID | `"1xouj0WrH2klavXKzDWZbq"` | S4C UI、GraphQL |
+| Anchor Episode ID（数値） | `123456789` | anchor.fm REST エンドポイント |
+| Spotify Show ID | `"YOUR_SHOW_ID"` | S4C UI、GraphQL |
+| Station ID（数値） | `YOUR_STATION_ID` | anchor.fm REST エンドポイント |
+
+---
+
 ## 1-A. ID変換：Spotify Episode ID → Anchor Numeric ID
 
 anchor.fm API のエンドポイントはすべて **anchor numeric ID**（整数）を使う。
@@ -47,13 +60,21 @@ GET /v3/episodes/spotify:episode:{SPOTIFY_EP_ID}/episodeId?isMumsCompatible=true
 { "episodeId": 123456789 }
 ```
 
-```python
-resp = requests.get(
-    f"https://api-v5.anchor.fm/v3/episodes/spotify:episode:{spotify_ep_id}/episodeId?isMumsCompatible=true",
-    headers={"Authorization": f"Bearer {bearer}", "Accept": "application/json"},
-)
-anchor_id = resp.json()["episodeId"]
-```
+=== "Python"
+    ```python
+    resp = requests.get(
+        f"https://api-v5.anchor.fm/v3/episodes/spotify:episode:{spotify_ep_id}/episodeId?isMumsCompatible=true",
+        headers={"Authorization": f"Bearer {bearer}", "Accept": "application/json"},
+    )
+    anchor_id = resp.json()["episodeId"]
+    ```
+
+=== "cURL"
+    ```bash
+    curl -s \
+      -H "Authorization: Bearer $BEARER" \
+      "https://api-v5.anchor.fm/v3/episodes/spotify:episode:${SPOTIFY_EP_ID}/episodeId?isMumsCompatible=true"
+    ```
 
 ---
 
@@ -96,6 +117,26 @@ isPublished: false  かつ  publishOn なし   →  draft（下書き）
   "podcastEpisodeIsExplicit": false
 }
 ```
+
+!!! warning "下書きエピソードは 403 が返る"
+    `isPublished: false` かつ `publishOn` なし（draft 状態）のエピソードに対してこのエンドポイントを呼ぶと **HTTP 403 Forbidden** が返る（ライブブラウザセッションでも同様）。S4C UI は下書きのデータを GraphQL で取得している。下書きエピソードのメタデータを更新する必要がある場合は、更新エンドポイントを呼ぶ前に元の値をメモリに保持しておくこと。
+
+=== "Python"
+    ```python
+    r = requests.get(
+        f"https://api-v5.anchor.fm/v3/episodes/{anchor_id}/overview"
+        "?isMumsCompatible=true&returnWebIds=true",
+        headers=headers_get,
+    )
+    overview = r.json()
+    ```
+
+=== "cURL"
+    ```bash
+    curl -s \
+      -H "Authorization: Bearer $BEARER" \
+      "https://api-v5.anchor.fm/v3/episodes/${ANCHOR_ID}/overview?isMumsCompatible=true&returnWebIds=true"
+    ```
 
 ---
 
@@ -162,6 +203,37 @@ POST /v3/episodes/{ANCHOR_ID}/update?isMumsCompatible=true
 ```
 
 `didChangePublishState: true` は `isPublished` が変わったことを示す。
+
+=== "Python"
+    ```python
+    pub_utc = publish_jst.astimezone(timezone.utc)
+    payload = {
+        "userId": overview["userId"],
+        "title": "新しいエピソードタイトル",
+        "description": "<p>新しい説明</p>",
+        "episodeType": overview.get("podcastEpisodeType", "full"),
+        "isPublished": overview.get("isPublished", False),
+        "podcastEpisodeIsExplicit": overview.get("podcastEpisodeIsExplicit", False),
+        "publishOn": int(pub_utc.timestamp()),                    # Unix 整数
+        "wizardDraftedToPublishOn": pub_utc.strftime("%Y-%m-%dT%H:%M:%S.000Z"),  # ISO 文字列
+    }
+    r = requests.post(
+        f"https://api-v5.anchor.fm/v3/episodes/{anchor_id}/update?isMumsCompatible=true",
+        json=payload,
+        headers=headers_post,
+    )
+    ```
+
+=== "cURL"
+    ```bash
+    curl -s -X POST \
+      -H "Authorization: Bearer $BEARER" \
+      -H "Content-Type: application/json" \
+      -H "Origin: https://creators.spotify.com" \
+      -H "Referer: https://creators.spotify.com/" \
+      -d '{"userId":YOUR_USER_ID,"title":"新タイトル","description":"<p>説明</p>","episodeType":"full","isPublished":false,"podcastEpisodeIsExplicit":false,"publishOn":1748732400,"wizardDraftedToPublishOn":"2026-06-01T21:00:00.000Z"}' \
+      "https://api-v5.anchor.fm/v3/episodes/${ANCHOR_ID}/update?isMumsCompatible=true"
+    ```
 
 ---
 
@@ -301,7 +373,29 @@ Spotify Show ID から anchor.fm 内部の numeric ID を一括変換して返�
 }
 ```
 
-`stationId` がエピソード一覧・メタデータ等の他エンドポイントで使う numeric ID。
+| フィールド | 説明 |
+|-----------|------|
+| `stationId` | エピソード一覧・メタデータ等の他エンドポイントで使う numeric ID |
+| `userId` | アカウントの numeric ユーザー ID |
+| `webStationId` | URL スラッグ（バニティ ID） |
+
+=== "Python"
+    ```python
+    r = requests.get(
+        f"https://api-v5.anchor.fm/v3/shows/{spotify_show_id}/legacyIds?isMumsCompatible=true",
+        headers=headers_get,
+    )
+    ids = r.json()
+    station_id = ids["stationId"]
+    user_id    = ids["userId"]
+    ```
+
+=== "cURL"
+    ```bash
+    curl -s \
+      -H "Authorization: Bearer $BEARER" \
+      "https://api-v5.anchor.fm/v3/shows/${SPOTIFY_SHOW_ID}/legacyIds?isMumsCompatible=true"
+    ```
 
 ---
 

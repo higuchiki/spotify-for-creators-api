@@ -1,5 +1,32 @@
 # 更新履歴
 
+## 2026年6月24日 — 英語・日本語ドキュメントの双方向同期
+
+**内容：** 3つのドキュメントペアを手動で差分確認・同期。
+
+### graphql.ja.md
+
+- アナリティクス — エンゲージメントタブ・ディスカバリータブ・ベンチマーク・AI インサイトの
+  オペレーション一覧テーブルを追加（EN の構造に対応）
+- アナリティクス — 概要タブ・オーディエンスタブのオペレーション一覧テーブルを追加
+  （2026年6月追加の操作を含む）
+- エピソード一覧ページ・エピソード作成・設定ページのセクションを追加
+- `getEngagementStats`・`getEngagementStatsNRT`・`getShowRetention`・
+  `getEpisodeTimeSeriesByMetric` の完全な GraphQL クエリボディを追加
+  （`foregroundConsumptionPercent` の注記を含む）
+- コメント管理 mutation（承認・削除・返信・既読マーク・ピン留め・ブロック）に
+  variables 例と `!!! note` ブロックを追加
+- `showsForUser` クエリに `pagination` フィールドを追加（EN と対応）
+
+### rest-api.ja.md
+
+- ID システムのテーブルを追加（4種類の ID と使用箇所を説明）
+- 1-A・1-B・1-C・1-L に Python サンプルに加えて cURL サンプルを追加
+- 1-B に下書きエピソードの 403 挙動に関する `!!! warning` ブロックを追加
+- 1-L に `stationId` / `userId` / `webStationId` のフィールド説明テーブルを追加
+
+---
+
 ## 2026年6月24日 — showByShowUri.showComments の文書化（番組横断コメント取得）
 
 **調査方法：** 収録前コメントダイジェストツール開発中にライブ API テストで確認。

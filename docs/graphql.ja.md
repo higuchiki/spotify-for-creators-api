@@ -72,6 +72,37 @@ anchor.fm と同じ Bearer トークンを使用する（同じ `spotifyconnecto
 | `getCommentsOnForEpisode` | query | コメント機能のオン/オフ状態 |
 | `getBlockedUsersForShow` | query | ブロックユーザー一覧 |
 
+### アナリティクス — エンゲージメントタブ（2026年6月追加）
+
+| オペレーション名 | 種別 | 用途 |
+|----------------|------|------|
+| `getEngagementStats` | query | 視聴時間・平均視聴時間・コメント・フォロワー増減の日次時系列 |
+| `getEngagementStatsNRT` | query | 視聴時間・平均視聴時間の期間合計（前期比付き） |
+| `getEpisodeCompletionRates` | query | 最新10エピソードの完全再生率（初回7日間） |
+| `getShowRetention` | query | 前週比リテンション率の週次時系列 |
+| `getEpisodeTimeSeriesByMetric` | query | 単一エピソードの任意メトリクス時系列 |
+
+### アナリティクス — ディスカバリータブ（2026年6月追加）
+
+| オペレーション名 | 種別 | 用途 |
+|----------------|------|------|
+| `getShowDiscoveryFunnelStats` | query | インプレッション → 再生 → 平均完了率ファネル（転換率付き） |
+
+### アナリティクス — ベンチマーク（2026年6月追加）
+
+| オペレーション名 | 種別 | 用途 |
+|----------------|------|------|
+| `getBenchmarkTotal` | query | 類似ショーとのパーセンタイル比較（合計） |
+| `getBenchmarkTimeSeries` | query | 類似ショーとのパーセンタイル比較（時系列） |
+
+### アナリティクス — AI インサイト（2026年6月追加）
+
+| オペレーション名 | 種別 | 用途 |
+|----------------|------|------|
+| `generateAnalyticsInsight` | mutation | AI インサイト生成を依頼 |
+| `getAnalyticsInsight` | query | 生成済みインサイトを ID で取得 |
+| `submitAnalyticsInsightFeedback` | mutation | インサイトへの評価（thumbs up/down）を送信 |
+
 ### コメントページ
 
 | オペレーション名 | 種別 | 用途 |
@@ -110,26 +141,62 @@ anchor.fm と同じ Bearer トークンを使用する（同じ `spotifyconnecto
 | `getEpisodeData` | query | エピソードデータ取得（コメント操作後の再取得に使用） |
 | `getPinnedCommentForEpisode` | query | エピソードのピン留めコメント取得 |
 
-### アナリティクス全体概要
+### アナリティクス — 概要タブ
 
 | オペレーション名 | 種別 | 用途 |
 |----------------|------|------|
 | `getShowOnSpotifyStats` | query | Spotifyでのショー統計（期間変更時に発火） |
 | `getShowOnSpotifyStatsNRT` | query | Spotifyでのショー統計 NRT（Near Real Time） |
 | `getShowOverviewStatsNRT` | query | ショー全体概要統計 NRT |
-| `getFeatureEligibility` | query | 機能利用可否チェック |
-| `getEpisodePlaysTotal` | query | エピソード総再生数取得 |
+| `getPublishedEpisodeCount` | query | 公開済みエピソード数取得 |
+| `getShowMetadata` | query | ショーメタデータ + 全期間再生数合計（2026年6月追加） |
+| `getShowAllPlatformsStats` | query | 全プラットフォームのストリーム+ダウンロード平均（2026年6月追加） |
+| `getShowAllPlatformsStatsNRT` | query | 全期間全プラットフォームのストリーム+ダウンロード合計（2026年6月追加） |
+| `getShowStreams` | query | Spotify 日次ストリーム時系列（2026年6月追加） |
+| `getShowStreamsNRT` | query | 期間内 Spotify ストリーム合計（2026年6月追加） |
+| `getShowStreamsAndDownloadsDaily` | query | 全プラットフォームの日次/週次/月次ストリーム+ダウンロード（2026年6月追加） |
+| `getPerformanceStats` | query | 日次再生数・オーディエンス・フォロワー時系列（2026年6月追加） |
+| `getPerformanceStatsNRT` | query | 再生数・オーディエンス・フォロワー合計（前期比付き、2026年6月追加） |
+| `getShowTopEpisodesByImpressions` | query | インプレッション別トップエピソード（ソース別内訳付き、2026年6月追加） |
+| `getShowTopEpisodesByMetric` | query | 任意 `EpisodeAnalyticsMetricType` でのトップエピソード（2026年6月追加） |
+| `getShowEpisodesByMetric` | query | メトリクス付きページネーションエピソード一覧（2026年6月追加） |
+| `hasVideoEpisodes` | query | ショーに動画エピソードがあるか（2026年6月追加） |
+| `getPermissionsForShow` | query | 制作者のショー権限（2026年6月追加） |
 
-### その他
+### アナリティクス — オーディエンスタブ
 
 | オペレーション名 | 種別 | 用途 |
 |----------------|------|------|
-| `getPublishedEpisodeCount` | query | 公開済みエピソード数取得 |
+| `getShowAudienceDemographicsStats` | query | 年齢・性別の内訳 |
+| `getShowAudienceAllPlatformsGeoStats` | query | 全プラットフォームの地域別内訳 |
+| `getShowAudienceAllPlatformsStats` | query | 全プラットフォーム統計 |
+| `getShowSegmentedAudienceTotal` | query | 新規・リピーターのリスナー合計（2026年5月追加） |
+| `getShowSegmentedAudienceTimeSeries` | query | 新規・リピーターの日次時系列（2026年5月追加） |
+| `getAudienceGrowthTimeSeries` | query | コアファン / 発展途上 / 新規オーディエンスの日次時系列（2026年6月追加） |
+| `getAudienceGrowthMetricSummary` | query | コアファンのサマリー（前期比付き、2026年6月追加） |
+| `getAudienceGrowthInsights` | query | リテンション率・視聴時間のコアファン vs 全体比較（2026年6月追加） |
+
+### アナリティクス全体（その他）
+
+| オペレーション名 | 種別 | 用途 |
+|----------------|------|------|
+| `getFeatureEligibility` | query | 機能利用可否チェック |
+| `getEpisodePlaysTotal` | query | エピソード総再生数取得 |
+
+### エピソード一覧ページ
+
+| オペレーション名 | 種別 | 用途 |
+|----------------|------|------|
+| `WebGetIndexedEpisodeList` | query | インデックス済みエピソード一覧取得 |
+| `getEpisodesForShow` | query | ショーのエピソード一覧取得（投票ページ） |
+
+### エピソード作成・設定ページ
+
+| オペレーション名 | 種別 | 用途 |
+|----------------|------|------|
 | `getChaptersEligibility` | query | チャプター機能の利用資格確認 |
 | `createEpisodeSmartlink` | mutation | エピソードスマートリンク作成 |
 | `getLatestCommentsForShow` | query | ショー最新コメント一覧取得 |
-| `WebGetIndexedEpisodeList` | query | インデックス済みエピソード一覧取得 |
-| `getEpisodesForShow` | query | ショーのエピソード一覧取得（投票ページ） |
 
 ---
 
@@ -370,13 +437,16 @@ mutation createPollForEpisode {
 
 ```graphql
 mutation publishCommentByCommentUri {
-  publishCommentByCommentUri(
-    commentUri: String!   # "spotify:comment:{COMMENT_ID}"
-  )
+  publishCommentByCommentUri(commentUri: String!)
 }
 ```
 
-> 承認と同時に `markCommentAsRead` も自動発火する。
+```json
+{ "commentUri": "spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ" }
+```
+
+!!! note
+    承認と同時に `markCommentAsRead` も自動発火する（2リクエストが連続して送信される）。
 
 ---
 
@@ -384,10 +454,7 @@ mutation publishCommentByCommentUri {
 
 ```graphql
 mutation deleteCommentByCommentUri {
-  deleteCommentByCommentUri(
-    commentUri: String!
-    filter: String!       # 下表参照
-  )
+  deleteCommentByCommentUri(commentUri: String!, filter: String!)
 }
 ```
 
@@ -398,6 +465,13 @@ mutation deleteCommentByCommentUri {
 | `DELETE_COMMENT_FILTER_PUBLISHED` | 公開済みコメントを削除する |
 | `DELETE_COMMENT_FILTER_NEEDS_REVIEW` | （推定）審査中コメントを削除する（未確認） |
 
+```json
+{
+  "commentUri": "spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ",
+  "filter": "DELETE_COMMENT_FILTER_PUBLISHED"
+}
+```
+
 ---
 
 ### 制作者返信
@@ -405,11 +479,38 @@ mutation deleteCommentByCommentUri {
 ```graphql
 mutation createCommentReplyByCommentUri {
   createCommentReplyByCommentUri(
-    parentCommentUri: String!   # 返信先コメントの URI
-    replyStr: String!           # 返信テキスト（UI上500文字）
+    parentCommentUri: String!
+    replyStr: String!
   )
 }
 ```
+
+```json
+{
+  "parentCommentUri": "spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ",
+  "replyStr": "ご視聴ありがとうございます！"
+}
+```
+
+!!! note
+    返信はスレッドビュー（`?thread={COMMENT_ID}` URL パラメータ）から行われる。
+    返信後、`GetCommentReplies` が自動発火してスレッドを更新する。
+
+---
+
+### コメント既読マーク
+
+```graphql
+mutation markCommentAsRead {
+  markCommentAsRead(commentUri: String!)
+}
+```
+
+```json
+{ "commentUri": "spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ" }
+```
+
+承認・返信・削除と同時に自動発火する。単独での呼び出しも可能。
 
 ---
 
@@ -417,14 +518,18 @@ mutation createCommentReplyByCommentUri {
 
 ```graphql
 mutation pinComment {
-  pinComment(
-    commentUri: String!
-  )
+  pinComment(commentUri: String!)
 }
 ```
 
-> - 公開済みコメントにのみ適用可能
-> - ピン留めできるコメントは1エピソードにつき1件のみ（UIの制約）
+```json
+{ "commentUri": "spotify:comment:0tHI8bJTfued8QR8E2Rv6B" }
+```
+
+!!! note
+    - 公開済みコメントにのみ適用可能
+    - ピン留めできるコメントは1エピソードにつき1件のみ（UIの制約。API レベルでは未確認）
+    - ピン留め後、`getPinnedCommentForEpisode` が自動発火して UI を更新する
 
 ---
 
@@ -432,10 +537,12 @@ mutation pinComment {
 
 ```graphql
 mutation unPinComment {
-  unPinComment(
-    commentUri: String!
-  )
+  unPinComment(commentUri: String!)
 }
+```
+
+```json
+{ "commentUri": "spotify:comment:0tHI8bJTfued8QR8E2Rv6B" }
 ```
 
 ---
@@ -444,14 +551,22 @@ mutation unPinComment {
 
 ```graphql
 mutation blockUserForShow {
-  blockUserForShow(
-    username: String!   # Spotifyの内部ユーザーID（"21xxxxx" 形式）
-    showUri: String!    # "spotify:show:{SHOW_ID}"
-  )
+  blockUserForShow(username: String!, showUri: String!)
 }
 ```
 
-> `username` は `getCommentsForEpisode` のレスポンスの `author.username` フィールドから取得する。
+```json
+{
+  "username": "21yafw4q377x3jpbbcohdh4py",
+  "showUri": "spotify:show:YOUR_SHOW_ID"
+}
+```
+
+!!! note
+    - `username` は Spotify 内部ユーザーID（`21xxxxx` 形式）。`getCommentsForEpisode` レスポンスの `author.uri` または `author.username` フィールドから取得する
+    - ブロックは**ショー全体**（全エピソード）に適用される
+    - UI ではコメント同時削除オプションがある。選択すると同じリクエストバッチで `deleteCommentByCommentUri` が発火する
+    - `unblockUserForShow` が対称的に存在すると思われる（未確認）
 
 ---
 
@@ -780,6 +895,73 @@ streams/starts から導出する完了率とも異なり、期間全体の集�
 エンゲージメントタブのロード時に発火。視聴時間（`SHOW_CONSUMPTION`）と
 平均視聴時間（`SHOW_AVERAGE_CONSUMPTION_TIME`）の日次時系列を返す。
 
+```graphql
+query getEngagementStats(
+  $showUri: ShowUri!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $customDateRange: CustomDateRangeInput,
+  $publishedAfter: TimestampInput,
+  $publishedBefore: TimestampInput,
+  $hasComments: Boolean!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    consumptionTimeDaily: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_CONSUMPTION,
+      aggregationType: AGGREGATION_TYPE_DAILY,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              endDate
+              value {
+                __typename
+                ... on ConsumptionValue {
+                  totalConsumptionHours
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    avgConsumptionTimeDaily: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_AVERAGE_CONSUMPTION_TIME,
+      aggregationType: AGGREGATION_TYPE_DAILY,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              endDate
+              value {
+                __typename
+                ... on AverageConsumptionTimeValue {
+                  averageConsumptionSeconds
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
 **新レスポンス型：**
 
 | 型名 | フィールド | 説明 |
@@ -796,12 +978,101 @@ streams/starts から導出する完了率とも異なり、期間全体の集�
 
 ### `getEngagementStatsNRT` — 期間合計（前期比付き）
 
-`periodOverPeriodPercentageDiff` フィールドにより、ダッシュボードの
-`+36.6%` / `+7.4%` バッジの値が取得できる（例：`0.366` = +36.6%）。
+期間合計（時系列ではない）を `periodOverPeriodPercentageDiff` 付きで返す。
+`+36.6%` / `+7.4%` バッジの値がこのフィールドから取得できる（例：`0.366` = +36.6%）。
+
+```graphql
+query getEngagementStatsNRT(
+  $showUri: ShowUri!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $customDateRange: CustomDateRangeInput,
+  $includePeriodComparison: Boolean!,
+  $hasComments: Boolean!
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    consumptionTimeTotal: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_CONSUMPTION,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange,
+      includePeriodComparison: $includePeriodComparison
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on ConsumptionValue {
+            totalConsumptionHours
+          }
+        }
+        periodOverPeriodPercentageDiff
+      }
+    }
+    avgConsumptionTimeTotal: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_AVERAGE_CONSUMPTION_TIME,
+      aggregationType: AGGREGATION_TYPE_TOTAL,
+      window: $dateRangeWindow,
+      customDateRange: $customDateRange,
+      includePeriodComparison: $includePeriodComparison
+    }) {
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on AverageConsumptionTimeValue {
+            averageConsumptionSeconds
+          }
+        }
+        periodOverPeriodPercentageDiff
+      }
+    }
+  }
+}
+```
+
+**重要フィールド：** `analyticsValue.periodOverPeriodPercentageDiff` — ダッシュボードの `+36.6%` / `+7.4%` バッジの値（例：`0.366` = +36.6%）。
 
 ### `getShowRetention` — 前週比リテンション率
 
-`SHOW_RETENTION` / `AGGREGATION_TYPE_WEEKLY` の組み合わせで週次時系列を返す。
+今週のリスナーのうち前週も聴いていた割合を週次時系列で返す。
+
+```graphql
+query getShowRetention(
+  $showUri: ShowUri!,
+  $dateRangeWindow: AnalyticsWindow!,
+  $publishedAfter: TimestampInput,
+  $publishedBefore: TimestampInput
+) {
+  showByShowUri(getShowByShowUriRequest: {showUri: $showUri}) {
+    uri
+    retentionWeekly: analytics(getShowAnalyticsRequest: {
+      showAnalyticsMetricType: SHOW_RETENTION,
+      aggregationType: AGGREGATION_TYPE_WEEKLY,
+      window: $dateRangeWindow
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              endDate
+              value {
+                __typename
+                ... on RatioValueFloat {
+                  value
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
 `RatioValueFloat.value` は 0〜1 の float（例：`0.537` = 53.7%）。
 `WINDOW_LAST_NINETY_DAYS` + `AGGREGATION_TYPE_WEEKLY` でダッシュボードの
 90日リテンショングラフを再現できる。
@@ -850,6 +1121,51 @@ query getEpisodeCompletionRates($showUri: ShowUri!) {
   }
 }
 ```
+
+### `getEpisodeTimeSeriesByMetric` — エピソードメトリクス時系列
+
+単一エピソードの任意 `EpisodeAnalyticsMetricType` について時系列データを取得する。
+
+```graphql
+query getEpisodeTimeSeriesByMetric(
+  $episodeUri: EpisodeUri!,
+  $metricType: EpisodeAnalyticsMetricType!,
+  $window: AnalyticsWindow!,
+  $aggregationType: AggregationType!
+) {
+  episodeByUri(getEpisodeRequest: {episodeUri: $episodeUri}) {
+    analyticsBatch(batchGetEpisodeAnalyticsItem: {
+      episodeAnalyticsMetricType: $metricType,
+      aggregationType: $aggregationType,
+      window: $window
+    }) {
+      startDate
+      endDate
+      analyticsValue {
+        analyticsValue {
+          __typename
+          ... on TimeSeriesValue {
+            points {
+              date
+              value {
+                __typename
+                ... on CountValueLong { longValue: value }
+                ... on ConsumptionValue {
+                  totalConsumptionHours
+                  foregroundConsumptionPercent
+                }
+                ... on RatioValueFloat { floatValue: value }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**注意：** `ConsumptionValue` はエピソードレベルで `foregroundConsumptionPercent`（フォアグラウンド再生率）も取得できる。
 
 ---
 
@@ -1127,6 +1443,9 @@ query {
     shows {
       name
       uri
+    }
+    pagination {
+      # 追加のページネーションフィールドが利用可能
     }
   }
 }
