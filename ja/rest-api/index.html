@@ -582,6 +582,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ID システム
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-a-idspotify-episode-id-anchor-numeric-id" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1243,6 +1254,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ID システム
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-a-idspotify-episode-id-anchor-numeric-id" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1790,6 +1812,40 @@
 </tbody>
 </table>
 <hr />
+<h2 id="id">ID システム<a class="headerlink" href="#id" title="Permanent link">&para;</a></h2>
+<p>anchor.fm API は <strong>anchor numeric ID</strong>（整数）を使う。S4C UI や GraphQL で見える Spotify 文字列 ID とは異なる。ほとんどのエンドポイントを呼ぶ前に変換が必要。</p>
+<table>
+<thead>
+<tr>
+<th>ID の種類</th>
+<th>例</th>
+<th>使用箇所</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spotify Episode ID</td>
+<td><code>"1xouj0WrH2klavXKzDWZbq"</code></td>
+<td>S4C UI、GraphQL</td>
+</tr>
+<tr>
+<td>Anchor Episode ID（数値）</td>
+<td><code>123456789</code></td>
+<td>anchor.fm REST エンドポイント</td>
+</tr>
+<tr>
+<td>Spotify Show ID</td>
+<td><code>"YOUR_SHOW_ID"</code></td>
+<td>S4C UI、GraphQL</td>
+</tr>
+<tr>
+<td>Station ID（数値）</td>
+<td><code>YOUR_STATION_ID</code></td>
+<td>anchor.fm REST エンドポイント</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h2 id="1-a-idspotify-episode-id-anchor-numeric-id">1-A. ID変換：Spotify Episode ID → Anchor Numeric ID<a class="headerlink" href="#1-a-idspotify-episode-id-anchor-numeric-id" title="Permanent link">&para;</a></h2>
 <p>anchor.fm API のエンドポイントはすべて <strong>anchor numeric ID</strong>（整数）を使う。
 S4C 上で見える Spotify Episode ID（文字列）からの変換が必要。</p>
@@ -1798,15 +1854,27 @@ S4C 上で見える Spotify Episode ID（文字列）からの変換が必要。
 <p><strong>レスポンス</strong></p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">123456789</span><span class="w"> </span><span class="p">}</span>
 </span></code></pre></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Python</label><label for="__tabbed_1_2">cURL</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/spotify:episode:</span><span class="si">{</span><span class="n">spotify_ep_id</span><span class="si">}</span><span class="s2">/episodeId?isMumsCompatible=true&quot;</span><span class="p">,</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">bearer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">},</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">)</span>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">anchor_id</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;episodeId&quot;</span><span class="p">]</span>
 </span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$BEARER</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/spotify:episode:</span><span class="si">${</span><span class="nv">SPOTIFY_EP_ID</span><span class="si">}</span><span class="s2">/episodeId?isMumsCompatible=true&quot;</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
 <hr />
 <h2 id="1-b">1-B. エピソード詳細取得<a class="headerlink" href="#1-b" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>GET /v3/episodes/{ANCHOR_ID}/overview?isMumsCompatible=true&amp;returnWebIds=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>GET /v3/episodes/{ANCHOR_ID}/overview?isMumsCompatible=true&amp;returnWebIds=true
 </span></code></pre></div>
 <p><strong>レスポンスフィールド（主要）</strong></p>
 <table>
@@ -1856,36 +1924,59 @@ S4C 上で見える Spotify Episode ID（文字列）からの変換が必要。
 </tbody>
 </table>
 <p><strong>エピソード状態の判定</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>isPublished: false  かつ  publishOn が存在  →  scheduled（予約済み）
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>isPublished: true                          →  published（公開済み）
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>isPublished: false  かつ  publishOn なし   →  draft（下書き）
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>isPublished: false  かつ  publishOn が存在  →  scheduled（予約済み）
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>isPublished: true                          →  published（公開済み）
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>isPublished: false  かつ  publishOn なし   →  draft（下書き）
 </span></code></pre></div>
 <p><strong>レスポンス例</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ep.61 〇〇という話&quot;</span><span class="p">,</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;ep.61 〇〇という話&lt;/p&gt;&quot;</span><span class="p">,</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">&quot;isPublished&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-31T21:00:00.000Z&quot;</span><span class="p">,</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_USER_ID</span><span class="p">,</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;full&quot;</span><span class="p">,</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ep.61 〇〇という話&quot;</span><span class="p">,</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;ep.61 〇〇という話&lt;/p&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">&quot;isPublished&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-31T21:00:00.000Z&quot;</span><span class="p">,</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_USER_ID</span><span class="p">,</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;full&quot;</span><span class="p">,</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">}</span>
 </span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">下書きエピソードは 403 が返る</p>
+<p><code>isPublished: false</code> かつ <code>publishOn</code> なし（draft 状態）のエピソードに対してこのエンドポイントを呼ぶと <strong>HTTP 403 Forbidden</strong> が返る（ライブブラウザセッションでも同様）。S4C UI は下書きのデータを GraphQL で取得している。下書きエピソードのメタデータを更新する必要がある場合は、更新エンドポイントを呼ぶ前に元の値をメモリに保持しておくこと。</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Python</label><label for="__tabbed_2_2">cURL</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">{</span><span class="n">anchor_id</span><span class="si">}</span><span class="s2">/overview&quot;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="s2">&quot;?isMumsCompatible=true&amp;returnWebIds=true&quot;</span><span class="p">,</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="n">headers</span><span class="o">=</span><span class="n">headers_get</span><span class="p">,</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">)</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">overview</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$BEARER</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">${</span><span class="nv">ANCHOR_ID</span><span class="si">}</span><span class="s2">/overview?isMumsCompatible=true&amp;returnWebIds=true&quot;</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
 <hr />
 <h2 id="1-c">1-C. エピソード更新（タイトル・概要欄・公開日時）<a class="headerlink" href="#1-c" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>POST /v3/episodes/{ANCHOR_ID}/update?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>POST /v3/episodes/{ANCHOR_ID}/update?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>リクエストボディ</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_USER_ID</span><span class="p">,</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;エピソードタイトル&quot;</span><span class="p">,</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;概要欄の HTML&lt;/p&gt;&quot;</span><span class="p">,</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="nt">&quot;episodeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;full&quot;</span><span class="p">,</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">&quot;isPublished&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1748732400</span><span class="p">,</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span><span class="nt">&quot;wizardDraftedToPublishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-31T21:00:00.000Z&quot;</span>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_USER_ID</span><span class="p">,</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;エピソードタイトル&quot;</span><span class="p">,</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;概要欄の HTML&lt;/p&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="nt">&quot;episodeType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;full&quot;</span><span class="p">,</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span><span class="nt">&quot;isPublished&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1748732400</span><span class="p">,</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">  </span><span class="nt">&quot;wizardDraftedToPublishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-31T21:00:00.000Z&quot;</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="p">}</span>
 </span></code></pre></div>
 <table>
 <thead>
@@ -1944,56 +2035,89 @@ S4C 上で見える Spotify Episode ID（文字列）からの変換が必要。
 API は先頭の数字だけを整数として解釈するため、<code>"2026"</code> が 2026 秒として格納され
 <code>1970-01-01T00:33:46.000Z</code> になる。</p>
 <p><code>wizardDraftedToPublishOn</code> は逆で ISO 8601 文字列が必須（整数を送ると HTTP 400）。</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">JST</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">publish_jst</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">JST</span><span class="p">)</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">pub_utc</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">publish_on_unix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pub_utc</span><span class="o">.</span><span class="n">timestamp</span><span class="p">())</span>                    <span class="c1"># → 1748732400</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="n">publish_on_iso</span>  <span class="o">=</span> <span class="n">pub_utc</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">)</span> <span class="c1"># → &quot;2026-05-31T21:00:00.000Z&quot;</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">JST</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">publish_jst</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">JST</span><span class="p">)</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">pub_utc</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="n">publish_on_unix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pub_utc</span><span class="o">.</span><span class="n">timestamp</span><span class="p">())</span>                    <span class="c1"># → 1748732400</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="n">publish_on_iso</span>  <span class="o">=</span> <span class="n">pub_utc</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">)</span> <span class="c1"># → &quot;2026-05-31T21:00:00.000Z&quot;</span>
 </span></code></pre></div>
 </div>
 <p><strong>レスポンス</strong>: 成功時 HTTP 200</p>
 <p><strong>レスポンスボディ（主要フィールド）</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;概要欄 HTML&lt;/p&gt;&quot;</span><span class="p">,</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;タイトル&quot;</span><span class="p">,</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="nt">&quot;didChangePublishState&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span><span class="nt">&quot;isAnchorCreate&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="nt">&quot;shareUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://creators.spotify.com/pod/show/...&quot;</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">{</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;p&gt;概要欄 HTML&lt;/p&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;タイトル&quot;</span><span class="p">,</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="nt">&quot;didChangePublishState&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span><span class="nt">&quot;isAnchorCreate&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span><span class="nt">&quot;shareUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://creators.spotify.com/pod/show/...&quot;</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><code>didChangePublishState: true</code> は <code>isPublished</code> が変わったことを示す。</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Python</label><label for="__tabbed_3_2">cURL</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">pub_utc</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    <span class="s2">&quot;userId&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="p">[</span><span class="s2">&quot;userId&quot;</span><span class="p">],</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;新しいエピソードタイトル&quot;</span><span class="p">,</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;p&gt;新しい説明&lt;/p&gt;&quot;</span><span class="p">,</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>    <span class="s2">&quot;episodeType&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;podcastEpisodeType&quot;</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">),</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>    <span class="s2">&quot;isPublished&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;isPublished&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>    <span class="s2">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span> <span class="n">overview</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>    <span class="s2">&quot;publishOn&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">pub_utc</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()),</span>                    <span class="c1"># Unix 整数</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>    <span class="s2">&quot;wizardDraftedToPublishOn&quot;</span><span class="p">:</span> <span class="n">pub_utc</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">),</span>  <span class="c1"># ISO 文字列</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="p">}</span>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">{</span><span class="n">anchor_id</span><span class="si">}</span><span class="s2">/update?isMumsCompatible=true&quot;</span><span class="p">,</span>
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>    <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>    <span class="n">headers</span><span class="o">=</span><span class="n">headers_post</span><span class="p">,</span>
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$BEARER</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Origin: https://creators.spotify.com&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Referer: https://creators.spotify.com/&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;userId&quot;:YOUR_USER_ID,&quot;title&quot;:&quot;新タイトル&quot;,&quot;description&quot;:&quot;&lt;p&gt;説明&lt;/p&gt;&quot;,&quot;episodeType&quot;:&quot;full&quot;,&quot;isPublished&quot;:false,&quot;podcastEpisodeIsExplicit&quot;:false,&quot;publishOn&quot;:1748732400,&quot;wizardDraftedToPublishOn&quot;:&quot;2026-06-01T21:00:00.000Z&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">${</span><span class="nv">ANCHOR_ID</span><span class="si">}</span><span class="s2">/update?isMumsCompatible=true&quot;</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
 <hr />
 <h2 id="1-d">1-D. リージョン取得<a class="headerlink" href="#1-d" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>GET /v3/region?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>GET /v3/region?isMumsCompatible=true
 </span></code></pre></div>
 <p>ユーザーアカウントのリージョン情報を返す。</p>
 <p><strong>レスポンス（推定）</strong>: <code>{ "region": "JP" }</code></p>
 <hr />
 <h2 id="1-e">1-E. スポンサードコンテンツ状態取得<a class="headerlink" href="#1-e" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>GET /v3/episodes/{ANCHOR_ID}/sponsoredContentStatus?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>GET /v3/episodes/{ANCHOR_ID}/sponsoredContentStatus?isMumsCompatible=true
 </span></code></pre></div>
 <p>エピソードのスポンサー（広告）設定状態を返す。</p>
 <hr />
 <h2 id="1-f">1-F. カバーアート配色取得<a class="headerlink" href="#1-f" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>POST /MultiGetColor?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>POST /MultiGetColor?isMumsCompatible=true
 </span></code></pre></div>
 <p>画像 URL からカラーパレットを返す。</p>
 <p><strong>リクエストボディ</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">&quot;color_queries&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://anchor-generated-image-bank.s3.amazonaws.com/...jpg&quot;</span><span class="w"> </span><span class="p">}</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="p">]</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">{</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nt">&quot;color_queries&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://anchor-generated-image-bank.s3.amazonaws.com/...jpg&quot;</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="p">}</span>
 </span></code></pre></div>
 <hr />
 <h2 id="1-g">1-G. エピソードフォームデータ取得<a class="headerlink" href="#1-g" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>GET /v3/episodes/pcdFormData?episodeUri[]=spotify:episode:{SPOTIFY_EP_ID}&amp;isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>GET /v3/episodes/pcdFormData?episodeUri[]=spotify:episode:{SPOTIFY_EP_ID}&amp;isMumsCompatible=true
 </span></code></pre></div>
 <p><code>episodeUri[]</code> を複数指定して一括取得可能。</p>
 <hr />
 <h2 id="1-h">1-H. ショーメタデータ取得<a class="headerlink" href="#1-h" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>GET /v3/stations/{STATION_ID}/metadata?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>GET /v3/stations/{STATION_ID}/metadata?isMumsCompatible=true
 </span></code></pre></div>
 <p><code>STATION_ID</code> は <code>1-L</code> の <code>legacyIds</code> エンドポイントで取得できる。</p>
 <p><strong>レスポンスフィールド（全フィールド、2026-05-26 実測）</strong></p>
@@ -2120,45 +2244,86 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 </table>
 <hr />
 <h2 id="1-i-id">1-I. パートナーID取得<a class="headerlink" href="#1-i-id" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>POST /v3/{USER_ID}/partnerIds?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>POST /v3/{USER_ID}/partnerIds?isMumsCompatible=true
 </span></code></pre></div>
 <p>収益化（広告・Fan Support 等）に関連するパートナー ID を取得。</p>
 <hr />
 <h2 id="1-j">1-J. ユーザー認証状態確認<a class="headerlink" href="#1-j" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>GET /v3/users/verification?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>GET /v3/users/verification?isMumsCompatible=true
 </span></code></pre></div>
 <hr />
 <h2 id="1-k">1-K. オンボーディング状態確認<a class="headerlink" href="#1-k" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>GET /v3/onboarding/redirectStatus/{USER_ID}/?isMumsCompatible=true
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>GET /v3/onboarding/steps/{USER_ID}/?userId={USER_ID}&amp;isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>GET /v3/onboarding/redirectStatus/{USER_ID}/?isMumsCompatible=true
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>GET /v3/onboarding/steps/{USER_ID}/?userId={USER_ID}&amp;isMumsCompatible=true
 </span></code></pre></div>
 <p>新規ユーザーのオンボーディング進捗確認。既存ユーザーには通常影響しない。</p>
 <hr />
 <h2 id="1-l-idspotify-show-id-anchor-numeric-ids">1-L. ショーID変換（Spotify Show ID → Anchor numeric IDs）<a class="headerlink" href="#1-l-idspotify-show-id-anchor-numeric-ids" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>GET /v3/shows/{SPOTIFY_SHOW_ID}/legacyIds?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>GET /v3/shows/{SPOTIFY_SHOW_ID}/legacyIds?isMumsCompatible=true
 </span></code></pre></div>
 <p>Spotify Show ID から anchor.fm 内部の numeric ID を一括変換して返す。</p>
 <p><strong>レスポンス例</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">{</span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">  </span><span class="nt">&quot;webStationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;112fef78c&quot;</span>
-</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="p">{</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span><span class="p">,</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">  </span><span class="nt">&quot;webStationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;112fef78c&quot;</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="p">}</span>
 </span></code></pre></div>
-<p><code>stationId</code> がエピソード一覧・メタデータ等の他エンドポイントで使う numeric ID。</p>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>stationId</code></td>
+<td>エピソード一覧・メタデータ等の他エンドポイントで使う numeric ID</td>
+</tr>
+<tr>
+<td><code>userId</code></td>
+<td>アカウントの numeric ユーザー ID</td>
+</tr>
+<tr>
+<td><code>webStationId</code></td>
+<td>URL スラッグ（バニティ ID）</td>
+</tr>
+</tbody>
+</table>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Python</label><label for="__tabbed_4_2">cURL</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-python highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/shows/</span><span class="si">{</span><span class="n">spotify_show_id</span><span class="si">}</span><span class="s2">/legacyIds?isMumsCompatible=true&quot;</span><span class="p">,</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>    <span class="n">headers</span><span class="o">=</span><span class="n">headers_get</span><span class="p">,</span>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="p">)</span>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="n">ids</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="n">station_id</span> <span class="o">=</span> <span class="n">ids</span><span class="p">[</span><span class="s2">&quot;stationId&quot;</span><span class="p">]</span>
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="n">user_id</span>    <span class="o">=</span> <span class="n">ids</span><span class="p">[</span><span class="s2">&quot;userId&quot;</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$BEARER</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/shows/</span><span class="si">${</span><span class="nv">SPOTIFY_SHOW_ID</span><span class="si">}</span><span class="s2">/legacyIds?isMumsCompatible=true&quot;</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
 <hr />
 <h2 id="1-m">1-M. エピソード一覧インデックス更新<a class="headerlink" href="#1-m" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>POST /v3/stations/{STATION_ID}/episode-list-index?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>POST /v3/stations/{STATION_ID}/episode-list-index?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>レスポンス</strong>: <code>{ "success": true }</code></p>
 <hr />
 <h2 id="1-n">1-N. ショー形式データ取得<a class="headerlink" href="#1-n" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>GET /v3/stations/{STATION_ID}/pcdForm?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>GET /v3/stations/{STATION_ID}/pcdForm?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>レスポンス</strong>: <code>{ "formUrl": "" }</code></p>
 <hr />
 <h2 id="1-o">1-O. 配信設定取得<a class="headerlink" href="#1-o" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>GET /v3/stations/{STATION_ID}/distribution?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>GET /v3/stations/{STATION_ID}/distribution?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>レスポンスフィールド（主要）</strong></p>
 <table>
@@ -2209,25 +2374,25 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 </table>
 <hr />
 <h2 id="1-p">1-P. ユーザー設定取得<a class="headerlink" href="#1-p" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>GET /v3/users/{USER_ID}/settings/termsAndContactability?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>GET /v3/users/{USER_ID}/settings/termsAndContactability?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>レスポンス例</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="p">{</span>
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span><span class="nt">&quot;termsOfServiceVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span><span class="nt">&quot;agreedToMinimumRequiredTermsOfService&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">  </span><span class="nt">&quot;contactabilityStatus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;optedOut&quot;</span><span class="p">,</span>
-</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">  </span><span class="nt">&quot;countryRule&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;needsResponseOptInSelected&quot;</span>
-</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="p">{</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">  </span><span class="nt">&quot;termsOfServiceVersion&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="w">  </span><span class="nt">&quot;agreedToMinimumRequiredTermsOfService&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a><span class="w">  </span><span class="nt">&quot;contactabilityStatus&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;optedOut&quot;</span><span class="p">,</span>
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a><span class="w">  </span><span class="nt">&quot;countryRule&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;needsResponseOptInSelected&quot;</span>
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="p">}</span>
 </span></code></pre></div>
 <hr />
 <h2 id="1-q">1-Q. スポンサードコンテンツ状態更新<a class="headerlink" href="#1-q" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>PUT /v3/episodes/{ANCHOR_ID}/sponsoredContentStatus?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>PUT /v3/episodes/{ANCHOR_ID}/sponsoredContentStatus?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>リクエストボディ</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="p">{</span>
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span><span class="nt">&quot;containsSponsoredContent&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1748732022</span>
-</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="p">{</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="w">  </span><span class="nt">&quot;containsSponsoredContent&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="w">  </span><span class="nt">&quot;publishOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1748732022</span>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <table>
 <thead>
@@ -2255,7 +2420,7 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 </blockquote>
 <hr />
 <h2 id="1-r">1-R. マネタイズライフサイクル同期<a class="headerlink" href="#1-r" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>POST /v5/monetization-lifecycle/{STATION_ID}/sync-and-fetch?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>POST /v5/monetization-lifecycle/{STATION_ID}/sync-and-fetch?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>レスポンスフィールド（主要）</strong></p>
 <table>
@@ -2281,11 +2446,11 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 </table>
 <hr />
 <h2 id="1-s">1-S. エピソード新規作成<a class="headerlink" href="#1-s" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>POST /v3/stations/{STATION_ID}/episodes?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>POST /v3/stations/{STATION_ID}/episodes?isMumsCompatible=true
 </span></code></pre></div>
 <p>エピソードの <strong>器（空レコード）</strong> を作るだけ。タイトル・音声・説明は後続の <code>1-C</code>（update）で設定する。</p>
 <p><strong>リクエストボディ</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;hourOffset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-9</span><span class="w"> </span><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;hourOffset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">-9</span><span class="w"> </span><span class="p">}</span>
 </span></code></pre></div>
 <table>
 <thead>
@@ -2304,10 +2469,10 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 </tbody>
 </table>
 <p><strong>レスポンス例</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="p">{</span>
-</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120529038</span><span class="p">,</span>
-</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
-</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="p">{</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120529038</span><span class="p">,</span>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <blockquote>
 <p>エピソード作成の完全フローは <strong>3ステップ</strong>：
@@ -2317,17 +2482,17 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 </blockquote>
 <hr />
 <h2 id="1-t">1-T. ショーメタデータ更新<a class="headerlink" href="#1-t" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>POST /v3/stations/{STATION_ID}/metadata?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>POST /v3/stations/{STATION_ID}/metadata?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>リクエストボディ（主要フィールド）</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="p">{</span>
-</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="w">  </span><span class="nt">&quot;podcastName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;番組タイトル&quot;</span><span class="p">,</span>
-</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="w">  </span><span class="nt">&quot;podcastDescription&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;番組説明&quot;</span><span class="p">,</span>
-</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="w">  </span><span class="nt">&quot;podcastAuthorName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;著者名&quot;</span><span class="p">,</span>
-</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="w">  </span><span class="nt">&quot;podcastCategory&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Arts|Design&quot;</span><span class="p">,</span>
-</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a><span class="w">  </span><span class="nt">&quot;podcastLanguage&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ja&quot;</span><span class="p">,</span>
-</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="p">{</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="w">  </span><span class="nt">&quot;podcastName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;番組タイトル&quot;</span><span class="p">,</span>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="w">  </span><span class="nt">&quot;podcastDescription&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;番組説明&quot;</span><span class="p">,</span>
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="w">  </span><span class="nt">&quot;podcastAuthorName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;著者名&quot;</span><span class="p">,</span>
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="w">  </span><span class="nt">&quot;podcastCategory&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Arts|Design&quot;</span><span class="p">,</span>
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a><span class="w">  </span><span class="nt">&quot;podcastLanguage&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ja&quot;</span><span class="p">,</span>
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a><span class="w">  </span><span class="nt">&quot;podcastEpisodeIsExplicit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a><span class="p">}</span>
 </span></code></pre></div>
 <table>
 <thead>
@@ -2378,16 +2543,16 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 </tbody>
 </table>
 <p><strong>カテゴリオプション一覧取得</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>GET /v3/settings/podcast-category/options?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>GET /v3/settings/podcast-category/options?isMumsCompatible=true
 </span></code></pre></div>
 <hr />
 <h2 id="1-u-vanity-slug">1-U. vanity slug 更新<a class="headerlink" href="#1-u-vanity-slug" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>POST /v3/settings?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>POST /v3/settings?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>リクエストボディ</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="p">{</span>
-</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">  </span><span class="nt">&quot;webStationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your-vanity-slug&quot;</span>
-</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="p">{</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="w">  </span><span class="nt">&quot;webStationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your-vanity-slug&quot;</span>
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="p">}</span>
 </span></code></pre></div>
 <blockquote>
 <p>⚠️ <code>webStationId</code> はグローバルでユニークである必要がある。すでに使用されているスラッグを指定すると 409 Conflict が返る可能性がある。</p>
@@ -2397,73 +2562,73 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 <p>S4C の画像アップロードは音声/動画とは<strong>別の専用パイプライン</strong>を使う。ショーカバーアート・エピソードサムネイルで共通フロー。</p>
 <h3 id="1-v-1-url">1-V-1. 署名付きURL取得<a class="headerlink" href="#1-v-1-url" title="Permanent link">&para;</a></h3>
 <p><strong>ショーカバーアート</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>GET /v3/stations/{STATION_ID}/images/upload/signed_url?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>GET /v3/stations/{STATION_ID}/images/upload/signed_url?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>エピソードサムネイル</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>GET /v3/episodes/{ANCHOR_ID}/images/upload/signed_url?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>GET /v3/episodes/{ANCHOR_ID}/images/upload/signed_url?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>レスポンス例</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="p">{</span>
-</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor-image-storage-production/{UUID}/{FILENAME}?X-Goog-Algorithm=...&quot;</span><span class="p">,</span>
-</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a46e21a4-1d2d-1686-1355-905e191a3bef&quot;</span>
-</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="p">{</span>
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor-image-storage-production/{UUID}/{FILENAME}?X-Goog-Algorithm=...&quot;</span><span class="p">,</span>
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a46e21a4-1d2d-1686-1355-905e191a3bef&quot;</span>
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="1-v-2-google-cloud-storage-put">1-V-2. Google Cloud Storage への直接 PUT<a class="headerlink" href="#1-v-2-google-cloud-storage-put" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>PUT {signed_url}
-</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>Content-Type: image/png  # または image/jpeg
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>PUT {signed_url}
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>Content-Type: image/png  # または image/jpeg
 </span></code></pre></div>
 <p>署名付きURL に対して画像ファイルを直接 PUT する。認証ヘッダー不要（署名パラメータに埋め込み済み）。</p>
 <h3 id="1-v-3-process_upload">1-V-3. アップロード完了通知（process_upload）<a class="headerlink" href="#1-v-3-process_upload" title="Permanent link">&para;</a></h3>
 <p><strong>ショーカバーアート</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>POST /v3/stations/{STATION_ID}/images/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>POST /v3/stations/{STATION_ID}/images/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>エピソードサムネイル</strong></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>POST /v3/episodes/{ANCHOR_ID}/images/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>POST /v3/episodes/{ANCHOR_ID}/images/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
 </span></code></pre></div>
 <p><strong>リクエストボディ（エピソードサムネイル）</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="p">{</span>
-</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120520683</span><span class="p">,</span>
-</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode_image&quot;</span>
-</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="p">{</span>
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120520683</span><span class="p">,</span>
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode_image&quot;</span>
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="1-v-4">1-V-4. アップロード状態ポーリング<a class="headerlink" href="#1-v-4" title="Permanent link">&para;</a></h3>
 <p><code>status</code> が <code>"completed"</code> になるまでポーリング（通常数秒）。</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>GET /v3/stations/{STATION_ID}/images/upload/{UPLOAD_ID}/?isMumsCompatible=true
-</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>GET /v3/episodes/{ANCHOR_ID}/images/upload/{UPLOAD_ID}/?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>GET /v3/stations/{STATION_ID}/images/upload/{UPLOAD_ID}/?isMumsCompatible=true
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>GET /v3/episodes/{ANCHOR_ID}/images/upload/{UPLOAD_ID}/?isMumsCompatible=true
 </span></code></pre></div>
 <hr />
 <h2 id="1-w">1-W. 収益化関連エンドポイント<a class="headerlink" href="#1-w" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>GET /v4/paywalls/{STATION_ID}/lifecycle-state?isMumsCompatible=true
-</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>GET /v6/wallet/{STATION_ID}/availability?isMumsCompatible=true
-</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>GET /v6/wallet/{STATION_ID}/?isMumsCompatible=true
-</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>GET /v3/paywalls/{STATION_ID}/?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>GET /v4/paywalls/{STATION_ID}/lifecycle-state?isMumsCompatible=true
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>GET /v6/wallet/{STATION_ID}/availability?isMumsCompatible=true
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>GET /v6/wallet/{STATION_ID}/?isMumsCompatible=true
+</span><span id="__span-54-4"><a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a>GET /v3/paywalls/{STATION_ID}/?isMumsCompatible=true
 </span></code></pre></div>
 <hr />
 <h2 id="1-x">1-X. 番組設定ページ固有エンドポイント<a class="headerlink" href="#1-x" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>GET /v3/stations/{STATION_ID}/episodePage?isMumsCompatible=true
-</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>GET /v3/station/{STATION_ID}/episodes/featured?isMumsCompatible=true
-</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>GET /v3/stations/{STATION_ID}/hostRecommendations?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>GET /v3/stations/{STATION_ID}/episodePage?isMumsCompatible=true
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>GET /v3/station/{STATION_ID}/episodes/featured?isMumsCompatible=true
+</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>GET /v3/stations/{STATION_ID}/hostRecommendations?isMumsCompatible=true
 </span></code></pre></div>
 <hr />
 <h2 id="1-y">1-Y. 配信ページ固有エンドポイント<a class="headerlink" href="#1-y" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>GET /v3/onboarding/redirectStatus/{STATION_ID}/?isMumsCompatible=true
-</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>GET /v3/onboarding/steps/{STATION_ID}/?userId={USER_ID}&amp;isMumsCompatible=true
-</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>GET /v3/stations/status?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>GET /v3/onboarding/redirectStatus/{STATION_ID}/?isMumsCompatible=true
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>GET /v3/onboarding/steps/{STATION_ID}/?userId={USER_ID}&amp;isMumsCompatible=true
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>GET /v3/stations/status?isMumsCompatible=true
 </span></code></pre></div>
 <hr />
 <h2 id="1-z">1-Z. エピソード削除<a class="headerlink" href="#1-z" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>POST /v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>POST /v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true
 </span></code></pre></div>
 <p>エピソードを完全に削除する。下書き・予約公開（未公開）・公開済みのいずれの
 状態でも動作する。</p>
 <h3 id="_3">リクエストボディ<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="p">{}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="p">{}</span>
 </span></code></pre></div>
 <p>空のJSONボディでよい。エピソードはパスの <code>{ANCHOR_ID}</code>（Spotifyの
 エピソードURIではなく <strong>Anchorの数値ID</strong>）で特定される。Spotify IDしか
 持っていない場合は 1-A で先に数値IDへ変換する。</p>
 <h3 id="_4">レスポンス<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="p">{}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="p">{}</span>
 </span></code></pre></div>
 <p>成功時 <code>200</code> を返す。</p>
 <div class="admonition warning">
@@ -2472,13 +2637,13 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 呼ぶ前に <code>{ANCHOR_ID}</code> が意図したエピソードを指しているか
 （<code>/overview</code>（1-B）等で）確認すること。</p>
 </div>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="si">${</span><span class="nv">BEARER</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-53-4"><a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-53-5"><a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anchor-client-type: web&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-53-6"><a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anchor-api-version: 3.8.3&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-53-7"><a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{}&#39;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a><span class="w">  </span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/{ANCHOR_ID}/delete?isMumsCompatible=true&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="si">${</span><span class="nv">BEARER</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anchor-client-type: web&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-6"><a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;anchor-api-version: 3.8.3&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-60-7"><a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{}&#39;</span>
 </span></code></pre></div>
 <hr />
 <h2 id="6-a-6-d">音声/動画アップロード（6-A 〜 6-D）<a class="headerlink" href="#6-a-6-d" title="Permanent link">&para;</a></h2>
@@ -2503,7 +2668,7 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 </tbody>
 </table>
 <h3 id="6-a-url">6-A. アップロード署名付きURL取得<a class="headerlink" href="#6-a-url" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&amp;type={MIME_TYPE}&amp;isMumsCompatible=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&amp;type={MIME_TYPE}&amp;isMumsCompatible=true
 </span></code></pre></div>
 <table>
 <thead>
@@ -2528,57 +2693,57 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 </table>
 <p><strong>レスポンス — ストレージバックエンドによって2種類：</strong></p>
 <p>音声ファイルは <strong>AWS S3</strong> にルーティングされ、以下を返す：</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="p">{</span>
-</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a><span class="w">  </span><span class="nt">&quot;requestUuid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc&quot;</span><span class="p">,</span>
-</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a><span class="w">  </span><span class="nt">&quot;fileKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc/episode.mp3&quot;</span><span class="p">,</span>
-</span><span id="__span-55-4"><a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="w">  </span><span class="nt">&quot;signedUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://audio-uploaded-default-production.s3.us-west-1.amazonaws.com/...&quot;</span>
-</span><span id="__span-55-5"><a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="p">{</span>
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a><span class="w">  </span><span class="nt">&quot;requestUuid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc&quot;</span><span class="p">,</span>
+</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a><span class="w">  </span><span class="nt">&quot;fileKey&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc/episode.mp3&quot;</span><span class="p">,</span>
+</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a><span class="w">  </span><span class="nt">&quot;signedUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://audio-uploaded-default-production.s3.us-west-1.amazonaws.com/...&quot;</span>
+</span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>動画ファイルは <strong>Google Cloud Storage</strong> にルーティングされ、以下を返す：</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="p">{</span>
-</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
-</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor_exclusive_media_upload_production/...&quot;</span><span class="p">,</span>
-</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a><span class="w">  </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="p">{</span>
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a><span class="w">  </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://storage.googleapis.com/anchor_exclusive_media_upload_production/...&quot;</span><span class="p">,</span>
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a><span class="w">  </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>音声は <code>signedUrl</code> / <code>requestUuid</code> を使う。動画は <code>url</code> / <code>uploadId</code> を使う。</p>
 <h3 id="6-b-put">6-B. ストレージへの直接 PUT<a class="headerlink" href="#6-b-put" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>PUT {signedUrl}    # 音声（S3）
-</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>PUT {url}          # 動画（GCS）
-</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a>Content-Type: {MIME_TYPE}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>PUT {signedUrl}    # 音声（S3）
+</span><span id="__span-64-2"><a id="__codelineno-64-2" name="__codelineno-64-2" href="#__codelineno-64-2"></a>PUT {url}          # 動画（GCS）
+</span><span id="__span-64-3"><a id="__codelineno-64-3" name="__codelineno-64-3" href="#__codelineno-64-3"></a>Content-Type: {MIME_TYPE}
 </span></code></pre></div>
 <p>レスポンスヘッダーの <code>ETag</code> を記録する（<code>process_upload</code> で使う）。</p>
 <h3 id="6-c-process_upload">6-C. アップロード完了通知（process_upload）<a class="headerlink" href="#6-c-process_upload" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>POST /v3/upload/{requestUuid}/process_upload?isMumsCompatible=true   # 音声
-</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>POST /v3/upload/{uploadId}/process_upload?isMumsCompatible=true      # 動画
+<div class="language-text highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>POST /v3/upload/{requestUuid}/process_upload?isMumsCompatible=true   # 音声
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>POST /v3/upload/{uploadId}/process_upload?isMumsCompatible=true      # 動画
 </span></code></pre></div>
 <p><strong>リクエストボディ（音声の場合）</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="p">{</span>
-</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_USER_ID</span><span class="p">,</span>
-</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
-</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
-</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp3&quot;</span><span class="p">,</span>
-</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-</span><span id="__span-59-7"><a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-59-8"><a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e3290d363f9552ada7cb4fa412a9fc7&quot;</span><span class="w"> </span><span class="p">}],</span>
-</span><span id="__span-59-9"><a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc&quot;</span><span class="p">,</span>
-</span><span id="__span-59-10"><a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
-</span><span id="__span-59-11"><a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
-</span><span id="__span-59-12"><a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="p">{</span>
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_USER_ID</span><span class="p">,</span>
+</span><span id="__span-66-3"><a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+</span><span id="__span-66-4"><a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
+</span><span id="__span-66-5"><a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp3&quot;</span><span class="p">,</span>
+</span><span id="__span-66-6"><a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+</span><span id="__span-66-7"><a id="__codelineno-66-7" name="__codelineno-66-7" href="#__codelineno-66-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-66-8"><a id="__codelineno-66-8" name="__codelineno-66-8" href="#__codelineno-66-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e3290d363f9552ada7cb4fa412a9fc7&quot;</span><span class="w"> </span><span class="p">}],</span>
+</span><span id="__span-66-9"><a id="__codelineno-66-9" name="__codelineno-66-9" href="#__codelineno-66-9"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc&quot;</span><span class="p">,</span>
+</span><span id="__span-66-10"><a id="__codelineno-66-10" name="__codelineno-66-10" href="#__codelineno-66-10"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
+</span><span id="__span-66-11"><a id="__codelineno-66-11" name="__codelineno-66-11" href="#__codelineno-66-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
+</span><span id="__span-66-12"><a id="__codelineno-66-12" name="__codelineno-66-12" href="#__codelineno-66-12"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><strong>リクエストボディ（動画の場合）</strong></p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="p">{</span>
-</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_USER_ID</span><span class="p">,</span>
-</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;video&quot;</span><span class="p">,</span>
-</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
-</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp4&quot;</span><span class="p">,</span>
-</span><span id="__span-60-6"><a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-60-7"><a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-</span><span id="__span-60-8"><a id="__codelineno-60-8" name="__codelineno-60-8" href="#__codelineno-60-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d49fffd0ed1c6a291577ac47d26b997&quot;</span><span class="w"> </span><span class="p">}],</span>
-</span><span id="__span-60-9"><a id="__codelineno-60-9" name="__codelineno-60-9" href="#__codelineno-60-9"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
-</span><span id="__span-60-10"><a id="__codelineno-60-10" name="__codelineno-60-10" href="#__codelineno-60-10"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
-</span><span id="__span-60-11"><a id="__codelineno-60-11" name="__codelineno-60-11" href="#__codelineno-60-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
-</span><span id="__span-60-12"><a id="__codelineno-60-12" name="__codelineno-60-12" href="#__codelineno-60-12"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="p">{</span>
+</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a><span class="w">  </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_USER_ID</span><span class="p">,</span>
+</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a><span class="w">  </span><span class="nt">&quot;uploadType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;video&quot;</span><span class="p">,</span>
+</span><span id="__span-67-4"><a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a><span class="w">  </span><span class="nt">&quot;origin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode-media:upload&quot;</span><span class="p">,</span>
+</span><span id="__span-67-5"><a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a><span class="w">  </span><span class="nt">&quot;caption&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;episode.mp4&quot;</span><span class="p">,</span>
+</span><span id="__span-67-6"><a id="__codelineno-67-6" name="__codelineno-67-6" href="#__codelineno-67-6"></a><span class="w">  </span><span class="nt">&quot;isExtractedFromVideo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-67-7"><a id="__codelineno-67-7" name="__codelineno-67-7" href="#__codelineno-67-7"></a><span class="w">  </span><span class="nt">&quot;isMultipartUpload&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-67-8"><a id="__codelineno-67-8" name="__codelineno-67-8" href="#__codelineno-67-8"></a><span class="w">  </span><span class="nt">&quot;parts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"> </span><span class="nt">&quot;partNumber&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;etag&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4d49fffd0ed1c6a291577ac47d26b997&quot;</span><span class="w"> </span><span class="p">}],</span>
+</span><span id="__span-67-9"><a id="__codelineno-67-9" name="__codelineno-67-9" href="#__codelineno-67-9"></a><span class="w">  </span><span class="nt">&quot;uploadId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9e1fdfce-4485-6bde-e582-3b7c84978d55&quot;</span><span class="p">,</span>
+</span><span id="__span-67-10"><a id="__codelineno-67-10" name="__codelineno-67-10" href="#__codelineno-67-10"></a><span class="w">  </span><span class="nt">&quot;episodeId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120525547</span><span class="p">,</span>
+</span><span id="__span-67-11"><a id="__codelineno-67-11" name="__codelineno-67-11" href="#__codelineno-67-11"></a><span class="w">  </span><span class="nt">&quot;stationId&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">YOUR_STATION_ID</span>
+</span><span id="__span-67-12"><a id="__codelineno-67-12" name="__codelineno-67-12" href="#__codelineno-67-12"></a><span class="p">}</span>
 </span></code></pre></div>
 <table>
 <thead>
@@ -2612,8 +2777,8 @@ API は先頭の数字だけを整数として解釈するため、<code>"2026"<
 </tbody>
 </table>
 <h3 id="6-d">6-D. メディア検証確認（ポーリング）<a class="headerlink" href="#6-d" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>GET /v3/upload/media/{requestUuid}?includeMediaValidation=true&amp;isMumsCompatible=true  # 音声
-</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>GET /v3/upload/media/{uploadId}?includeMediaValidation=true&amp;isMumsCompatible=true     # 動画
+<div class="language-text highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>GET /v3/upload/media/{requestUuid}?includeMediaValidation=true&amp;isMumsCompatible=true  # 音声
+</span><span id="__span-68-2"><a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a>GET /v3/upload/media/{uploadId}?includeMediaValidation=true&amp;isMumsCompatible=true     # 動画
 </span></code></pre></div>
 <p><code>status</code> が <code>"completed"</code> になるまでポーリングする。</p>
 <p><strong>レスポンスフィールド（主要）</strong></p>
@@ -2674,13 +2839,13 @@ HTTP 404 を返すことがある。バックオフを入れながら最大約 3
 <h3 id="publishon-unix">publishOn は Unix 整数で指定する<a class="headerlink" href="#publishon-unix" title="Permanent link">&para;</a></h3>
 <p><code>publishOn</code> には <strong>Unix タイムスタンプ（整数秒）</strong> を指定する。ISO 8601 文字列を送ると値がサイレントに破損する（API が先頭の数字だけを整数として解釈し、1970年になる）。</p>
 <p>JST 06:00 に公開したい場合：</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
-</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>
-</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a><span class="n">JST</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))</span>
-</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a><span class="n">publish_jst</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">JST</span><span class="p">)</span>
-</span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a><span class="n">pub_utc</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
-</span><span id="__span-62-6"><a id="__codelineno-62-6" name="__codelineno-62-6" href="#__codelineno-62-6"></a><span class="n">publish_on_unix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pub_utc</span><span class="o">.</span><span class="n">timestamp</span><span class="p">())</span>                    <span class="c1"># → 1748732400</span>
-</span><span id="__span-62-7"><a id="__codelineno-62-7" name="__codelineno-62-7" href="#__codelineno-62-7"></a><span class="n">publish_on_iso</span>  <span class="o">=</span> <span class="n">pub_utc</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">)</span> <span class="c1"># → &quot;2026-05-31T21:00:00.000Z&quot;</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
+</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>
+</span><span id="__span-69-3"><a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a><span class="n">JST</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))</span>
+</span><span id="__span-69-4"><a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a><span class="n">publish_jst</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">JST</span><span class="p">)</span>
+</span><span id="__span-69-5"><a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a><span class="n">pub_utc</span> <span class="o">=</span> <span class="n">publish_jst</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+</span><span id="__span-69-6"><a id="__codelineno-69-6" name="__codelineno-69-6" href="#__codelineno-69-6"></a><span class="n">publish_on_unix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pub_utc</span><span class="o">.</span><span class="n">timestamp</span><span class="p">())</span>                    <span class="c1"># → 1748732400</span>
+</span><span id="__span-69-7"><a id="__codelineno-69-7" name="__codelineno-69-7" href="#__codelineno-69-7"></a><span class="n">publish_on_iso</span>  <span class="o">=</span> <span class="n">pub_utc</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z&quot;</span><span class="p">)</span> <span class="c1"># → &quot;2026-05-31T21:00:00.000Z&quot;</span>
 </span></code></pre></div>
 <p><code>wizardDraftedToPublishOn</code> は逆に ISO 8601 文字列が必須（整数を送ると HTTP 400）。詳細は 1-C の警告を参照。</p>
 <h3 id="publishon-ispublished-false-true">publishOn を isPublished: false → true に一発設定する挙動<a class="headerlink" href="#publishon-ispublished-false-true" title="Permanent link">&para;</a></h3>

@@ -666,6 +666,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-24-bidirectional-enja-documentation-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-24 — Bidirectional EN/JA documentation sync
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-06-24 — Bidirectional EN/JA documentation sync">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphqljamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        graphql.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest-apijamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rest-api.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-24-document-showbyshowurishowcomments-cross-episode-comment-fetch" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -900,6 +939,45 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-06-24-bidirectional-enja-documentation-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-06-24 — Bidirectional EN/JA documentation sync
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-06-24 — Bidirectional EN/JA documentation sync">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphqljamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        graphql.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest-apijamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rest-api.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-24-document-showbyshowurishowcomments-cross-episode-comment-fetch" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1117,6 +1195,30 @@
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h2 id="2026-06-24-bidirectional-enja-documentation-sync">2026-06-24 — Bidirectional EN/JA documentation sync<a class="headerlink" href="#2026-06-24-bidirectional-enja-documentation-sync" title="Permanent link">&para;</a></h2>
+<p><strong>Source:</strong> Manual diff and sync pass across all three doc pairs.</p>
+<h3 id="graphqljamd">graphql.ja.md<a class="headerlink" href="#graphqljamd" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Added Operations Reference tables for Analytics — Engagement Tab, Discovery Tab,
+  Benchmark, and AI Insights (mirroring the EN structure)</li>
+<li>Added Analytics Overview Tab and Audience Tab operation tables with all Jun 2026
+  operations (<code>getShowMetadata</code>, <code>getShowStreams</code>, <code>getPerformanceStats</code>, etc.)</li>
+<li>Added Episode List Page and Episode Create/Settings Page sections</li>
+<li>Added full GraphQL query bodies for <code>getEngagementStats</code>, <code>getEngagementStatsNRT</code>,
+  <code>getShowRetention</code>, and <code>getEpisodeTimeSeriesByMetric</code> (including
+  <code>foregroundConsumptionPercent</code> note)</li>
+<li>Added variables examples and <code>!!! note</code> blocks for comment mutations
+  (approve, delete, reply, <code>markCommentAsRead</code>, pin, unpin, block)</li>
+<li>Added <code>pagination</code> field to <code>showsForUser</code> query (matching EN)</li>
+</ul>
+<h3 id="rest-apijamd">rest-api.ja.md<a class="headerlink" href="#rest-apijamd" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Added ID System table describing the four ID types and their usage</li>
+<li>Added cURL samples alongside Python samples for 1-A, 1-B, 1-C, and 1-L</li>
+<li>Added <code>!!! warning</code> block for draft episode 403 behavior in 1-B</li>
+<li>Added field description table (<code>stationId</code> / <code>userId</code> / <code>webStationId</code>) in 1-L</li>
+</ul>
+<hr />
 <h2 id="2026-06-24-document-showbyshowurishowcomments-cross-episode-comment-fetch">2026-06-24 — Document showByShowUri.showComments (cross-episode comment fetch)<a class="headerlink" href="#2026-06-24-document-showbyshowurishowcomments-cross-episode-comment-fetch" title="Permanent link">&para;</a></h2>
 <p><strong>Source:</strong> Live API testing while building a pre-recording comment digest tool.</p>
 <h3 id="graphqlmd-graphqljamd">graphql.md / graphql.ja.md<a class="headerlink" href="#graphqlmd-graphqljamd" title="Permanent link">&para;</a></h3>
