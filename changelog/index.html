@@ -1272,6 +1272,9 @@ to a comment digest tool.</p>
 <li>Auth note: the <code>sp_dc</code> cookie alone was sufficient to re-authenticate after a
   cookie expiry; <code>sp_key</code> was absent from the browser's cookie list entirely
   (2026-07-27 observation, spotifyconnector flow).</li>
+<li>Follow-up (same day): <code>ShowAuthorDisplayMetadata</code> fields confirmed by
+  introspection — <code>showUri</code>, <code>showFullName</code>, <code>showCoverImageUrl</code> (creator-posted
+  comments carry the show identity, not a user identity).</li>
 </ul>
 <h2 id="2026-06-24-bidirectional-enja-documentation-sync">2026-06-24 — Bidirectional EN/JA documentation sync<a class="headerlink" href="#2026-06-24-bidirectional-enja-documentation-sync" title="Permanent link">&para;</a></h2>
 <p><strong>Source:</strong> Manual diff and sync pass across all three doc pairs.</p>
