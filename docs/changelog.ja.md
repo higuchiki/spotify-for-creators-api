@@ -18,6 +18,8 @@
   「未返信コメント一覧」を作るのに有用。
 - 認証メモ：Cookie失効後の再認証は **`sp_dc` の更新のみで復旧**した。ブラウザのCookie一覧に
   `sp_key` 自体が存在しないケースを確認（2026-07-27・spotifyconnectorフロー）。
+- 同日追記：`ShowAuthorDisplayMetadata` のフィールドをイントロスペクションで確認 —
+  `showUri`・`showFullName`・`showCoverImageUrl`（制作者投稿はユーザーではなく番組のアイデンティティを持つ）。
 
 ## 2026年6月24日 — 英語・日本語ドキュメントの双方向同期
 

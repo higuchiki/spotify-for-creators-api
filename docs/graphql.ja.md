@@ -680,7 +680,7 @@ query {
 | 型 | 意味 | フィールド |
 |----|------|-----------|
 | `UserAuthorDisplayMetadata` | リスナーのコメント | `username`・`userFullName`・`userCoverImageUrl` |
-| `ShowAuthorDisplayMetadata` | 番組（制作者）側の投稿 | （使用前にイントロスペクション推奨） |
+| `ShowAuthorDisplayMetadata` | 番組（制作者）側の投稿 | `showUri`・`showFullName`・`showCoverImageUrl` |
 
 `userFullName` がSpotifyアプリに表示される表示名。`username` は不透明なID文字列。
 別途 `authorMetadata.oneOfAuthorMetadata` というUNION（`UserIdString` \| `ParentEntityUriString`）にも生IDが入る。

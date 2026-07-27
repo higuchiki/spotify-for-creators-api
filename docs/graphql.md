@@ -467,7 +467,7 @@ types:
 | Type | Meaning | Fields |
 |------|---------|--------|
 | `UserAuthorDisplayMetadata` | A listener's comment | `username`, `userFullName`, `userCoverImageUrl` |
-| `ShowAuthorDisplayMetadata` | A comment posted by the show (creator) | (introspect before use) |
+| `ShowAuthorDisplayMetadata` | A comment posted by the show (creator) | `showUri`, `showFullName`, `showCoverImageUrl` |
 
 `userFullName` is the display name shown in the Spotify app; `username` is an
 opaque id string. There is also a separate `authorMetadata.oneOfAuthorMetadata`

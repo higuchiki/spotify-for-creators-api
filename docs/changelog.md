@@ -23,6 +23,9 @@ to a comment digest tool.
 - Auth note: the `sp_dc` cookie alone was sufficient to re-authenticate after a
   cookie expiry; `sp_key` was absent from the browser's cookie list entirely
   (2026-07-27 observation, spotifyconnector flow).
+- Follow-up (same day): `ShowAuthorDisplayMetadata` fields confirmed by
+  introspection — `showUri`, `showFullName`, `showCoverImageUrl` (creator-posted
+  comments carry the show identity, not a user identity).
 
 ## 2026-06-24 — Bidirectional EN/JA documentation sync
 
