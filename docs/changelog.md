@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-07-27 — Comment author metadata discovered; showComments schema corrected
+
+**Source:** Live introspection and production queries while adding author names
+to a comment digest tool.
+
+### graphql.md / graphql.ja.md
+
+- **Comment author names are available** — `DecoratedComment.oneOfAuthorDisplayMetadata`
+  is a union of `UserAuthorDisplayMetadata { username, userFullName, userCoverImageUrl }`
+  (listener comments) and `ShowAuthorDisplayMetadata` (creator-posted comments).
+  `userFullName` is the display name shown in the Spotify app.
+- **Corrected the `showComments` signature** — the previously documented simplified
+  shape (`primaryFilters:` as direct args, `comments{…}` result) does not match the
+  schema. The verified working shape takes a `listShowCommentsRequest` input object
+  (`commentFilters` / `sortOrder` / `pagingInfo`) and returns
+  `decoratedCommentOrReply[]` with `oneOfCommentOrReply … on DecoratedComment`.
+- Added the full introspected `DecoratedComment` field list — includes
+  `numberOfReplies`, `hasParentEntityReplied`, `hasParentEntityPinned`,
+  `containsBlockedWords`, `initialModerationState`, useful for building
+  "unanswered comments" views without fetching reply threads.
+- Auth note: the `sp_dc` cookie alone was sufficient to re-authenticate after a
+  cookie expiry; `sp_key` was absent from the browser's cookie list entirely
+  (2026-07-27 observation, spotifyconnector flow).
+
 ## 2026-06-24 — Bidirectional EN/JA documentation sync
 
 **Source:** Manual diff and sync pass across all three doc pairs.

@@ -615,54 +615,86 @@ query getCommentsForEpisode {
 }
 ```
 
-### 番組横断コメント一覧取得（showByShowUri.showComments）— 2026-06-23 動作確認済み
+### 番組横断コメント一覧取得（showByShowUri.showComments）— 2026-06-23 動作確認済み・2026-07-27 スキーマ修正＆投稿者フィールド追加
 
 > **重要：** ネットワークキャプチャでは `getLatestCommentsForShow` というオペレーション名が見えるが、
 > これは **Persisted Query のエイリアス名** であり、`/v2/graph-pq` スキーマの
 > トップレベルフィールドには**存在しない**。
 > 実際のパスは `showByShowUri` → `Show.showComments(…)` で、アナリティクス取得と同じ入り口を使う。
 
+> **スキーマ修正（2026-07-27）：** 本ページの旧版には簡略化したシグネチャ
+> （`primaryFilters:` 直指定・`comments{…}` 形式）を掲載していたが、
+> 実装検証済みの正しい形は `listShowCommentsRequest` 入力オブジェクト＋
+> `decoratedCommentOrReply` 戻り値である（以下）。
+
 ```graphql
-query getShowComments {
+query {
   showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
-    showComments(
-      primaryFilters: [String!]!
-      commentTypesFilters: [String!]!
-      secondaryFilters: [String!]!
-      repliesFilter: [String!]!
-      pageSize: Int!
-    ) {
-      comments {
-        commentUri
-        textContent
-        episodeUri
-        episodeTitle
-        createdAt
-        status
+    showComments(listShowCommentsRequest: {
+      commentFilters: {
+        primaryFilters: [LIST_COMMENT_PRIMARY_FILTER_PUBLISHED]
+        typeFilters: [LIST_COMMENT_TYPE_FILTER_ROOT]
+        secondaryFilters: []
       }
-      pageToken
+      sortOrder: LIST_COMMENT_SORT_ORDER_MOST_RECENT
+      pagingInfo: { pageSize: 20, pageToken: "" }
+    }) {
+      decoratedCommentOrReply {
+        episodeUri
+        oneOfCommentOrReply {
+          ... on DecoratedComment {
+            commentUri
+            commentStr
+            createDate          # Long・Unixミリ秒
+            oneOfAuthorDisplayMetadata {
+              ... on UserAuthorDisplayMetadata {
+                username        # 不透明なユーザーID文字列
+                userFullName    # S4C UIに表示される表示名
+                userCoverImageUrl
+              }
+            }
+          }
+        }
+        episode {
+          title
+          publishedOn { seconds }
+        }
+      }
     }
   }
 }
 ```
 
 > **注意：** `primaryFilters` に `LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW` を含めると
-> `DataFetchingException` が発生する（2026-06-23 確認）。
-> `LIST_COMMENT_PRIMARY_FILTER_PUBLISHED` のみを指定すること。
-
-**variables 例（公開済みルートコメント・最大20件）**
-```json
-{
-  "primaryFilters": ["LIST_COMMENT_PRIMARY_FILTER_PUBLISHED"],
-  "commentTypesFilters": ["LIST_COMMENT_TYPE_FILTER_ROOT"],
-  "secondaryFilters": [],
-  "repliesFilter": ["LIST_COMMENT_PRIMARY_FILTER_PUBLISHED"],
-  "pageSize": 20
-}
-```
+> このクエリでは `DataFetchingException` が発生する（2026-06-23 確認）。
+> `LIST_COMMENT_PRIMARY_FILTER_PUBLISHED` のみを指定すること
+> （`getCommentsForEpisode` は両方の値を安全に受け付けるのと対照的）。
 
 このクエリは**番組全体（全エピソード）のコメントを1リクエストで取得**できる。
 収録前のコメントダイジェスト作成などに活用できる。
+
+#### コメント投稿者メタデータ — 2026-07-27 発見
+
+`DecoratedComment.oneOfAuthorDisplayMetadata` は **UNION型**で、2つの型を取りうる：
+
+| 型 | 意味 | フィールド |
+|----|------|-----------|
+| `UserAuthorDisplayMetadata` | リスナーのコメント | `username`・`userFullName`・`userCoverImageUrl` |
+| `ShowAuthorDisplayMetadata` | 番組（制作者）側の投稿 | （使用前にイントロスペクション推奨） |
+
+`userFullName` がSpotifyアプリに表示される表示名。`username` は不透明なID文字列。
+別途 `authorMetadata.oneOfAuthorMetadata` というUNION（`UserIdString` \| `ParentEntityUriString`）にも生IDが入る。
+
+#### `DecoratedComment` の全フィールド一覧（2026-07-27 イントロスペクション）
+
+`commentUri`・`parentEntityUri`・`entityUri`・`authorMetadata`・`createDate`（Long）・
+`commentStr`・`language`・`initialModerationState`・`approvalDate`（Long）・
+`numberOfReplies`（Int）・`hasParentEntityReacted`・`hasParentEntityReplied`・
+`isAnySensitivityPolicyInitiallyViolated`・`hasParentEntityPinned`・
+`containsBlockedWords`・`surfaceType`・`oneOfAuthorDisplayMetadata`
+
+`hasParentEntityReplied` / `hasParentEntityPinned` は、返信スレッドを取得せずに
+「未返信コメント一覧」を作るのに便利。
 
 ---
 

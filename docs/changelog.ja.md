@@ -1,5 +1,24 @@
 # 更新履歴
 
+## 2026年7月27日 — コメント投稿者メタデータの発見・showComments スキーマ修正
+
+**調査方法：** コメントダイジェストツールへの投稿者名追加作業中のライブイントロスペクション＋本番クエリ。
+
+### graphql.md / graphql.ja.md
+
+- **コメント投稿者名が取得可能** — `DecoratedComment.oneOfAuthorDisplayMetadata` は
+  `UserAuthorDisplayMetadata { username, userFullName, userCoverImageUrl }`（リスナーのコメント）と
+  `ShowAuthorDisplayMetadata`（制作者側の投稿）のUNION型。`userFullName` がSpotifyアプリの表示名。
+- **`showComments` のシグネチャを修正** — 旧掲載の簡略形（`primaryFilters:` 直指定・`comments{…}`）は
+  スキーマと一致しない。検証済みの正しい形は `listShowCommentsRequest` 入力オブジェクト
+  （`commentFilters` / `sortOrder` / `pagingInfo`）＋ `decoratedCommentOrReply[]` 戻り値。
+- `DecoratedComment` の全フィールド一覧（イントロスペクション）を追加 —
+  `numberOfReplies`・`hasParentEntityReplied`・`hasParentEntityPinned`・
+  `containsBlockedWords`・`initialModerationState` 等。返信スレッドを取得せずに
+  「未返信コメント一覧」を作るのに有用。
+- 認証メモ：Cookie失効後の再認証は **`sp_dc` の更新のみで復旧**した。ブラウザのCookie一覧に
+  `sp_key` 自体が存在しないケースを確認（2026-07-27・spotifyconnectorフロー）。
+
 ## 2026年6月24日 — 英語・日本語ドキュメントの双方向同期
 
 **内容：** 3つのドキュメントペアを手動で差分確認・同期。

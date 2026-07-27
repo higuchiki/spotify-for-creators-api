@@ -401,54 +401,89 @@ query getCommentsForEpisode {
 }
 ```
 
-### Get Comments for a Show (Cross-episode) — Verified 2026-06-23
+### Get Comments for a Show (Cross-episode) — Verified 2026-06-23, schema corrected & author fields added 2026-07-27
 
 > **Important:** The operation name `getLatestCommentsForShow` appears in browser
 > network traffic, but it is a **Persisted Query alias** — it does **not** exist as a
 > top-level field in the `/v2/graph-pq` schema. The actual path is
 > `showByShowUri` → `Show.showComments(…)`, the same entry point used for analytics.
 
+> **Schema correction (2026-07-27):** an earlier revision of this page showed a
+> simplified signature (`primaryFilters:`/`comments{…}`). The verified working shape
+> uses a `listShowCommentsRequest` input object and returns
+> `decoratedCommentOrReply` items, as below.
+
 ```graphql
-query getShowComments {
+query {
   showByShowUri(getShowByShowUriRequest: { showUri: "spotify:show:YOUR_SHOW_ID" }) {
-    showComments(
-      primaryFilters: [String!]!
-      commentTypesFilters: [String!]!
-      secondaryFilters: [String!]!
-      repliesFilter: [String!]!
-      pageSize: Int!
-    ) {
-      comments {
-        commentUri
-        textContent
-        episodeUri
-        episodeTitle
-        createdAt
-        status
+    showComments(listShowCommentsRequest: {
+      commentFilters: {
+        primaryFilters: [LIST_COMMENT_PRIMARY_FILTER_PUBLISHED]
+        typeFilters: [LIST_COMMENT_TYPE_FILTER_ROOT]
+        secondaryFilters: []
       }
-      pageToken
+      sortOrder: LIST_COMMENT_SORT_ORDER_MOST_RECENT
+      pagingInfo: { pageSize: 20, pageToken: "" }
+    }) {
+      decoratedCommentOrReply {
+        episodeUri
+        oneOfCommentOrReply {
+          ... on DecoratedComment {
+            commentUri
+            commentStr
+            createDate          # Long, Unix milliseconds
+            oneOfAuthorDisplayMetadata {
+              ... on UserAuthorDisplayMetadata {
+                username        # opaque user id string
+                userFullName    # display name shown in the S4C UI
+                userCoverImageUrl
+              }
+            }
+          }
+        }
+        episode {
+          title
+          publishedOn { seconds }
+        }
+      }
     }
   }
 }
 ```
 
 > **Warning:** Including `LIST_COMMENT_PRIMARY_FILTER_NEEDS_REVIEW` in
-> `primaryFilters` causes a `DataFetchingException`. Use
-> `LIST_COMMENT_PRIMARY_FILTER_PUBLISHED` only.
-
-**Variables example (published root comments, up to 20):**
-```json
-{
-  "primaryFilters": ["LIST_COMMENT_PRIMARY_FILTER_PUBLISHED"],
-  "commentTypesFilters": ["LIST_COMMENT_TYPE_FILTER_ROOT"],
-  "secondaryFilters": [],
-  "repliesFilter": ["LIST_COMMENT_PRIMARY_FILTER_PUBLISHED"],
-  "pageSize": 20
-}
-```
+> `primaryFilters` causes a `DataFetchingException` on this query. Use
+> `LIST_COMMENT_PRIMARY_FILTER_PUBLISHED` only. (Contrast with
+> `getCommentsForEpisode`, which accepts both values safely.)
 
 This query fetches comments across **all episodes of the show** in a single
 request — useful for building a comment digest before each recording session.
+
+#### Comment author metadata — discovered 2026-07-27
+
+`DecoratedComment.oneOfAuthorDisplayMetadata` is a **union** with two possible
+types:
+
+| Type | Meaning | Fields |
+|------|---------|--------|
+| `UserAuthorDisplayMetadata` | A listener's comment | `username`, `userFullName`, `userCoverImageUrl` |
+| `ShowAuthorDisplayMetadata` | A comment posted by the show (creator) | (introspect before use) |
+
+`userFullName` is the display name shown in the Spotify app; `username` is an
+opaque id string. There is also a separate `authorMetadata.oneOfAuthorMetadata`
+union (`UserIdString` \| `ParentEntityUriString`) carrying raw ids.
+
+#### Full `DecoratedComment` field list (introspected 2026-07-27)
+
+`commentUri`, `parentEntityUri`, `entityUri`, `authorMetadata`, `createDate`
+(Long), `commentStr`, `language`, `initialModerationState`, `approvalDate`
+(Long), `numberOfReplies` (Int), `hasParentEntityReacted`,
+`hasParentEntityReplied`, `isAnySensitivityPolicyInitiallyViolated`,
+`hasParentEntityPinned`, `containsBlockedWords`, `surfaceType`,
+`oneOfAuthorDisplayMetadata`.
+
+`hasParentEntityReplied` / `hasParentEntityPinned` are handy for building an
+"unanswered comments" digest without fetching reply threads.
 
 ---
 
