@@ -666,6 +666,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-07-27-comment-author-metadata-discovered-showcomments-schema-corrected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-07-27 — Comment author metadata discovered; showComments schema corrected
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-07-27 — Comment author metadata discovered; showComments schema corrected">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        graphql.md / graphql.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-24-bidirectional-enja-documentation-sync" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -717,7 +745,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+  <a href="#graphqlmd-graphqljamd_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         graphql.md / graphql.ja.md
@@ -939,6 +967,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-07-27-comment-author-metadata-discovered-showcomments-schema-corrected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-07-27 — Comment author metadata discovered; showComments schema corrected
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-07-27 — Comment author metadata discovered; showComments schema corrected">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        graphql.md / graphql.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-06-24-bidirectional-enja-documentation-sync" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -990,7 +1046,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+  <a href="#graphqlmd-graphqljamd_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         graphql.md / graphql.ja.md
@@ -1195,6 +1251,28 @@
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h2 id="2026-07-27-comment-author-metadata-discovered-showcomments-schema-corrected">2026-07-27 — Comment author metadata discovered; showComments schema corrected<a class="headerlink" href="#2026-07-27-comment-author-metadata-discovered-showcomments-schema-corrected" title="Permanent link">&para;</a></h2>
+<p><strong>Source:</strong> Live introspection and production queries while adding author names
+to a comment digest tool.</p>
+<h3 id="graphqlmd-graphqljamd">graphql.md / graphql.ja.md<a class="headerlink" href="#graphqlmd-graphqljamd" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Comment author names are available</strong> — <code>DecoratedComment.oneOfAuthorDisplayMetadata</code>
+  is a union of <code>UserAuthorDisplayMetadata { username, userFullName, userCoverImageUrl }</code>
+  (listener comments) and <code>ShowAuthorDisplayMetadata</code> (creator-posted comments).
+  <code>userFullName</code> is the display name shown in the Spotify app.</li>
+<li><strong>Corrected the <code>showComments</code> signature</strong> — the previously documented simplified
+  shape (<code>primaryFilters:</code> as direct args, <code>comments{…}</code> result) does not match the
+  schema. The verified working shape takes a <code>listShowCommentsRequest</code> input object
+  (<code>commentFilters</code> / <code>sortOrder</code> / <code>pagingInfo</code>) and returns
+  <code>decoratedCommentOrReply[]</code> with <code>oneOfCommentOrReply … on DecoratedComment</code>.</li>
+<li>Added the full introspected <code>DecoratedComment</code> field list — includes
+  <code>numberOfReplies</code>, <code>hasParentEntityReplied</code>, <code>hasParentEntityPinned</code>,
+  <code>containsBlockedWords</code>, <code>initialModerationState</code>, useful for building
+  "unanswered comments" views without fetching reply threads.</li>
+<li>Auth note: the <code>sp_dc</code> cookie alone was sufficient to re-authenticate after a
+  cookie expiry; <code>sp_key</code> was absent from the browser's cookie list entirely
+  (2026-07-27 observation, spotifyconnector flow).</li>
+</ul>
 <h2 id="2026-06-24-bidirectional-enja-documentation-sync">2026-06-24 — Bidirectional EN/JA documentation sync<a class="headerlink" href="#2026-06-24-bidirectional-enja-documentation-sync" title="Permanent link">&para;</a></h2>
 <p><strong>Source:</strong> Manual diff and sync pass across all three doc pairs.</p>
 <h3 id="graphqljamd">graphql.ja.md<a class="headerlink" href="#graphqljamd" title="Permanent link">&para;</a></h3>
@@ -1221,7 +1299,7 @@
 <hr />
 <h2 id="2026-06-24-document-showbyshowurishowcomments-cross-episode-comment-fetch">2026-06-24 — Document showByShowUri.showComments (cross-episode comment fetch)<a class="headerlink" href="#2026-06-24-document-showbyshowurishowcomments-cross-episode-comment-fetch" title="Permanent link">&para;</a></h2>
 <p><strong>Source:</strong> Live API testing while building a pre-recording comment digest tool.</p>
-<h3 id="graphqlmd-graphqljamd">graphql.md / graphql.ja.md<a class="headerlink" href="#graphqlmd-graphqljamd" title="Permanent link">&para;</a></h3>
+<h3 id="graphqlmd-graphqljamd_1">graphql.md / graphql.ja.md<a class="headerlink" href="#graphqlmd-graphqljamd_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong><code>getLatestCommentsForShow</code> is a PQ alias, not a real query field</strong> — the
   operation name appears in browser network traffic but does not exist in the

@@ -666,6 +666,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026727-showcomments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年7月27日 — コメント投稿者メタデータの発見・showComments スキーマ修正
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026年7月27日 — コメント投稿者メタデータの発見・showComments スキーマ修正">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        graphql.md / graphql.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026624" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -717,7 +745,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+  <a href="#graphqlmd-graphqljamd_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         graphql.md / graphql.ja.md
@@ -939,6 +967,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026727-showcomments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年7月27日 — コメント投稿者メタデータの発見・showComments スキーマ修正
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026年7月27日 — コメント投稿者メタデータの発見・showComments スキーマ修正">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        graphql.md / graphql.ja.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026624" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -990,7 +1046,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#graphqlmd-graphqljamd" class="md-nav__link">
+  <a href="#graphqlmd-graphqljamd_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         graphql.md / graphql.ja.md
@@ -1195,6 +1251,23 @@
 
 
 <h1 id="_1">更新履歴<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="2026727-showcomments">2026年7月27日 — コメント投稿者メタデータの発見・showComments スキーマ修正<a class="headerlink" href="#2026727-showcomments" title="Permanent link">&para;</a></h2>
+<p><strong>調査方法：</strong> コメントダイジェストツールへの投稿者名追加作業中のライブイントロスペクション＋本番クエリ。</p>
+<h3 id="graphqlmd-graphqljamd">graphql.md / graphql.ja.md<a class="headerlink" href="#graphqlmd-graphqljamd" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>コメント投稿者名が取得可能</strong> — <code>DecoratedComment.oneOfAuthorDisplayMetadata</code> は
+  <code>UserAuthorDisplayMetadata { username, userFullName, userCoverImageUrl }</code>（リスナーのコメント）と
+  <code>ShowAuthorDisplayMetadata</code>（制作者側の投稿）のUNION型。<code>userFullName</code> がSpotifyアプリの表示名。</li>
+<li><strong><code>showComments</code> のシグネチャを修正</strong> — 旧掲載の簡略形（<code>primaryFilters:</code> 直指定・<code>comments{…}</code>）は
+  スキーマと一致しない。検証済みの正しい形は <code>listShowCommentsRequest</code> 入力オブジェクト
+  （<code>commentFilters</code> / <code>sortOrder</code> / <code>pagingInfo</code>）＋ <code>decoratedCommentOrReply[]</code> 戻り値。</li>
+<li><code>DecoratedComment</code> の全フィールド一覧（イントロスペクション）を追加 —
+  <code>numberOfReplies</code>・<code>hasParentEntityReplied</code>・<code>hasParentEntityPinned</code>・
+  <code>containsBlockedWords</code>・<code>initialModerationState</code> 等。返信スレッドを取得せずに
+  「未返信コメント一覧」を作るのに有用。</li>
+<li>認証メモ：Cookie失効後の再認証は <strong><code>sp_dc</code> の更新のみで復旧</strong>した。ブラウザのCookie一覧に
+  <code>sp_key</code> 自体が存在しないケースを確認（2026-07-27・spotifyconnectorフロー）。</li>
+</ul>
 <h2 id="2026624">2026年6月24日 — 英語・日本語ドキュメントの双方向同期<a class="headerlink" href="#2026624" title="Permanent link">&para;</a></h2>
 <p><strong>内容：</strong> 3つのドキュメントペアを手動で差分確認・同期。</p>
 <h3 id="graphqljamd">graphql.ja.md<a class="headerlink" href="#graphqljamd" title="Permanent link">&para;</a></h3>
@@ -1221,7 +1294,7 @@
 <hr />
 <h2 id="2026624-showbyshowurishowcomments">2026年6月24日 — showByShowUri.showComments の文書化（番組横断コメント取得）<a class="headerlink" href="#2026624-showbyshowurishowcomments" title="Permanent link">&para;</a></h2>
 <p><strong>調査方法：</strong> 収録前コメントダイジェストツール開発中にライブ API テストで確認。</p>
-<h3 id="graphqlmd-graphqljamd">graphql.md / graphql.ja.md<a class="headerlink" href="#graphqlmd-graphqljamd" title="Permanent link">&para;</a></h3>
+<h3 id="graphqlmd-graphqljamd_1">graphql.md / graphql.ja.md<a class="headerlink" href="#graphqlmd-graphqljamd_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong><code>getLatestCommentsForShow</code> は PQ エイリアスであり実在するクエリフィールドではない</strong> — ブラウザのネットワークトラフィックにはこのオペレーション名が見えるが、<code>/v2/graph-pq</code> スキーマには存在しない。アドホッククエリとして送ると <code>ValidationError</code> が返る。</li>
 <li><strong>正しいパス：<code>showByShowUri</code> → <code>Show.showComments(…)</code></strong> — アナリティクス取得と同じ入り口で、<code>analytics</code> の代わりに <code>showComments</code> をネストフィールドとして指定する。番組全エピソードのコメントを1リクエストで取得できる。</li>
