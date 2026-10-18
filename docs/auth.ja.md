@@ -3,7 +3,7 @@
 Spotify for Creators のすべての API は、共通の認証チェーンを使用する。
 
 ```
-sp_dc / sp_key クッキー
+sp_dc クッキー
        │
        └─▶ spotifyconnector._authenticate()
                   │
@@ -12,12 +12,17 @@ sp_dc / sp_key クッキー
 
 ---
 
-## Step 1 — `sp_dc` と `sp_key` クッキーの取得
+## Step 1 — `sp_dc` クッキーの取得
 
-この2つのクッキーが S4C セッション全体の認証の起点。
+このクッキーが S4C セッション全体の認証の起点。
+
+!!! info "`sp_key` は不要になった（2026年10月）"
+    `creators.spotify.com` のクッキー一覧に `sp_key` が表示されなくなり、認証でも
+    完全に無視される（空文字でも任意の値でも認証成功・2026-10-17 実測）。
+    `spotifyconnector` は引数として `sp_key` を必須にしているため、空文字を渡す。
 
 !!! warning "セキュリティ警告"
-    `sp_dc` と `sp_key` は **Spotify アカウント全体**（音楽・支払い情報を含む全機能）への
+    `sp_dc` は **Spotify アカウント全体**（音楽・支払い情報を含む全機能）への
     アクセス権限を持つ。絶対に他人と共有しないこと。`.env` ファイルに保存し、
     `.gitignore` でバージョン管理対象から除外すること。
 
@@ -27,7 +32,7 @@ sp_dc / sp_key クッキー
 2. Spotify アカウントでログインする
 3. DevTools を開く（`F12` または `Cmd+Option+I`）
 4. **Application → Cookies → `https://creators.spotify.com`** に移動する
-5. `sp_dc` と `sp_key` の **Value** 列をコピーする
+5. `sp_dc` の **Value** 列をコピーする
 
 ---
 
@@ -62,7 +67,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",  # S4C のパブリックな OAuth client_id
     podcast_id="YOUR_SHOW_ID",
     sp_dc="YOUR_SP_DC_COOKIE_VALUE",
-    sp_key="YOUR_SP_KEY_COOKIE_VALUE",
+    sp_key="",  # 引数は必須だが値は使われない（sp_dc のみで認証）
 )
 connector._authenticate()   # 内部メソッド
 bearer = connector._bearer  # 内部プロパティ — 短命な JWT
@@ -111,7 +116,6 @@ headers_post = {
 
 ```ini
 SP_DC=your_sp_dc_value_here
-SP_KEY=your_sp_key_value_here
 SHOW_ID=your_show_id_here
 ```
 
@@ -121,6 +125,5 @@ from dotenv import load_dotenv
 
 load_dotenv()
 sp_dc = os.environ["SP_DC"]
-sp_key = os.environ["SP_KEY"]
 show_id = os.environ["SHOW_ID"]
 ```

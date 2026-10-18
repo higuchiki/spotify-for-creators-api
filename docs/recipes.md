@@ -16,7 +16,6 @@ Create a `.env` file:
 
 ```ini
 SP_DC=your_sp_dc_value_here
-SP_KEY=your_sp_key_value_here
 SHOW_ID=your_show_id_here
 ```
 
@@ -36,7 +35,6 @@ from datetime import datetime, timezone, timedelta
 
 load_dotenv()
 sp_dc   = os.environ["SP_DC"]
-sp_key  = os.environ["SP_KEY"]
 show_id = os.environ["SHOW_ID"]
 
 # --- Configuration ---
@@ -59,7 +57,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",
     podcast_id=show_id,
     sp_dc=sp_dc,
-    sp_key=sp_key,
+    sp_key="",  # required arg, but ignored — sp_dc alone authenticates
 )
 connector._authenticate()
 bearer = connector._bearer
@@ -133,7 +131,6 @@ from spotifyconnector import SpotifyConnector
 
 load_dotenv()
 sp_dc   = os.environ["SP_DC"]
-sp_key  = os.environ["SP_KEY"]
 show_id = os.environ["SHOW_ID"]
 
 BASE = "https://api-v5.anchor.fm"
@@ -143,7 +140,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",
     podcast_id=show_id,
     sp_dc=sp_dc,
-    sp_key=sp_key,
+    sp_key="",  # required arg, but ignored — sp_dc alone authenticates
 )
 connector._authenticate()
 bearer = connector._bearer
@@ -174,7 +171,6 @@ from spotifyconnector import SpotifyConnector
 
 load_dotenv()
 sp_dc   = os.environ["SP_DC"]
-sp_key  = os.environ["SP_KEY"]
 show_id = os.environ["SHOW_ID"]
 
 SPOTIFY_EP_ID = "1xouj0WrH2klavXKzDWZbq"
@@ -185,7 +181,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",
     podcast_id=show_id,
     sp_dc=sp_dc,
-    sp_key=sp_key,
+    sp_key="",  # required arg, but ignored — sp_dc alone authenticates
 )
 connector._authenticate()
 bearer = connector._bearer
@@ -238,7 +234,6 @@ from spotifyconnector import SpotifyConnector
 
 load_dotenv()
 sp_dc   = os.environ["SP_DC"]
-sp_key  = os.environ["SP_KEY"]
 show_id = os.environ["SHOW_ID"]
 
 COMMENT_URI   = "spotify:comment:7cXkaBSy1gocZ0hAtS9WsJ"
@@ -250,7 +245,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",
     podcast_id=show_id,
     sp_dc=sp_dc,
-    sp_key=sp_key,
+    sp_key="",  # required arg, but ignored — sp_dc alone authenticates
 )
 connector._authenticate()
 bearer = connector._bearer
@@ -297,7 +292,6 @@ from spotifyconnector import SpotifyConnector
 
 load_dotenv()
 sp_dc   = os.environ["SP_DC"]
-sp_key  = os.environ["SP_KEY"]
 show_id = os.environ["SHOW_ID"]
 
 FILE_PATH     = "/path/to/episode.mp3"
@@ -309,7 +303,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",
     podcast_id=show_id,
     sp_dc=sp_dc,
-    sp_key=sp_key,
+    sp_key="",  # required arg, but ignored — sp_dc alone authenticates
 )
 connector._authenticate()
 bearer = connector._bearer

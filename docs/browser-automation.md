@@ -25,7 +25,7 @@ that have no API equivalent.
 
 ## Authentication
 
-Playwright uses the same `sp_dc` / `sp_key` cookies described in the
+Playwright uses the same `sp_dc` cookie described in the
 [Authentication](auth.md) page — no login interaction is needed at runtime.
 
 ```python
@@ -39,15 +39,6 @@ with sync_playwright() as p:
         {
             "name": "sp_dc",
             "value": sp_dc,
-            "domain": ".spotify.com",
-            "path": "/",
-            "secure": True,
-            "httpOnly": True,
-            "sameSite": "None",
-        },
-        {
-            "name": "sp_key",
-            "value": sp_key,
             "domain": ".spotify.com",
             "path": "/",
             "secure": True,

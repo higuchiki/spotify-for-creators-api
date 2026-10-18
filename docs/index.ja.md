@@ -69,7 +69,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",
     podcast_id="YOUR_SHOW_ID",
     sp_dc="YOUR_SP_DC",
-    sp_key="YOUR_SP_KEY",
+    sp_key="",  # 引数は必須だが値は使われない（sp_dc のみで認証）
 )
 connector._authenticate()
 bearer = connector._bearer
@@ -92,7 +92,7 @@ print(r.json())
 
 | ページ | 内容 |
 |--------|------|
-| [認証](auth.md) | `sp_dc` / `sp_key` クッキーと Bearer トークンの取得方法 |
+| [認証](auth.md) | `sp_dc` クッキーと Bearer トークンの取得方法 |
 | [REST API リファレンス](rest-api.md) | anchor.fm REST エンドポイント全一覧（1-A 〜 1-Z、エピソード削除含む） |
 | [GraphQL API](graphql.md) | GraphQL クエリ・ミューテーション全一覧 — アナリティクス（概要 / エンゲージメント / リテンション / オーディエンス成長 / ベンチマーク / ディスカバリーファネル / AIインサイト）・コメント・トランスクリプト・チャプター |
 | [レシピ・実装例](recipes.md) | Python によるエンドツーエンドの実装フロー |

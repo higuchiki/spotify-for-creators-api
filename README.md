@@ -16,7 +16,7 @@ Unofficial API reference for **Spotify for Creators** (formerly Anchor.fm), disc
 |-----|---------|
 | `api-v5.anchor.fm` REST | Episode CRUD (incl. delete), show metadata, audio/video upload, scheduling, distribution, monetisation |
 | `creators-graph.spotify.com` GraphQL | Analytics (~50 queries: overview, engagement, retention, audience growth / core fans, benchmarks, discovery funnel, segmented audience, AI insights), comments, transcripts, chapters |
-| `spotifyconnector` | Bearer token retrieval from `sp_dc` / `sp_key` cookies |
+| `spotifyconnector` | Bearer token retrieval from the `sp_dc` cookie |
 | Browser automation | Playwright recipes for UI-only operations |
 
 > **📢 Platform change (2026-06-11):** Spotify redefined **Plays** as *30+ seconds listened = 1 play* (aligning with the AMP industry standard). The S4C dashboard headline metric switched from **Streams + Downloads** to **Plays + Downloads** across all platforms; the old metric remains available for reference only. New Engagement tab, benchmarks, and audience segments shipped alongside. Metric semantics documented before this date may reflect the old definitions — see the [Changelog](https://higuchiki.github.io/spotify-for-creators-api/changelog/).
@@ -27,14 +27,14 @@ Unofficial API reference for **Spotify for Creators** (formerly Anchor.fm), disc
 from spotifyconnector import SpotifyConnector
 import requests
 
-# 1. Get a Bearer token from sp_dc / sp_key cookies
+# 1. Get a Bearer token from the sp_dc cookie
 #    (obtained from browser DevTools → Application → Cookies)
 connector = SpotifyConnector(
     base_url="https://generic.wg.spotify.com/podcasters/v0",
     client_id="05a1371ee5194c27860b3ff3ff3979d2",
     podcast_id="YOUR_SHOW_ID",
     sp_dc="YOUR_SP_DC_COOKIE",
-    sp_key="YOUR_SP_KEY_COOKIE",
+    sp_key="",  # required arg, but ignored — sp_dc alone authenticates
 )
 connector._authenticate()
 bearer = connector._bearer

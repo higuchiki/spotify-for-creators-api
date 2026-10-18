@@ -70,7 +70,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",
     podcast_id="YOUR_SHOW_ID",
     sp_dc="YOUR_SP_DC",
-    sp_key="YOUR_SP_KEY",
+    sp_key="",  # required arg, but ignored — sp_dc alone authenticates
 )
 connector._authenticate()
 bearer = connector._bearer
@@ -85,7 +85,7 @@ r = requests.get(
 print(r.json())
 ```
 
-See [Authentication](auth.md) for how to obtain `sp_dc` / `sp_key` and a Bearer token.
+See [Authentication](auth.md) for how to obtain `sp_dc` and a Bearer token.
 
 ---
 
@@ -93,7 +93,7 @@ See [Authentication](auth.md) for how to obtain `sp_dc` / `sp_key` and a Bearer 
 
 | Page | Contents |
 |------|---------|
-| [Authentication](auth.md) | Obtaining `sp_dc` / `sp_key` cookies and Bearer tokens |
+| [Authentication](auth.md) | Obtaining the `sp_dc` cookie and Bearer tokens |
 | [REST API](rest-api.md) | All anchor.fm REST endpoints (1-A through 1-Z, including episode delete) |
 | [GraphQL API](graphql.md) | All GraphQL queries and mutations — analytics (overview / engagement / retention / audience growth / benchmarks / discovery funnel / AI insights), comments, transcripts, chapters |
 | [Recipes](recipes.md) | End-to-end Python implementation examples |

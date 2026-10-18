@@ -3,7 +3,7 @@
 All Spotify for Creators APIs share the same authentication chain:
 
 ```
-sp_dc / sp_key cookies
+sp_dc cookie
        │
        └─▶ spotifyconnector._authenticate()
                   │
@@ -12,13 +12,20 @@ sp_dc / sp_key cookies
 
 ---
 
-## Step 1 — Obtain `sp_dc` and `sp_key` Cookies
+## Step 1 — Obtain the `sp_dc` Cookie
 
-These two cookies are the root credentials for the entire S4C session.
+This cookie is the root credential for the entire S4C session.
+
+!!! info "`sp_key` is no longer needed (Oct 2026)"
+    `sp_key` no longer appears in the browser's cookie list for
+    `creators.spotify.com`, and authentication ignores it entirely — an empty
+    string or an arbitrary value both authenticate successfully (verified
+    2026-10-17). `spotifyconnector` still requires the `sp_key` argument, so
+    pass an empty string.
 
 !!! warning "Security warning"
-    `sp_dc` and `sp_key` grant full access to your Spotify account — music,
-    payments, and all features. Never share them with anyone and store them
+    `sp_dc` grants full access to your Spotify account — music,
+    payments, and all features. Never share it with anyone and store it
     in a `.env` file that is excluded from version control via `.gitignore`.
 
 ### How to obtain them
@@ -27,7 +34,7 @@ These two cookies are the root credentials for the entire S4C session.
 2. Log in with your Spotify account.
 3. Open DevTools (`F12` or `Cmd+Option+I`).
 4. Go to **Application → Cookies → `https://creators.spotify.com`**.
-5. Copy the **Value** column for `sp_dc` and `sp_key`.
+5. Copy the **Value** column for `sp_dc`.
 
 ---
 
@@ -44,7 +51,7 @@ https://creators.spotify.com/pod/show/【SHOW_ID_IS_HERE】/episodes
 ## Step 3 — Obtain a Bearer Token
 
 Use the unofficial [`spotifyconnector`](https://pypi.org/project/spotifyconnector/)
-Python library to exchange your cookies for a short-lived Bearer token.
+Python library to exchange your cookie for a short-lived Bearer token.
 
 ### Install
 
@@ -62,7 +69,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",  # S4C public OAuth client_id
     podcast_id="YOUR_SHOW_ID",
     sp_dc="YOUR_SP_DC_COOKIE_VALUE",
-    sp_key="YOUR_SP_KEY_COOKIE_VALUE",
+    sp_key="",  # required arg, but ignored — sp_dc alone authenticates
 )
 connector._authenticate()   # internal method
 bearer = connector._bearer  # internal property — short-lived JWT
@@ -111,7 +118,6 @@ headers_post = {
 
 ```ini
 SP_DC=your_sp_dc_value_here
-SP_KEY=your_sp_key_value_here
 SHOW_ID=your_show_id_here
 ```
 
@@ -121,6 +127,5 @@ from dotenv import load_dotenv
 
 load_dotenv()
 sp_dc = os.environ["SP_DC"]
-sp_key = os.environ["SP_KEY"]
 show_id = os.environ["SHOW_ID"]
 ```

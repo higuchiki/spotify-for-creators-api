@@ -17,7 +17,6 @@ from datetime import datetime, timezone, timedelta
 
 load_dotenv()
 sp_dc   = os.environ["SP_DC"]
-sp_key  = os.environ["SP_KEY"]
 show_id = os.environ["SHOW_ID"]
 
 # --- 設定 ---
@@ -40,7 +39,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",
     podcast_id=show_id,
     sp_dc=sp_dc,
-    sp_key=sp_key,
+    sp_key="",  # 引数は必須だが値は使われない（sp_dc のみで認証）
 )
 connector._authenticate()
 bearer = connector._bearer
@@ -133,7 +132,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",
     podcast_id=show_id,
     sp_dc=sp_dc,
-    sp_key=sp_key,
+    sp_key="",  # 引数は必須だが値は使われない（sp_dc のみで認証）
 )
 connector._authenticate()
 
@@ -171,7 +170,6 @@ from spotifyconnector import SpotifyConnector
 
 load_dotenv()
 sp_dc   = os.environ["SP_DC"]
-sp_key  = os.environ["SP_KEY"]
 show_id = os.environ["SHOW_ID"]
 
 FILE_PATH     = "/path/to/episode.mp3"
@@ -183,7 +181,7 @@ connector = SpotifyConnector(
     client_id="05a1371ee5194c27860b3ff3ff3979d2",
     podcast_id=show_id,
     sp_dc=sp_dc,
-    sp_key=sp_key,
+    sp_key="",  # 引数は必須だが値は使われない（sp_dc のみで認証）
 )
 connector._authenticate()
 bearer = connector._bearer

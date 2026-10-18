@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-10-17 — `sp_key` cookie no longer required
+
+**Source:** Re-authentication after a cookie expiry, followed by controlled tests.
+
+### All pages
+
+- **Only `sp_dc` is needed.** `sp_key` no longer appears in the browser's cookie
+  list for `creators.spotify.com`, and authentication ignores its value entirely —
+  an empty string and an arbitrary value both authenticated successfully
+  (2026-10-17). This confirms the 2026-07-27 observation below.
+- `spotifyconnector` still requires `sp_key` as a constructor argument, so all code
+  samples now pass `sp_key=""`.
+- Removed `SP_KEY` from the `.env` templates and the `sp_key` cookie from the
+  Playwright `add_cookies` example.
+
 ## 2026-07-27 — Comment author metadata discovered; showComments schema corrected
 
 **Source:** Live introspection and production queries while adding author names

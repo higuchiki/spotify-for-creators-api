@@ -24,7 +24,7 @@ Playwright が必要なのは、API で対応できない操作に限定する�
 
 ## 認証
 
-Playwright は [認証](auth.md) ページで説明している `sp_dc` / `sp_key` クッキーをそのまま使う。
+Playwright は [認証](auth.md) ページで説明している `sp_dc` クッキーをそのまま使う。
 実行時にログイン操作は不要。
 
 ```python
@@ -38,15 +38,6 @@ with sync_playwright() as p:
         {
             "name": "sp_dc",
             "value": sp_dc,
-            "domain": ".spotify.com",
-            "path": "/",
-            "secure": True,
-            "httpOnly": True,
-            "sameSite": "None",
-        },
-        {
-            "name": "sp_key",
-            "value": sp_key,
             "domain": ".spotify.com",
             "path": "/",
             "secure": True,
