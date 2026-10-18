@@ -533,15 +533,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#step-1-obtain-sp_dc-and-sp_key-cookies" class="md-nav__link">
+  <a href="#step-1-obtain-the-sp_dc-cookie" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1 — Obtain sp_dc and sp_key Cookies
+        Step 1 — Obtain the sp_dc Cookie
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 1 — Obtain sp_dc and sp_key Cookies">
+    <nav class="md-nav" aria-label="Step 1 — Obtain the sp_dc Cookie">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -830,15 +830,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#step-1-obtain-sp_dc-and-sp_key-cookies" class="md-nav__link">
+  <a href="#step-1-obtain-the-sp_dc-cookie" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1 — Obtain sp_dc and sp_key Cookies
+        Step 1 — Obtain the sp_dc Cookie
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 1 — Obtain sp_dc and sp_key Cookies">
+    <nav class="md-nav" aria-label="Step 1 — Obtain the sp_dc Cookie">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -976,19 +976,27 @@
 
 <h1 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h1>
 <p>All Spotify for Creators APIs share the same authentication chain:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sp_dc / sp_key cookies
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sp_dc cookie
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>       │
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>       └─▶ spotifyconnector._authenticate()
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                  │
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                  └─▶ Bearer token  (used in Authorization header for all requests)
 </span></code></pre></div>
 <hr />
-<h2 id="step-1-obtain-sp_dc-and-sp_key-cookies">Step 1 — Obtain <code>sp_dc</code> and <code>sp_key</code> Cookies<a class="headerlink" href="#step-1-obtain-sp_dc-and-sp_key-cookies" title="Permanent link">&para;</a></h2>
-<p>These two cookies are the root credentials for the entire S4C session.</p>
+<h2 id="step-1-obtain-the-sp_dc-cookie">Step 1 — Obtain the <code>sp_dc</code> Cookie<a class="headerlink" href="#step-1-obtain-the-sp_dc-cookie" title="Permanent link">&para;</a></h2>
+<p>This cookie is the root credential for the entire S4C session.</p>
+<div class="admonition info">
+<p class="admonition-title"><code>sp_key</code> is no longer needed (Oct 2026)</p>
+<p><code>sp_key</code> no longer appears in the browser's cookie list for
+<code>creators.spotify.com</code>, and authentication ignores it entirely — an empty
+string or an arbitrary value both authenticate successfully (verified
+2026-10-17). <code>spotifyconnector</code> still requires the <code>sp_key</code> argument, so
+pass an empty string.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Security warning</p>
-<p><code>sp_dc</code> and <code>sp_key</code> grant full access to your Spotify account — music,
-payments, and all features. Never share them with anyone and store them
+<p><code>sp_dc</code> grants full access to your Spotify account — music,
+payments, and all features. Never share it with anyone and store it
 in a <code>.env</code> file that is excluded from version control via <code>.gitignore</code>.</p>
 </div>
 <h3 id="how-to-obtain-them">How to obtain them<a class="headerlink" href="#how-to-obtain-them" title="Permanent link">&para;</a></h3>
@@ -997,7 +1005,7 @@ in a <code>.env</code> file that is excluded from version control via <code>.git
 <li>Log in with your Spotify account.</li>
 <li>Open DevTools (<code>F12</code> or <code>Cmd+Option+I</code>).</li>
 <li>Go to <strong>Application → Cookies → <code>https://creators.spotify.com</code></strong>.</li>
-<li>Copy the <strong>Value</strong> column for <code>sp_dc</code> and <code>sp_key</code>.</li>
+<li>Copy the <strong>Value</strong> column for <code>sp_dc</code>.</li>
 </ol>
 <hr />
 <h2 id="step-2-find-your-show-id">Step 2 — Find Your Show ID<a class="headerlink" href="#step-2-find-your-show-id" title="Permanent link">&para;</a></h2>
@@ -1007,7 +1015,7 @@ in a <code>.env</code> file that is excluded from version control via <code>.git
 <hr />
 <h2 id="step-3-obtain-a-bearer-token">Step 3 — Obtain a Bearer Token<a class="headerlink" href="#step-3-obtain-a-bearer-token" title="Permanent link">&para;</a></h2>
 <p>Use the unofficial <a href="https://pypi.org/project/spotifyconnector/"><code>spotifyconnector</code></a>
-Python library to exchange your cookies for a short-lived Bearer token.</p>
+Python library to exchange your cookie for a short-lived Bearer token.</p>
 <h3 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">spotifyconnector</span><span class="o">==</span><span class="m">0</span>.8.2
 </span></code></pre></div>
@@ -1015,11 +1023,11 @@ Python library to exchange your cookies for a short-lived Bearer token.</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">spotifyconnector</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpotifyConnector</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">connector</span> <span class="o">=</span> <span class="n">SpotifyConnector</span><span class="p">(</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://generic.wg.spotify.com/podcasters/v0&quot;</span><span class="p">,</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">client_id</span><span class="o">=</span><span class="s2">&quot;05a1371ee5194c27860b3ff3ff3979d2&quot;</span><span class="p">,</span>  <span class="c1"># S4C public OAuth client_id</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">podcast_id</span><span class="o">=</span><span class="s2">&quot;YOUR_SHOW_ID&quot;</span><span class="p">,</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">sp_dc</span><span class="o">=</span><span class="s2">&quot;YOUR_SP_DC_COOKIE_VALUE&quot;</span><span class="p">,</span>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">sp_key</span><span class="o">=</span><span class="s2">&quot;YOUR_SP_KEY_COOKIE_VALUE&quot;</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">base_url</span><span class="o">=</span><span class="s2">"https://generic.wg.spotify.com/podcasters/v0"</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">client_id</span><span class="o">=</span><span class="s2">"05a1371ee5194c27860b3ff3ff3979d2"</span><span class="p">,</span>  <span class="c1"># S4C public OAuth client_id</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">podcast_id</span><span class="o">=</span><span class="s2">"YOUR_SHOW_ID"</span><span class="p">,</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">sp_dc</span><span class="o">=</span><span class="s2">"YOUR_SP_DC_COOKIE_VALUE"</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">sp_key</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>  <span class="c1"># required arg, but ignored — sp_dc alone authenticates</span>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">)</span>
 </span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">connector</span><span class="o">.</span><span class="n">_authenticate</span><span class="p">()</span>   <span class="c1"># internal method</span>
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="n">bearer</span> <span class="o">=</span> <span class="n">connector</span><span class="o">.</span><span class="n">_bearer</span>  <span class="c1"># internal property — short-lived JWT</span>
@@ -1036,17 +1044,17 @@ OAuth client ID embedded in the S4C web app and is the same for all users.</p>
 <p>Once you have the Bearer token, include it in every API request:</p>
 <h3 id="get-requests">GET requests<a class="headerlink" href="#get-requests" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">headers_get</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">bearer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">bearer</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="s2">"Accept"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="post-put-requests">POST / PUT requests<a class="headerlink" href="#post-put-requests" title="Permanent link">&para;</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">headers_post</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">bearer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">,</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="s2">&quot;Origin&quot;</span><span class="p">:</span> <span class="s2">&quot;https://creators.spotify.com&quot;</span><span class="p">,</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="s2">&quot;Referer&quot;</span><span class="p">:</span> <span class="s2">&quot;https://creators.spotify.com/&quot;</span><span class="p">,</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">bearer</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="s2">"Accept"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="s2">"Origin"</span><span class="p">:</span> <span class="s2">"https://creators.spotify.com"</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="s2">"Referer"</span><span class="p">:</span> <span class="s2">"https://creators.spotify.com/"</span><span class="p">,</span>
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition warning">
@@ -1057,16 +1065,14 @@ Omitting them can cause the server to reject the request.</p>
 <hr />
 <h2 id="env-template">.env Template<a class="headerlink" href="#env-template" title="Permanent link">&para;</a></h2>
 <div class="language-ini highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="na">SP_DC</span><span class="o">=</span><span class="s">your_sp_dc_value_here</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="na">SP_KEY</span><span class="o">=</span><span class="s">your_sp_key_value_here</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="na">SHOW_ID</span><span class="o">=</span><span class="s">your_show_id_here</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="na">SHOW_ID</span><span class="o">=</span><span class="s">your_show_id_here</span>
 </span></code></pre></div>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">load_dotenv</span><span class="p">()</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">sp_dc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SP_DC&quot;</span><span class="p">]</span>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">sp_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SP_KEY&quot;</span><span class="p">]</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">show_id</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SHOW_ID&quot;</span><span class="p">]</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">sp_dc</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"SP_DC"</span><span class="p">]</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">show_id</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"SHOW_ID"</span><span class="p">]</span>
 </span></code></pre></div>
 
 

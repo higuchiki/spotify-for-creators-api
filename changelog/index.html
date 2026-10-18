@@ -666,6 +666,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-10-17-sp_key-cookie-no-longer-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-10-17 — sp_key cookie no longer required
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-10-17 — sp_key cookie no longer required">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#all-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        All pages
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-07-27-comment-author-metadata-discovered-showcomments-schema-corrected" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -967,6 +995,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#2026-10-17-sp_key-cookie-no-longer-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-10-17 — sp_key cookie no longer required
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026-10-17 — sp_key cookie no longer required">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#all-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        All pages
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026-07-27-comment-author-metadata-discovered-showcomments-schema-corrected" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1251,6 +1307,19 @@
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h2 id="2026-10-17-sp_key-cookie-no-longer-required">2026-10-17 — <code>sp_key</code> cookie no longer required<a class="headerlink" href="#2026-10-17-sp_key-cookie-no-longer-required" title="Permanent link">&para;</a></h2>
+<p><strong>Source:</strong> Re-authentication after a cookie expiry, followed by controlled tests.</p>
+<h3 id="all-pages">All pages<a class="headerlink" href="#all-pages" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Only <code>sp_dc</code> is needed.</strong> <code>sp_key</code> no longer appears in the browser's cookie
+  list for <code>creators.spotify.com</code>, and authentication ignores its value entirely —
+  an empty string and an arbitrary value both authenticated successfully
+  (2026-10-17). This confirms the 2026-07-27 observation below.</li>
+<li><code>spotifyconnector</code> still requires <code>sp_key</code> as a constructor argument, so all code
+  samples now pass <code>sp_key=""</code>.</li>
+<li>Removed <code>SP_KEY</code> from the <code>.env</code> templates and the <code>sp_key</code> cookie from the
+  Playwright <code>add_cookies</code> example.</li>
+</ul>
 <h2 id="2026-07-27-comment-author-metadata-discovered-showcomments-schema-corrected">2026-07-27 — Comment author metadata discovered; showComments schema corrected<a class="headerlink" href="#2026-07-27-comment-author-metadata-discovered-showcomments-schema-corrected" title="Permanent link">&para;</a></h2>
 <p><strong>Source:</strong> Live introspection and production queries while adding author names
 to a comment digest tool.</p>

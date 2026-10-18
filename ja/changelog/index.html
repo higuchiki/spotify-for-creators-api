@@ -666,6 +666,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#20261017-sp_key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年10月17日 — sp_key クッキーが不要に
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026年10月17日 — sp_key クッキーが不要に">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全ページ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026727-showcomments" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -801,7 +829,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         新規文書化されたオペレーション
@@ -823,7 +851,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         エンドポイント数の更新
@@ -967,6 +995,34 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#20261017-sp_key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026年10月17日 — sp_key クッキーが不要に
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2026年10月17日 — sp_key クッキーが不要に">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全ページ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#2026727-showcomments" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1102,7 +1158,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         新規文書化されたオペレーション
@@ -1124,7 +1180,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         エンドポイント数の更新
@@ -1251,6 +1307,16 @@
 
 
 <h1 id="_1">更新履歴<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="20261017-sp_key">2026年10月17日 — <code>sp_key</code> クッキーが不要に<a class="headerlink" href="#20261017-sp_key" title="Permanent link">&para;</a></h2>
+<p><strong>調査方法：</strong> クッキー失効後の再認証と、その後の比較テスト。</p>
+<h3 id="_2">全ページ<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>必要なのは <code>sp_dc</code> だけ。</strong> <code>creators.spotify.com</code> のクッキー一覧に <code>sp_key</code> が表示されなくなり、
+  認証でも値が完全に無視される（空文字・任意の値のどちらでも認証成功・2026-10-17）。
+  下記 2026-07-27 の観測を裏づける結果。</li>
+<li><code>spotifyconnector</code> は引数として <code>sp_key</code> を必須にしているため、全サンプルコードを <code>sp_key=""</code> に変更。</li>
+<li><code>.env</code> テンプレートから <code>SP_KEY</code> を、Playwright の <code>add_cookies</code> 例から <code>sp_key</code> クッキーを削除。</li>
+</ul>
 <h2 id="2026727-showcomments">2026年7月27日 — コメント投稿者メタデータの発見・showComments スキーマ修正<a class="headerlink" href="#2026727-showcomments" title="Permanent link">&para;</a></h2>
 <p><strong>調査方法：</strong> コメントダイジェストツールへの投稿者名追加作業中のライブイントロスペクション＋本番クエリ。</p>
 <h3 id="graphqlmd-graphqljamd">graphql.md / graphql.ja.md<a class="headerlink" href="#graphqlmd-graphqljamd" title="Permanent link">&para;</a></h3>
@@ -1318,7 +1384,7 @@
 <p><strong>調査方法：</strong> JavaScript バンドル解析 — S4C アナリティクス マイクロフロントエンドの
 バンドル（<code>microfrontend-analytics-cdn.spotifycdn.com</code>）から GraphQL AST を
 抽出・再構成。すべてのオペレーション名とクエリ構造は本番バンドルから直接取得した。</p>
-<h3 id="_2">新規文書化されたオペレーション<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<h3 id="_3">新規文書化されたオペレーション<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p><strong>エンゲージメントタブ（確定）：</strong>
 - <strong><code>getEngagementStats</code></strong> — 視聴時間（<code>SHOW_CONSUMPTION</code> → <code>ConsumptionValue.totalConsumptionHours</code>）
   と平均視聴時間（<code>SHOW_AVERAGE_CONSUMPTION_TIME</code> → <code>AverageConsumptionTimeValue.averageConsumptionSeconds</code>）
@@ -1376,7 +1442,7 @@
   <code>WINDOW_FIRST_SIXTY_DAYS</code>、<code>WINDOW_LAST_SIXTY_DAYS</code>、<code>WINDOW_SINCE_PUBLISHED</code>、
   <code>WINDOW_UNSPECIFIED</code></li>
 </ul>
-<h3 id="_3">エンドポイント数の更新<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h3 id="_4">エンドポイント数の更新<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>

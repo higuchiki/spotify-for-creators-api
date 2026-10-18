@@ -933,11 +933,11 @@
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># 1. Bearer トークン取得</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">connector</span> <span class="o">=</span> <span class="n">SpotifyConnector</span><span class="p">(</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;https://generic.wg.spotify.com/podcasters/v0&quot;</span><span class="p">,</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">client_id</span><span class="o">=</span><span class="s2">&quot;05a1371ee5194c27860b3ff3ff3979d2&quot;</span><span class="p">,</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">podcast_id</span><span class="o">=</span><span class="s2">&quot;YOUR_SHOW_ID&quot;</span><span class="p">,</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">sp_dc</span><span class="o">=</span><span class="s2">&quot;YOUR_SP_DC&quot;</span><span class="p">,</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">sp_key</span><span class="o">=</span><span class="s2">&quot;YOUR_SP_KEY&quot;</span><span class="p">,</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">base_url</span><span class="o">=</span><span class="s2">"https://generic.wg.spotify.com/podcasters/v0"</span><span class="p">,</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">client_id</span><span class="o">=</span><span class="s2">"05a1371ee5194c27860b3ff3ff3979d2"</span><span class="p">,</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">podcast_id</span><span class="o">=</span><span class="s2">"YOUR_SHOW_ID"</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">sp_dc</span><span class="o">=</span><span class="s2">"YOUR_SP_DC"</span><span class="p">,</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">sp_key</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>  <span class="c1"># 引数は必須だが値は使われない（sp_dc のみで認証）</span>
 </span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="p">)</span>
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">connector</span><span class="o">.</span><span class="n">_authenticate</span><span class="p">()</span>
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">bearer</span> <span class="o">=</span> <span class="n">connector</span><span class="o">.</span><span class="n">_bearer</span>
@@ -945,9 +945,9 @@
 </span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="c1"># 2. エピソード詳細取得</span>
 </span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">anchor_id</span> <span class="o">=</span> <span class="mi">123456789</span>  <span class="c1"># ID変換は 1-A を参照</span>
 </span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    <span class="sa">f</span><span class="s2">&quot;https://api-v5.anchor.fm/v3/episodes/</span><span class="si">{</span><span class="n">anchor_id</span><span class="si">}</span><span class="s2">/overview&quot;</span>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    <span class="s2">&quot;?isMumsCompatible=true&amp;returnWebIds=true&quot;</span><span class="p">,</span>
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Bearer </span><span class="si">{</span><span class="n">bearer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;Accept&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">},</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    <span class="sa">f</span><span class="s2">"https://api-v5.anchor.fm/v3/episodes/</span><span class="si">{</span><span class="n">anchor_id</span><span class="si">}</span><span class="s2">/overview"</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    <span class="s2">"?isMumsCompatible=true&amp;returnWebIds=true"</span><span class="p">,</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">bearer</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"Accept"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">},</span>
 </span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="p">)</span>
 </span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
 </span></code></pre></div>
@@ -964,7 +964,7 @@
 <tbody>
 <tr>
 <td><a href="auth/">認証</a></td>
-<td><code>sp_dc</code> / <code>sp_key</code> クッキーと Bearer トークンの取得方法</td>
+<td><code>sp_dc</code> クッキーと Bearer トークンの取得方法</td>
 </tr>
 <tr>
 <td><a href="rest-api/">REST API リファレンス</a></td>
