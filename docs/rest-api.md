@@ -74,6 +74,16 @@ episode endpoints.
     anchor_id = resp.json()["episodeId"]
     ```
 
+=== "Node.js"
+    ```javascript
+    const BASE = "https://api-v5.anchor.fm";
+    const r = await fetch(
+      `${BASE}/v3/episodes/spotify:episode:${spotifyEpId}/episodeId?isMumsCompatible=true`,
+      { headers: headersGet },
+    );
+    const { episodeId: anchorId } = await r.json();
+    ```
+
 === "cURL"
     ```bash
     curl -s \
@@ -111,12 +121,23 @@ Returns the current metadata for an episode.
 | `true` | — | Published |
 | `false` | absent | Draft |
 
-!!! warning "Draft episodes return 403"
+!!! warning "Draft episodes may return 403"
     Calling this endpoint on a draft episode (`isPublished: false`, no
-    `publishOn`) returns **HTTP 403 Forbidden** — even in a live browser
-    session. The S4C UI fetches draft data via GraphQL instead. If you need
-    to update a draft episode's metadata, keep the original values in memory
-    before calling the update endpoint.
+    `publishOn`) was observed to return **HTTP 403 Forbidden** (2026-05) —
+    even in a live browser session. If you need to update a draft episode's
+    metadata, keep the original values in memory before calling the update
+    endpoint.
+
+    **Observation 2026-11-21:** `/overview?isMumsCompatible=true&returnWebIds=true`
+    returned **HTTP 200** on freshly created drafts (both from the S4C web app
+    and from a script, 28 drafts), including `spotifyUri`. The 403 may depend
+    on the episode's state (e.g. no media yet) or may no longer apply —
+    handle both.
+
+!!! note "Numbering fields are read under different names"
+    `/overview` returns the season and episode number as
+    `podcastSeasonNumber` / `podcastEpisodeNumber`. The update endpoint (1-C)
+    **writes** them as `seasonNumber` / `episodeNumber`.
 
 === "Python"
     ```python
@@ -126,6 +147,15 @@ Returns the current metadata for an episode.
         headers=headers_get,
     )
     overview = r.json()
+    ```
+
+=== "Node.js"
+    ```javascript
+    const r = await fetch(
+      `${BASE}/v3/episodes/${anchorId}/overview?isMumsCompatible=true&returnWebIds=true`,
+      { headers: headersGet },
+    );
+    const overview = await r.json();
     ```
 
 === "cURL"
@@ -153,6 +183,8 @@ type, explicit flag, and scheduled publish time in a single call.
   "userId": YOUR_USER_ID,
   "title": "Episode title",
   "description": "<p>Episode description HTML</p>",
+  "seasonNumber": 1,
+  "episodeNumber": 3,
   "episodeType": "full",
   "isPublished": false,
   "podcastEpisodeIsExplicit": false,
@@ -160,6 +192,11 @@ type, explicit flag, and scheduled publish time in a single call.
   "wizardDraftedToPublishOn": "2026-06-01T21:00:00.000Z"
 }
 ```
+
+The S4C web app itself (episode wizard, 2026-11) sends
+`{userId, title, description, seasonNumber, episodeNumber, episodeType,
+isPublished, podcastEpisodeIsExplicit, isVideoEighteenPlus, publishOn: null}`
+when saving a draft.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -169,6 +206,9 @@ type, explicit flag, and scheduled publish time in a single call.
 | `episodeType` | string | Yes | `"full"` / `"trailer"` / `"bonus"` |
 | `isPublished` | boolean | Yes | Pass the current value from `/overview` to preserve state |
 | `podcastEpisodeIsExplicit` | boolean | Yes | Same as above |
+| `seasonNumber` | integer | No | Season number. **Not** `podcastSeasonNumber` — see warning below |
+| `episodeNumber` | integer | No | Episode number. **Not** `podcastEpisodeNumber` |
+| `isVideoEighteenPlus` | boolean | No | 18+ flag for video episodes (sent by the web app) |
 | `publishOn` | integer | No | **Unix timestamp (seconds).** Required when scheduling. See warning below |
 | `wizardDraftedToPublishOn` | string | No | UTC ISO 8601. Must match `publishOn` in wall-clock time |
 
@@ -194,6 +234,18 @@ HTTP 200 on success:
     Once an episode is published (`isPublished: true`), you cannot change
     `publishOn` via this endpoint. Use the S4C UI or Playwright to modify
     the publish date of a live episode.
+
+!!! warning "Season / episode number: write names differ from read names"
+    Send `seasonNumber` and `episodeNumber`. The names returned by
+    `/overview` (`podcastSeasonNumber`, `podcastEpisodeNumber`) are
+    **silently ignored** by this endpoint — it answers HTTP 200 and nothing is
+    saved. Read them back from `/overview` under the `podcast*` names to
+    verify (verified 2026-11-21).
+
+!!! note "Unpublishing"
+    Sending `isPublished: false` (without `publishOn`) for a published episode
+    moved it back to drafts (verified 2026-11-21 on three video episodes).
+    Be careful: in the web app, unpublishing an episode deletes its clips.
 
 !!! warning "`publishOn` must be a Unix timestamp integer"
     `publishOn` expects a **Unix timestamp in integer seconds**, not an ISO 8601
@@ -231,6 +283,26 @@ HTTP 200 on success:
         json=payload,
         headers=headers_post,
     )
+    ```
+
+=== "Node.js"
+    ```javascript
+    const pubUtc = new Date("2026-06-01T06:00:00+09:00"); // 06:00 JST
+    const payload = {
+      userId: overview.userId,
+      title: "New episode title",
+      description: "<p>New description</p>",
+      episodeType: overview.podcastEpisodeType ?? "full",
+      isPublished: overview.isPublished ?? false,
+      podcastEpisodeIsExplicit: overview.podcastEpisodeIsExplicit ?? false,
+      publishOn: Math.floor(pubUtc.getTime() / 1000),  // Unix integer
+      wizardDraftedToPublishOn: pubUtc.toISOString(),  // ISO string
+    };
+    const r = await fetch(
+      `${BASE}/v3/episodes/${anchorId}/update?isMumsCompatible=true`,
+      { method: "POST", headers: headersPost, body: JSON.stringify(payload) },
+    );
+    if (!r.ok) throw new Error(`update -> ${r.status} ${await r.text()}`);
     ```
 
 === "cURL"
@@ -407,6 +479,15 @@ by most other endpoints.
     user_id    = ids["userId"]
     ```
 
+=== "Node.js"
+    ```javascript
+    const r = await fetch(
+      `${BASE}/v3/shows/${spotifyShowId}/legacyIds?isMumsCompatible=true`,
+      { headers: headersGet },
+    );
+    const { stationId, userId } = await r.json();
+    ```
+
 === "cURL"
     ```bash
     curl -s \
@@ -556,10 +637,46 @@ wizard — it allocates the episode ID before audio or metadata are set.
 }
 ```
 
+!!! note "Variant used by the web app: `returnWebIds=true` (2026-11)"
+    The S4C web app calls
+
+    ```
+    POST /v3/stations/{STATION_ID}/episodes?isMumsCompatible=true&returnWebIds=true
+    ```
+
+    with the same `{ "hourOffset": … }` body, and receives the Spotify-side
+    identifiers instead of the numeric ID:
+
+    ```json
+    { "episodeUri": "spotify:episode:…", "webEpisodeId": "…" }
+    ```
+
+    It then resolves the numeric ID with
+    `GET /v3/episodes/{episodeUri}/episodeId?isMumsCompatible=true`
+    (same shape as 1-A). Without `returnWebIds` the response is
+    `{ "episodeId": … }` as above. Handle both.
+
+=== "Node.js"
+    ```javascript
+    const hourOffset = new Date().getTimezoneOffset() / 60; // JST → -9
+    const c = await (await fetch(
+      `${BASE}/v3/stations/${stationId}/episodes?isMumsCompatible=true&returnWebIds=true`,
+      { method: "POST", headers: headersPost, body: JSON.stringify({ hourOffset }) },
+    )).json();
+    const anchorId = c.episodeId ?? (await (await fetch(
+      `${BASE}/v3/episodes/${c.episodeUri}/episodeId?isMumsCompatible=true`,
+      { headers: headersGet },
+    )).json()).episodeId;
+    ```
+
 !!! note "Three-step episode creation"
     1. `POST /v3/stations/{STATION_ID}/episodes` — allocate the episode record (this endpoint)
     2. Upload audio/video via the media upload flow (6-A through 6-D)
     3. `POST /v3/episodes/{ANCHOR_ID}/update` (1-C) — set title, description, and publish settings
+
+    Optionally between steps 2 and 3: episode image (1-V) and, for video
+    episodes, the horizontal video thumbnail (GraphQL —
+    [Episode video thumbnail upload](graphql.md#episode-video-thumbnail-upload)).
 
 ---
 
@@ -618,11 +735,16 @@ Updates the show's custom URL slug.
 
 ---
 
-## 1-V. Image Upload Flow (Cover Art / Episode Thumbnail)
+## 1-V. Image Upload Flow (Cover Art / Episode Image)
 
-Cover art and episode thumbnails share the same upload pipeline but use
-different endpoints. The pipeline is **separate** from the media upload
-pipeline (6-A through 6-D).
+Show cover art and the square **episode image** ("Episode art" in the web
+app) share the same upload pipeline but use different endpoints. The
+pipeline is **separate** from the media upload pipeline (6-A through 6-D).
+
+!!! note "Episode image ≠ video thumbnail"
+    For video episodes the web app has a second, horizontal image — the
+    **video thumbnail**. It is uploaded through GraphQL, not through this
+    flow: see [Episode video thumbnail upload](graphql.md#episode-video-thumbnail-upload).
 
 ### 1-V-1. Get a Signed Upload URL
 
@@ -631,12 +753,7 @@ pipeline (6-A through 6-D).
 GET /v3/stations/{STATION_ID}/images/upload/signed_url?isMumsCompatible=true
 ```
 
-**Episode thumbnail:**
-```
-GET /v3/episodes/{ANCHOR_ID}/images/upload/signed_url?isMumsCompatible=true
-```
-
-**Response:**
+Response:
 ```json
 {
   "url": "https://storage.googleapis.com/anchor-image-storage-production/{UUID}/{FILENAME}?X-Goog-Algorithm=...",
@@ -644,11 +761,33 @@ GET /v3/episodes/{ANCHOR_ID}/images/upload/signed_url?isMumsCompatible=true
 }
 ```
 
-### 1-V-2. PUT the Image to Google Cloud Storage
+**Episode image** (verified 2026-11-21):
+```
+GET /v3/episodes/{ANCHOR_ID}/images/upload/signed_url?contentType=image%2Fjpeg&stationId={STATION_ID}&isMumsCompatible=true
+```
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `contentType` | **Yes** | URL-encoded MIME type (`image%2Fjpeg`, `image%2Fpng`). Without it: HTTP 400 `request/query must have required property 'contentType'` |
+| `stationId` | Yes (sent by the web app) | Numeric station ID (1-L) |
+
+Response — an **S3** variant, not the GCS `{url, uploadId}` shape:
+```json
+{
+  "requestUuid": "…",
+  "signedUrl": "https://anchor-img-uploads-production.s3.us-east-1.amazonaws.com/…"
+}
+```
+
+Use `requestUuid` wherever the steps below say `{UPLOAD_ID}`. Code that
+must handle both shapes can read `url ?? signedUrl` and
+`uploadId ?? requestUuid`.
+
+### 1-V-2. PUT the Image to Storage
 
 ```
-PUT {signed_url}
-Content-Type: image/png   # or image/jpeg
+PUT {url | signedUrl}
+Content-Type: image/jpeg   # must match contentType from 1-V-1
 ```
 
 No auth headers needed — the signature is embedded in the URL.
@@ -661,7 +800,7 @@ POST /v3/stations/{STATION_ID}/images/upload/{UPLOAD_ID}/process_upload?isMumsCo
 ```
 Body: `{}` or empty.
 
-**Episode thumbnail:**
+**Episode image:**
 ```
 POST /v3/episodes/{ANCHOR_ID}/images/upload/{UPLOAD_ID}/process_upload?isMumsCompatible=true
 ```
@@ -681,12 +820,83 @@ Body:
 GET /v3/stations/{STATION_ID}/images/upload/{UPLOAD_ID}/?isMumsCompatible=true
 ```
 
-**Episode thumbnail:**
+**Episode image:**
 ```
 GET /v3/episodes/{ANCHOR_ID}/images/upload/{UPLOAD_ID}/?isMumsCompatible=true
 ```
 
-Poll until `status` equals `"completed"` (typically a few seconds).
+Poll until `status` reaches its final value (typically a few seconds). For
+the episode image the observed sequence is `uploaded` → **`processed`**
+(2026-11-21), not `completed`; accept either. The poll may return 404
+briefly right after `process_upload`.
+
+=== "Python"
+    ```python
+    import time, requests
+
+    r = requests.get(
+        f"{BASE}/v3/episodes/{anchor_id}/images/upload/signed_url"
+        f"?contentType=image%2Fjpeg&stationId={station_id}&isMumsCompatible=true",
+        headers=headers_get,
+    )
+    r.raise_for_status()
+    s = r.json()
+    url = s.get("url") or s["signedUrl"]
+    upload_id = s.get("uploadId") or s["requestUuid"]
+
+    with open("cover.jpg", "rb") as f:
+        requests.put(url, data=f.read(), headers={"Content-Type": "image/jpeg"}).raise_for_status()
+
+    requests.post(
+        f"{BASE}/v3/episodes/{anchor_id}/images/upload/{upload_id}/process_upload?isMumsCompatible=true",
+        json={"episodeId": anchor_id, "uploadType": "episode_image"},
+        headers=headers_post,
+    ).raise_for_status()
+
+    for _ in range(30):
+        r = requests.get(
+            f"{BASE}/v3/episodes/{anchor_id}/images/upload/{upload_id}/?isMumsCompatible=true",
+            headers=headers_get,
+        )
+        if r.status_code != 404 and r.json().get("status") in ("processed", "completed"):
+            break
+        time.sleep(2)
+    ```
+
+=== "Node.js"
+    ```javascript
+    import fs from "node:fs";
+
+    const s = await (await fetch(
+      `${BASE}/v3/episodes/${anchorId}/images/upload/signed_url` +
+        `?contentType=image%2Fjpeg&stationId=${stationId}&isMumsCompatible=true`,
+      { headers: headersGet },
+    )).json();
+    const url = s.url ?? s.signedUrl;
+    const uploadId = s.uploadId ?? s.requestUuid;
+
+    const put = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "image/jpeg" },
+      body: fs.readFileSync("cover.jpg"),
+    });
+    if (!put.ok) throw new Error(`PUT image -> ${put.status}`);
+
+    await fetch(
+      `${BASE}/v3/episodes/${anchorId}/images/upload/${uploadId}/process_upload?isMumsCompatible=true`,
+      { method: "POST", headers: headersPost,
+        body: JSON.stringify({ episodeId: anchorId, uploadType: "episode_image" }) },
+    );
+
+    for (let i = 0; i < 30; i++) {
+      const r = await fetch(
+        `${BASE}/v3/episodes/${anchorId}/images/upload/${uploadId}/?isMumsCompatible=true`,
+        { headers: headersGet },
+      );
+      if (r.ok && ["processed", "completed"].includes((await r.json()).status)) break;
+      await new Promise((res) => setTimeout(res, 2000));
+    }
+    ```
 
 ---
 
@@ -831,18 +1041,35 @@ end-to-end Python example using endpoints **6-A through 6-D**.
 
 ### 6-A. Get a Signed Upload URL
 
+**Audio:**
 ```
 GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&type={MIME_TYPE}&isMumsCompatible=true
 ```
 
+**Video — multipart** (verified 2026-11-21):
+```
+GET /v3/episodes/{ANCHOR_ID}/upload/signedUrl?filename={FILENAME}&type=video%2Fmp4&isMumsCompatible=true&isMultipartUpload=true&numParts={N}&uploadType=video
+```
+
 | Parameter | Example | Description |
 |-----------|---------|-------------|
-| `filename` | `episode.mp4` | File name to upload |
-| `type` | `video/mp4` | MIME type |
+| `filename` | `episode.mp4` | File name to upload (URL-encoded). The web app replaces `_` with `-` |
+| `type` | `video%2Fmp4` | MIME type, **must be URL-encoded** — see warning below |
+| `isMultipartUpload` | `true` | Video only — required to get GCS part URLs |
+| `numParts` | `2` | Video only — number of parts you will upload |
+| `uploadType` | `video` | Video only |
 
-**Response — two variants depending on storage backend:**
+!!! warning "`type` must be URL-encoded"
+    `type=video/mp4` returns HTTP 400
+    `Parameter 'type' must be url encoded. Its value may not contain reserved characters.`
+    Send `type=video%2Fmp4` (`encodeURIComponent` / `urllib.parse.quote(…, safe="")`).
 
-Audio files are routed to **AWS S3** and return:
+!!! warning "Video without the multipart parameters fails later"
+    Without `isMultipartUpload` / `numParts` / `uploadType`, a video request
+    receives the **audio (S3)** variant below, and the subsequent
+    `process_upload` with `uploadType: "video"` fails with **HTTP 500**.
+
+**Response — audio** (AWS S3):
 ```json
 {
   "requestUuid": "b8c96d9c-1d37-45a5-7ba3-2dcfb17e1fdc",
@@ -851,33 +1078,57 @@ Audio files are routed to **AWS S3** and return:
 }
 ```
 
-Video files are routed to **Google Cloud Storage** and return:
+**Response — video multipart** (Google Cloud Storage):
 ```json
 {
-  "uploadId": "9e1fdfce-4485-6bde-e582-3b7c84978d55",
-  "url": "https://storage.googleapis.com/anchor_exclusive_media_upload_production/...",
-  "headers": {}
+  "fileKey": "…",
+  "filename": "episode.mp4",
+  "requestUuid": "…",
+  "uploadId": "…",
+  "signedUrlParts": [
+    { "partNumber": 1, "url": "https://storage.googleapis.com/anchor_exclusive_media_upload_production/{UUID}/episode.mp4-1?…" },
+    { "partNumber": 2, "url": "https://storage.googleapis.com/anchor_exclusive_media_upload_production/{UUID}/episode.mp4-2?…" }
+  ]
 }
 ```
 
-Use `signedUrl` / `requestUuid` for audio; `url` / `uploadId` for video.
+!!! note "Older single-URL video variant"
+    Earlier research (2026-05) recorded a video response of the form
+    `{ "uploadId", "url", "headers" }`. It was not seen in 2026-11; the
+    multipart shape above is what the web app uses now.
 
 ### 6-B. PUT the File to Storage
 
+**Audio:**
 ```
-PUT {signedUrl}           # audio (S3)
-PUT {url}                 # video (GCS)
+PUT {signedUrl}
 Content-Type: {MIME_TYPE}
 ```
 
-Save the `ETag` response header — you need it in the next step.
+**Video (multipart):** split the file into `N` equal consecutive byte
+ranges (the last one may be shorter) and `PUT` each range to the `url` of
+the matching `partNumber`. No auth headers — the signature is in the URL.
+
+```
+PUT {signedUrlParts[k].url}      # body = bytes of part k
+```
+
+Save the `ETag` response header of **every** part, with the surrounding
+quotes stripped — they go into `parts` in 6-C.
+
+!!! tip "Choosing `N`"
+    The web app split a 77 MB file into 2 parts of `ceil(size / 2)` bytes.
+    `N = ceil(size / 50 MiB)` (2 parts for 60–180 MB files) worked for 28
+    uploads of 60–180 MB (2026-11-21).
 
 ### 6-C. Notify Upload Completion
 
 ```
-POST /v3/upload/{requestUuid}/process_upload?isMumsCompatible=true   # audio
-POST /v3/upload/{uploadId}/process_upload?isMumsCompatible=true      # video
+POST /v3/upload/{requestUuid}/process_upload?isMumsCompatible=true
 ```
+
+For both audio and video use `requestUuid` from 6-A in the path and as
+`uploadId` in the body.
 
 **Request body (audio):**
 ```json
@@ -904,8 +1155,11 @@ POST /v3/upload/{uploadId}/process_upload?isMumsCompatible=true      # video
   "caption": "episode.mp4",
   "isExtractedFromVideo": true,
   "isMultipartUpload": true,
-  "parts": [{ "partNumber": 1, "etag": "4d49fffd0ed1c6a291577ac47d26b997" }],
-  "uploadId": "9e1fdfce-4485-6bde-e582-3b7c84978d55",
+  "parts": [
+    { "partNumber": 1, "etag": "4d49fffd0ed1c6a291577ac47d26b997" },
+    { "partNumber": 2, "etag": "0c2f7a3b6e8d4f1a9b5c7d3e2f1a0b9c" }
+  ],
+  "uploadId": "{requestUuid from 6-A}",
   "episodeId": 120525547,
   "stationId": YOUR_STATION_ID
 }
@@ -915,15 +1169,18 @@ POST /v3/upload/{uploadId}/process_upload?isMumsCompatible=true      # video
 |-----------|------|-------------|
 | `uploadType` | string | `"default"` for audio; `"video"` for video (**not** `"audio"`) |
 | `isExtractedFromVideo` | boolean | `true` for mp4/mov; `false` for audio-only |
-| `parts` | array | List of ETags from the storage PUT response |
-| `uploadId` | string | For audio: use `requestUuid` from 6-A. For video: use `uploadId` from 6-A |
+| `parts` | array | One `{partNumber, etag}` per uploaded part |
+| `uploadId` | string | `requestUuid` from 6-A (audio and video) |
+
+Response (video): `{ "requestUuid": "…" }`.
 
 ### 6-D. Poll for Media Validation
 
 ```
-GET /v3/upload/media/{requestUuid}?includeMediaValidation=true&isMumsCompatible=true  # audio
-GET /v3/upload/media/{uploadId}?includeMediaValidation=true&isMumsCompatible=true     # video
+GET /v3/upload/media/{requestUuid}?includeMediaValidation=true&isMumsCompatible=true
 ```
+
+**Audio** — response fields:
 
 | Response field | Description |
 |----------------|-------------|
@@ -934,7 +1191,32 @@ GET /v3/upload/media/{uploadId}?includeMediaValidation=true&isMumsCompatible=tru
 
 Poll until `status` is `"completed"`.
 
+**Video (multipart)** — a different shape (verified 2026-11-21):
+
+```json
+{
+  "request": {
+    "requestUuid": "…",
+    "state": "processed",
+    "uploadType": "video",
+    "storageProviderType": "GCP",
+    "failureReason": null
+  },
+  "data": { "duration": 312480 },
+  "isAnchorFormatFileReady": true,
+  "mediaValidation": { "status": "…" }
+}
+```
+
+`request.state` goes `requested` → `uploaded` → **`processed`**; stop at
+`processed` (usually 5–15 s after 6-C). `data.duration` is in milliseconds.
+Treat `request.failureReason` or `mediaValidation.status === "failed"` as
+an error.
+
 !!! note "Audio polling may return 404 transiently"
     For audio (S3) uploads, the poll endpoint sometimes returns HTTP 404
     for 30–60 seconds after `process_upload` completes before the record
     becomes available. Retry with backoff up to ~300 seconds.
+
+See [Recipes — Video upload with multipart and thumbnails](recipes.md#video-upload-with-multipart-and-thumbnails)
+for a complete Python and Node.js script.

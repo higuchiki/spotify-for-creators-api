@@ -29,6 +29,21 @@ anchor.fm REST API.
     strings, and schema introspection is enabled — see
     [Analytics Queries](#analytics-queries-verified) below.
 
+    You can also send exactly what the web app sends — an empty/absent
+    `query` plus the operation's hash:
+
+    ```json
+    {
+      "operationName": "getEpisodeThumbnail",
+      "variables": { "episodeUri": "spotify:episode:…" },
+      "extensions": { "persistedQuery": { "version": 1, "sha256Hash": "bf061fbd…6be9" } }
+    }
+    ```
+
+    Hashes are public (they are in the web app's JavaScript bundle) but
+    **change when the web app is redeployed** — capture current ones from
+    DevTools if a call starts failing with an unknown-query error.
+
 ---
 
 ## Common Headers
@@ -40,6 +55,13 @@ headers = {
     "Accept": "application/json",
 }
 ```
+
+!!! warning "`x-creator-client: public-website` is required for some mutations"
+    The web app also sends `x-creator-client: public-website` (and
+    `accept-language`). Most queries work without it, but
+    `uploadThumbnailComplete` returns a GraphQL error `INVALID_ARGUMENT`
+    ("An error occurred while processing the request.") when it is missing
+    (verified 2026-11-21). Sending it on every request is harmless.
 
 ---
 
@@ -137,7 +159,10 @@ Called from the episode detail and analytics pages.
 
 | Operation | Type | Description |
 |-----------|------|-------------|
-| `getEpisodeThumbnail` | query | Episode thumbnail URL |
+| `getEpisodeThumbnail` | query | Video thumbnail state and image URLs — see [Episode video thumbnail upload](#episode-video-thumbnail-upload) |
+| `getEpisodeThumbnailImageSpecs` | query | Allowed thumbnail formats |
+| `getThumbnailSignedUrl` | mutation | Signed URL for a video thumbnail upload |
+| `uploadThumbnailComplete` | mutation | Finalise a video thumbnail upload |
 | `getEpisodeChapters` | query | Chapter data |
 | `getEpisodeChaptersOptIn` | query | Chapter feature opt-in state |
 | `getEpisodePreviews` | query | Preview clip data |
@@ -346,6 +371,216 @@ query {
 For a recent episode of our test show, `EPISODE_STREAMS_AND_DOWNLOADS` was
 roughly **2.5×** the Spotify-only starts — RSS-distributed platforms (Apple
 Podcasts etc.) can account for the majority of early plays.
+
+---
+
+## Episode video thumbnail upload
+
+**Verified 2026-11-21** on 28 video episodes (drafts on a hosted show).
+
+Video episodes have a horizontal **video thumbnail** in addition to the
+square episode image. The episode image goes through REST
+([1-V](rest-api.md#1-v-image-upload-flow-cover-art-episode-image)); the video
+thumbnail goes through GraphQL persisted queries on
+`https://creators-graph.spotify.com/v2/graph-pq`, with the same Bearer token.
+
+!!! warning "Required header"
+    Send `x-creator-client: public-website`. Without it
+    `getThumbnailSignedUrl` still works, but `uploadThumbnailComplete`
+    fails with `INVALID_ARGUMENT`.
+
+| Step | Operation | Hash (2026-11-21) |
+|------|-----------|-------------------|
+| 0 (optional) | `getEpisodeThumbnailImageSpecs` | `01cf26d3947f3db39fa4d72ea754ae19d4e5ffaf15d306c42b9638b7300511f9` |
+| 1 | `getThumbnailSignedUrl` | `3621c97566c4cfdffc7ce3fbba1d886441498ac96ca27b4b594546a83d9bf876` |
+| 2 | `PUT` the image to the signed URL | — |
+| 3 | `uploadThumbnailComplete` | `c43a47136fa24af04869aad730b412789edbfeced6c9aef949a94cb2ca383082` |
+| 4 | `getEpisodeThumbnail` (poll) | `bf061fbd2cb87cdbb448e5509efa5e091cd6e2b50ffec8a374a37cee521a6be9` |
+
+Hashes change when the web app is redeployed (see
+[Request Format](#request-format)).
+
+The episode is identified by its Spotify URI (`spotify:episode:…`) — read
+`spotifyUri` from `/overview` (REST 1-B) or use `episodeUri` from episode
+creation (1-S with `returnWebIds=true`).
+
+### 0. Image specs (optional)
+
+Variables: `{ "episodeUri": "spotify:episode:…" }` → `allowedFormats`
+(png, jpeg, webp, …).
+
+### 1. `getThumbnailSignedUrl`
+
+```json
+{
+  "contentType": "image/png",
+  "episodeUriV2": "spotify:episode:…",
+  "fileName": "thumbnail.png",
+  "platformType": "S4C_HOSTED",
+  "thumbnailType": "USER_UPLOADED_THUMBNAIL"
+}
+```
+
+Response:
+
+```json
+{
+  "data": {
+    "createThumbnailSignedUrl": {
+      "signedUrl": "https://storage.googleapis.com/…&X-Goog-Expires=10&…&response-content-type=image%2Fpng…",
+      "thumbnailUuid": "…"
+    }
+  }
+}
+```
+
+!!! warning "The signed URL is valid for 10 seconds"
+    `X-Goog-Expires=10`. Read the file into memory **before** requesting the
+    URL and `PUT` immediately.
+
+### 2. PUT the image
+
+```
+PUT {signedUrl}
+Content-Type: image/png      # must equal contentType from step 1
+```
+
+No auth headers.
+
+### 3. `uploadThumbnailComplete`
+
+Variables: `{ "episodeUri": "spotify:episode:…", "thumbnailUuid": "…" }`
+
+Response: `{ "data": { "completeThumbnailUpload": { "success": "true" } } }`
+(note: `success` is the string `"true"`).
+
+### 4. Poll `getEpisodeThumbnail`
+
+Variables: `{ "episodeUri": "spotify:episode:…" }` →
+`data.episodeByUri.thumbnail`:
+
+| Field | Observed values |
+|-------|-----------------|
+| `ingestionStatus` | `INGESTION_IN_PROGRESS` → `INGESTION_COMPLETE` |
+| `source` | `ORIGINAL_UPLOADED_IMAGE` → `TRANSCODED_IMAGE` |
+| `images[]` | Image renditions once transcoded |
+| `error` | Present on failure |
+
+Poll every few seconds until `INGESTION_COMPLETE` (usually under 30 s).
+
+=== "Python"
+    ```python
+    import time, requests
+
+    GRAPH = "https://creators-graph.spotify.com/v2/graph-pq"
+    PQ = {
+        "getThumbnailSignedUrl":   "3621c97566c4cfdffc7ce3fbba1d886441498ac96ca27b4b594546a83d9bf876",
+        "uploadThumbnailComplete": "c43a47136fa24af04869aad730b412789edbfeced6c9aef949a94cb2ca383082",
+        "getEpisodeThumbnail":     "bf061fbd2cb87cdbb448e5509efa5e091cd6e2b50ffec8a374a37cee521a6be9",
+    }
+    graph_headers = {
+        "Authorization": f"Bearer {bearer}",
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "x-creator-client": "public-website",   # required for uploadThumbnailComplete
+        "Origin": "https://creators.spotify.com",
+        "Referer": "https://creators.spotify.com/",
+    }
+
+    def graph(op, variables):
+        r = requests.post(GRAPH, headers=graph_headers, json={
+            "operationName": op,
+            "variables": variables,
+            "extensions": {"persistedQuery": {"version": 1, "sha256Hash": PQ[op]}},
+        })
+        j = r.json()
+        if not r.ok or j.get("errors"):
+            raise RuntimeError(f"{op}: {r.status_code} {j.get('errors') or j}")
+        return j["data"]
+
+    episode_uri = "spotify:episode:YOUR_EPISODE_ID"
+    image = open("thumbnail.png", "rb").read()      # read first: URL expires in 10 s
+
+    t = graph("getThumbnailSignedUrl", {
+        "contentType": "image/png",
+        "episodeUriV2": episode_uri,
+        "fileName": "thumbnail.png",
+        "platformType": "S4C_HOSTED",
+        "thumbnailType": "USER_UPLOADED_THUMBNAIL",
+    })["createThumbnailSignedUrl"]
+
+    requests.put(t["signedUrl"], data=image, headers={"Content-Type": "image/png"}).raise_for_status()
+    graph("uploadThumbnailComplete", {"episodeUri": episode_uri, "thumbnailUuid": t["thumbnailUuid"]})
+
+    for _ in range(30):
+        th = graph("getEpisodeThumbnail", {"episodeUri": episode_uri})["episodeByUri"]["thumbnail"]
+        if th and th.get("ingestionStatus") == "INGESTION_COMPLETE":
+            break
+        if th and th.get("error"):
+            raise RuntimeError(th)
+        time.sleep(3)
+    ```
+
+=== "Node.js"
+    ```javascript
+    import fs from "node:fs";
+
+    const GRAPH = "https://creators-graph.spotify.com/v2/graph-pq";
+    const PQ = {
+      getThumbnailSignedUrl: "3621c97566c4cfdffc7ce3fbba1d886441498ac96ca27b4b594546a83d9bf876",
+      uploadThumbnailComplete: "c43a47136fa24af04869aad730b412789edbfeced6c9aef949a94cb2ca383082",
+      getEpisodeThumbnail: "bf061fbd2cb87cdbb448e5509efa5e091cd6e2b50ffec8a374a37cee521a6be9",
+    };
+
+    async function graph(op, variables) {
+      const r = await fetch(GRAPH, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "x-creator-client": "public-website", // required for uploadThumbnailComplete
+          Origin: "https://creators.spotify.com",
+          Referer: "https://creators.spotify.com/",
+        },
+        body: JSON.stringify({
+          operationName: op,
+          variables,
+          extensions: { persistedQuery: { version: 1, sha256Hash: PQ[op] } },
+        }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || j.errors) throw new Error(`${op}: ${r.status} ${JSON.stringify(j.errors ?? j)}`);
+      return j.data;
+    }
+
+    const episodeUri = "spotify:episode:YOUR_EPISODE_ID";
+    const image = fs.readFileSync("thumbnail.png"); // read first: URL expires in 10 s
+
+    const { createThumbnailSignedUrl: t } = await graph("getThumbnailSignedUrl", {
+      contentType: "image/png",
+      episodeUriV2: episodeUri,
+      fileName: "thumbnail.png",
+      platformType: "S4C_HOSTED",
+      thumbnailType: "USER_UPLOADED_THUMBNAIL",
+    });
+
+    const put = await fetch(t.signedUrl, {
+      method: "PUT",
+      headers: { "Content-Type": "image/png" },
+      body: image,
+    });
+    if (!put.ok) throw new Error(`PUT thumbnail -> ${put.status}`);
+
+    await graph("uploadThumbnailComplete", { episodeUri, thumbnailUuid: t.thumbnailUuid });
+
+    for (let i = 0; i < 30; i++) {
+      const th = (await graph("getEpisodeThumbnail", { episodeUri })).episodeByUri?.thumbnail;
+      if (th?.ingestionStatus === "INGESTION_COMPLETE") break;
+      if (th?.error) throw new Error(JSON.stringify(th));
+      await new Promise((res) => setTimeout(res, 3000));
+    }
+    ```
 
 ---
 

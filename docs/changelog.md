@@ -1,5 +1,63 @@
 # Changelog
 
+## 2026-11-21 — Video multipart upload, episode image, video thumbnail (GraphQL), Node.js examples
+
+**Source:** A Node.js CLI that uploaded and published 28 video episodes
+(60–180 MB MP4) to a hosted show, cross-checked against the S4C web app's
+own network traffic (Chrome DevTools) on 2026-11-20 and 2026-11-21.
+
+### rest-api.md
+
+- **6-A video now requires multipart parameters**:
+  `isMultipartUpload=true&numParts={N}&uploadType=video`. The response is
+  `{fileKey, filename, requestUuid, uploadId, signedUrlParts[{partNumber, url}]}`
+  (GCS). Without these parameters a video gets the S3/audio variant and
+  `process_upload` with `uploadType: "video"` fails with HTTP 500.
+- **`type` must be URL-encoded** (`video%2Fmp4`); `video/mp4` → HTTP 400.
+- **6-B / 6-C**: one `PUT` per part, ETag of every part in `parts`;
+  `requestUuid` from 6-A is used in the `process_upload` path and as `uploadId`.
+- **6-D video poll** has a different shape: `request.state`
+  `requested` → `uploaded` → `processed`, `data.duration` in ms.
+- **1-C**: season / episode number are written as **`seasonNumber` /
+  `episodeNumber`**. The `/overview` names (`podcastSeasonNumber`,
+  `podcastEpisodeNumber`) are silently ignored on update. Documented the
+  draft payload the web app sends (`isVideoEighteenPlus`, `publishOn: null`)
+  and unpublishing via `isPublished: false`.
+- **1-S**: documented the `returnWebIds=true` variant
+  (`{episodeUri, webEpisodeId}` → resolve via `/episodeId`).
+- **1-B**: the draft 403 was not reproduced — `/overview?returnWebIds=true`
+  returned 200 on fresh drafts (2026-11-21). Warning kept, softened.
+- **1-V episode image**: `contentType` query parameter is required (400
+  without it); response is an S3 variant `{requestUuid, signedUrl}`; final
+  poll status is `processed`.
+- Added Node.js tabs to 1-A, 1-B, 1-C, 1-L, 1-S and 1-V.
+
+### graphql.md
+
+- **New: Episode video thumbnail upload** — `getThumbnailSignedUrl` →
+  `PUT` (signed URL valid 10 s) → `uploadThumbnailComplete` → poll
+  `getEpisodeThumbnail` (`INGESTION_IN_PROGRESS` → `INGESTION_COMPLETE`),
+  with persisted-query hashes, Python and Node.js examples.
+- **`x-creator-client: public-website` header** — required for
+  `uploadThumbnailComplete` (`INVALID_ARGUMENT` without it).
+- Documented the persisted-query request form (`extensions.persistedQuery.sha256Hash`).
+
+### auth.md
+
+- **Node.js token exchange without `spotifyconnector`** — PKCE
+  authorization-code request with `prompt=none` and `response_mode=web_message`,
+  authenticated by the `sp_dc` cookie. Node.js versions of the request headers.
+
+### recipes.md
+
+- **New recipe: Video upload with multipart and thumbnails** (Python and
+  Node.js, end to end). Node.js setup notes. Marked the old single-URL video
+  branch of "Media Upload" as outdated.
+
+### Not updated
+
+- Japanese pages (`*.ja.md`) are unchanged in this revision.
+
 ## 2026-10-17 — `sp_key` cookie no longer required
 
 **Source:** Re-authentication after a cookie expiry, followed by controlled tests.
